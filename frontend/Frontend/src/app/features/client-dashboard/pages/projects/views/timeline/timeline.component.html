@@ -1,0 +1,140 @@
+<div class="p-4 bg-gray-50 min-h-screen">
+
+    <div class="flex items-center justify-between mb-2">
+        <div class="">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                    <!-- Search with filters -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search tasks"
+                            class="pl-7 pr-3 py-1.5 text-sm rounded border border-gray-300 w-48 focus:outline-none focus:ring-1 focus:ring-blue-400">
+                        <i class='bx bx-search absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm'></i>
+                    </div>
+
+
+
+                    <!-- Team Members -->
+                    <div class="flex -space-x-1.5">
+                        <div
+                            class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs">
+                            AN
+                        </div>
+                        <img class="w-6  h-6 rounded-full ring-1 ring-white"
+                            src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?fit=facearea&w=100&h=100"
+                            alt="Team member">
+                        <img class="w-6 h-6 rounded-full ring-1 ring-white"
+                            src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?fit=facearea&w=100&h=100"
+                            alt="Team member">
+                        <button
+                            class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-600 hover:bg-gray-200">
+                            +3
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button class="p-2 hover:bg-gray-100 rounded-full">
+                <i class='bx bx-share-alt text-gray-600'></i>
+            </button>
+            <button class="p-2 hover:bg-gray-100 rounded-full">
+                <i class='bx bx-dots-horizontal-rounded text-gray-600'></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-[#f8f8f8] px-2 ">
+        <!-- Accordion Header -->
+        <div (click)="isOpen = !isOpen" class="flex justify-between items-center cursor-pointer  p-4 rounded-t-md">
+            <div class="flex items-center gap-2 w-[50%] ">
+                <i class="" [ngClass]="isOpen ? 'bx bx-chevron-up' : 'bx bx-chevron-down'"></i>
+                <h2 class="font-semibold text-[14px]">SCRUM Sprint 1</h2>
+                <button class="flex items-center text-gray-700 gap-1  text-sm">
+                    <span
+                        class="bg-white border border-gray-200  px-1 py-0.5  flex items-center  justify-center rounded-sm ">
+                        <i class='bx bx-duplicate text-blue-900'></i></span>
+                    <span class=" font-semibold"> Add dates</span>
+
+                </button>
+                <p>(0 work items)</p>
+            </div>
+            <div class="flex items-end justify-end gap-4 w-[50%]">
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-[#dddee1] px-2 rounded-sm text-sm">0</span>
+                        <span class="bg-[#8fb8f6] px-2 rounded-sm text-sm">0</span>
+                        <span class="bg-[#efffd6] px-2 rounded-sm text-sm">0</span>
+                    </div>
+                    <button class="px-4 text-sm py-0.5 bg-blue-600 text-white rounded hover:bg-blue-700">Start
+                        sprint</button>
+                </div>
+
+
+                <button class="p-1 hover:bg-gray-100 rounded">
+                    <i class='bx bx-dots-horizontal-rounded'></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Accordion Content -->
+        <div *ngIf="isOpen" class=" text-gray-900 py-10 px-4 rounded-b-md border-2 border-stone-300 border-dashed ">
+            <div class="flex items-center justify-center gap-6">
+                <img class="w-24 h-24"
+                    src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/design.e096ff32.svg"
+                    alt="">
+                <div class="flex flex-col text-[15px] max-w-[500px]">
+                    <p class="font-semibold">Plan your sprint</p>
+                    <p>Drag work items from the <span class="font-semibold">Backlog</span> section or create new ones to
+                        plan the
+                        work for this sprint. Select <span class="font-semibold">Start sprint</span> when you're ready.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <div
+            class="px-4 py-2 flex items-center font-semibold gap-1 transition-all duration-100 cursor-pointer hover:bg-gray-100">
+            <i class='bx bx-plus text-xl  '></i>
+            <p class="text-[14px] text-teal-800">Create</p>
+        </div>
+        <div class="relative w-full">
+            <input type="text" placeholder="Search backlog"
+                class="pl-40 text-sm pr-4 py-1.5 rounded border border-gray-300 w-full focus:outline-none ring-2 ring-blue-500 border-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <div class="absolute left-1 top-1/2 -translate-y-1/2">
+                <div class="relative">
+                    <button (click)="toggleDropdown()"
+                        class="flex items-center gap-2 px-4 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-all duration-200">
+                        <i class="bx bx-filter"></i>
+                        <span>Filter</span>
+                        <i class="bx" [ngClass]="isDropdownOpen ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                    </button>
+                    <div *ngIf="isDropdownOpen"
+                        class="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <ng-container *ngFor="let item of items">
+                            <div class="relative group">
+                                <button (click)="toggleSubMenu(item)"
+                                    class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all duration-200">
+                                    <i *ngIf="item.icon" class="bx" [ngClass]="item.icon"></i>
+                                    <span>{{ item.label }}</span>
+                                </button>
+                                <!-- <div *ngIf="item.items && item.isOpen"
+                                    class="absolute left-full top-0 w-48 bg-white rounded-md shadow-lg py-1">
+                                    <button *ngFor="let subItem of item.items"
+                                        class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-all duration-200">
+                                        <i *ngIf="subItem.icon" class="bx" [ngClass]="subItem.icon"></i>
+                                        <span>{{ subItem.label }}</span>
+                                    </button>
+                                </div> -->
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div style="margin-bottom: 1rem;">
+    <input type="text" [(ngModel)]="searchQuery" (input)="fetchSuggestions()" placeholder="Search location in Egypt..." />
+    <ul *ngIf="suggestions.length > 0" class="suggestions">
+      <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+        {{ suggestion.display_name }}
+      </li>
+    </ul>
+  </div>
+  
+  <p>Or click anywhere on the map to go there.</p>
+  <div id="map" style="height: 500px;"></div>
+  

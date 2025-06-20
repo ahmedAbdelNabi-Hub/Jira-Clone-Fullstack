@@ -1,0 +1,163 @@
+<main
+    class="min-h-screen bg-gradient-to-br from-gray-200 via-white to-slate-50 flex flex-col md:flex-row items-center gap-4 md:gap-10 justify-evenly p-4 relative overflow-hidden">
+    <!-- Background Pattern Container -->
+    <div class="absolute inset-0 overflow-hidden hidden md:block">
+        <!-- Animated Floating Shapes -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute top-40 right-20 w-16 h-16 bg-purple-500/15 rounded-full blur-lg animate-bounce"
+            style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-32 left-1/4 w-24 h-24 bg-pink-500/10 rounded-full blur-xl animate-pulse"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/3 right-1/5 w-12 h-12 bg-cyan-500/10 rounded-full blur-lg animate-bounce"
+            style="animation-delay: 0.5s;"></div>
+        <div class="absolute bottom-20 right-10 w-18 h-18 bg-indigo-500/10 rounded-full animate-pulse"
+            style="animation-delay: 1.5s;"></div>
+
+        <!-- Animated Geometric Shapes -->
+        <div
+            class="absolute top-1/4 left-1/3 w-8 h-8 bg-gradient-to-r from-blue-400/15 to-purple-400/15 rotate-45 animate-spin-slow">
+        </div>
+        <div
+            class="absolute bottom-1/3 right-1/4 w-6 h-6 bg-gradient-to-r from-orange-400/15 to-red-400/15 animate-pulse">
+        </div>
+        <div class="absolute top-1/2 left-1/5 w-10 h-10 bg-gradient-to-r from-green-400/10 to-teal-400/10 rounded-lg animate-bounce"
+            style="animation-delay: 0.3s;"></div>
+
+        <!-- Animated Hexagons -->
+        <div class="absolute top-16 right-1/3 w-6 h-6 bg-yellow-400/10 animate-pulse"
+            style="clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%); animation-delay: 2s;">
+        </div>
+        <div class="absolute bottom-1/4 left-1/2 w-8 h-8 bg-purple-400/10 animate-bounce"
+            style="clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%); animation-delay: 1s;">
+        </div>
+
+        <!-- Subtle Grid Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                        <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1f2937" stroke-width="0.8" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+
+        <!-- Moving Particles -->
+        <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400/20 rounded-full animate-ping"></div>
+        <div class="absolute top-3/4 right-1/4 w-2 h-2 bg-purple-400/25 rounded-full animate-ping"
+            style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/2 right-1/3 w-1 h-1 bg-cyan-400/25 rounded-full animate-pulse"
+            style="animation-delay: 0.5s;"></div>
+
+        <!-- Original Floating Elements -->
+        <div
+            class="absolute top-10 left-10 w-20 h-20 bg-gradient-to-br from-blue-400/10 to-teal-400/10 rounded-full animate-float">
+        </div>
+        <div
+            class="absolute top-32 right-16 w-16 h-16 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full animate-float-reverse">
+        </div>
+        <div
+            class="absolute bottom-20 left-20 w-24 h-24 bg-gradient-to-br from-indigo-400/10 to-blue-400/10 rounded-full animate-pulse-custom">
+        </div>
+        <div
+            class="absolute bottom-32 right-10 w-12 h-12 bg-gradient-to-br from-teal-400/10 to-green-400/10 rounded-full animate-drift">
+        </div>
+    </div>
+
+    <!-- Registration Form Container -->
+    <div class="text-center mb-2 w-full md:w-auto">
+        <div class="flex items-center justify-center space-x-3 mb-1">
+            <div class="relative">
+                <div
+                    class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-white to-slate-50 text-slate-800 border border-slate-200 rounded-2xl flex items-center justify-center">
+                    <i class='bx bxl-foursquare rotate-45 text-xl md:text-2xl bx-flip-vertical'></i>
+                </div>
+            </div>
+            <div>
+                <p
+                    class="text-slate-800 text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    JOLLY</p>
+            </div>
+        </div>
+
+        <p class="text-slate-600 text-base md:text-lg">Create your account to get started</p>
+    </div>
+    <div
+        class="w-full max-w-sm md:max-w-md relative z-10 bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-200/50 p-4 md:p-8">
+
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <!-- Google Sign Up Button -->
+            <div class="mb-4 md:mb-6">
+                <asl-google-signin-button type='standard' size='large' class="w-full"></asl-google-signin-button>
+            </div>
+
+            <!-- Divider -->
+            <div class="relative flex items-center justify-center my-4 md:my-6">
+                <div class="w-full h-px bg-gray-200"></div>
+                <span class="absolute px-4 bg-white text-gray-500 text-xs md:text-sm">or continue with</span>
+            </div>
+            <!-- Profile Picture Upload -->
+            <div class="flex flex-col items-center mb-2 md:mb-2">
+                
+                <div class="relative w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-blue-500/50 overflow-hidden group cursor-pointer hover:border-blue-400 transition-colors"
+                    (click)="onImageClick()">
+                    <img [src]="profileImage || 'download.png'" alt="Profile" class="w-full h-full object-cover" />
+                    <div
+                        class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class='bx bxs-camera text-white text-xl md:text-2xl'></i>
+                        <span class="text-white text-xs mt-1">Click to upload</span>
+                    </div>
+                    <input #fileInput type="file" class="hidden" accept="image/*" (change)="onFileSelected($event)">
+                </div>
+                <p
+                    class="text-sm text-blue-400 mt-2 bg-blue-200/50 border border-gray-100 backdrop-blur-sm px-2 py-1 rounded-lg  ">
+                    Upload Profile Picture</p>
+            </div>
+
+            <!-- Form Fields -->
+            <div class="space-y-3 md:space-y-4">
+                <div class="relative group">
+                    <i class='bx bxs-user-circle text-blue-400 absolute left-3 top-4 text-lg md:text-xl'></i>
+                    <input formControlName="fullName" placeholder="Full Name" type="text"
+                        class="w-full pl-10 pr-4 py-2.5 md:py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none transition-all duration-200 text-sm md:text-base" />
+                    <app-form-error [form]="registerForm" [controlName]="'fullName'"></app-form-error>
+                </div>
+
+                <div class="relative group">
+                    <i class='bx bx-envelope text-blue-400 absolute left-3 top-4 text-lg md:text-xl'></i>
+                    <input formControlName="email" placeholder="Email Address" type="email"
+                        class="w-full pl-10 pr-4 py-2.5 md:py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none transition-all duration-200 text-sm md:text-base" />
+                    <app-form-error [form]="registerForm" [controlName]="'email'"></app-form-error>
+                </div>
+
+                <div class="relative group">
+                    <i class='bx bx-lock-alt text-blue-400 absolute left-3 top-4 text-lg md:text-xl'></i>
+                    <input formControlName="password" placeholder="Password" type="password"
+                        class="w-full pl-10 pr-4 py-2.5 md:py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none transition-all duration-200 text-sm md:text-base" />
+                    <app-form-error [form]="registerForm" [controlName]="'password'"></app-form-error>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" [disabled]="registerForm.invalid || (_asyncDataHandler.isLoading$ | async)"
+                class="w-full mt-4 md:mt-6 relative overflow-hidden group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2.5 md:py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base">
+                <span *ngIf="!(_asyncDataHandler.isLoading$ | async)">
+                    <i class='bx bx-user-plus text-lg md:text-xl'></i>
+                    <span class="ml-2">Create Account</span>
+                </span>
+                <div *ngIf="(_asyncDataHandler.isLoading$ | async)"
+                    class="w-5 h-5 md:w-6 md:h-6 border-2 border-white border-t-transparent rounded-full animate-spin">
+                </div>
+            </button>
+        </form>
+
+        <!-- Sign In Link -->
+        <p class="mt-4 md:mt-6 text-center text-xs md:text-sm text-gray-600">
+            Already have an account?
+            <a routerLink="/login"
+                class="font-medium text-blue-400 hover:text-purple-400 transition-colors duration-200">Sign in</a>
+        </p>
+    </div>
+</main>

@@ -1,0 +1,39 @@
+<section class=" relative">
+  <app-header></app-header>
+  <app-sidebar [menuItems]="[
+    {
+      title: 'MAIN MENU',
+      items: [
+        {
+          label: 'Search',
+          icon: 'bx bx-search-alt-2',
+          route: '/admin-dashboard',
+        },
+   
+        {
+          label: 'Notification',
+          icon: 'bx bx-notification',
+          
+          route: 'manage-clinics',
+        },
+        {
+          label: 'Calendar',
+          icon: 'bx bx-calendar',
+          route: 'manage-clinics',
+        },
+        {
+          label: 'Settings',
+          icon: 'bx bx-cog',
+          route: 'manage-clinics',
+        }
+      ],
+    },
+  
+    
+  ]"></app-sidebar>
+  <main class="w-full mt-14 lg:ps-[250px] py-2 md:px-4 ">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</section>

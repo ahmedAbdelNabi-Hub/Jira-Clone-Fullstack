@@ -1,0 +1,76 @@
+<main class="bg-white">
+    <div class="px-6 py-2">
+        <p class="text-sm text-gray-600">Projects</p>
+        <div class="flex items-center justify-between  ">
+            <div class="flex items-center gap-2">
+                <img src="https://abdalnabyahmed724.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10410"
+                    alt="Project Icon" class="w-6 h-6 object-cover">
+                <span class="font-medium text-[20px] text-gray-900">My Scrum Project</span>
+                <button class="mx-2 flex items-center justify-center hover:bg-gray-100 rounded-md">
+                    <i class='bx bx-dots-horizontal-rounded text-xl'></i>
+                </button>
+            </div>
+            <div class="flex items-center gap-2 ">
+                <div
+                    class="group relative py-1 rounded-md shadow-sm px-1 border border-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-50">
+                    <i class='bx bx-share-alt text-xl'></i>
+                    <div
+                        class="absolute invisible group-hover:visible -bottom-8 left-[20%] transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
+                        Share project</div>
+                </div>
+                <div
+                    class="group relative py-1 rounded-md shadow-sm px-1 border border-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-50">
+                    <i class='bx bx-fullscreen text-xl'></i>
+                    <div
+                        class="absolute invisible group-hover:visible -bottom-8 left-[20%] transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
+                        Toggle fullscreen</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="flex items-center gap-2  w-full border-b-2 border-[#DFE1E6]">
+        <div class="flex items-center gap-5 px-4">
+            <div *ngFor="let tab of tabs" [routerLink]="[tab.route]"
+                routerLinkActive="text-[#0052CC] border-b-4 border-blue-600 "
+                class="group relative  flex items-center  px-1 py-1.5 text-[12px] cursor-pointer text-[#38455d] hover:text-[#172B4D] border-b-4 ">
+                <div class="relative">
+                    <div *ngIf="activeMenu === tab.id + '-menu'"
+                        class="absolute z-50 mt-6 -left-8 w-48  bg-white ring-1 ring-black ring-opacity-5">
+                        <div class="py-1" role="menu">
+                            <div (click)="handleMenuAction('edit', tab.id)"
+                                class="block px-4 py-2 text-sm text-[#42526E] hover:bg-[#F4F5F7] cursor-pointer"
+                                role="menuitem">Edit details</div>
+                            <div (click)="handleMenuAction('move', tab.id)"
+                                class="block px-4 py-2 text-sm text-[#42526E] hover:bg-[#F4F5F7] cursor-pointer"
+                                role="menuitem">Move</div>
+                            <div (click)="handleMenuAction('delete', tab.id)"
+                                class="block px-4 py-2 text-sm text-red-600 hover:bg-[#F4F5F7] cursor-pointer"
+                                role="menuitem">Delete</div>
+                        </div>
+                    </div>
+                </div>
+                <i class='group-hover:opacity-0 text-slate-600 bx {{tab.icon}} text-xl mr-1'></i>
+                <span class="text-[#353232] text-[13px] font-medium  " >{{tab.label}}</span>
+                <button (click)="toggleMenu($event, tab.id + '-menu')"
+                    class="invisible absolute -left-2  group-hover:visible ml-2 p-1 hover:bg-[#F4F5F7] ">
+                    <i class='bx bx-dots-vertical-rounded'
+                        [ngClass]="{'text-[#0052CC]': activeTab === tab.id, 'text-[#42526E]': activeTab !== tab.id}"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button class="flex items-center gap-2 text-sm text-[#42526E] hover:bg-[#F4F5F7] px-3 py-1.5 rounded-sm">
+                <span>More</span>
+                <span class="px-1.5 py-0.5 text-xs bg-[#DFE1E6] text-[#42526E] rounded-full">3</span>
+            </button>
+            <button class="text-[#42526E] hover:bg-[#F4F5F7] p-1.5 rounded-sm">
+                <i class='bx bx-plus text-xl'></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Router Outlet for Tab Content -->
+    <router-outlet></router-outlet>
+</main>

@@ -1,0 +1,96 @@
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  25% {
+    transform: translateX(10px) translateY(-15px);
+  }
+
+  50% {
+    transform: translateX(-5px) translateY(-10px);
+  }
+
+  75% {
+    transform: translateX(-15px) translateY(-5px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+.shape-1 {
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape-2 {
+  animation: drift 8s ease-in-out infinite;
+}
+
+.shape-3 {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.shape-4 {
+  animation: float 7s ease-in-out infinite reverse;
+}
+
+.shape-5 {
+  animation: drift 9s ease-in-out infinite reverse;
+}
+
+.google-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.google-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 40px rgba(31, 38, 135, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.google-btn:active {
+  transform: translateY(0px);
+  transition: all 0.1s ease;
+}
+
+.bg-pattern {
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(119, 255, 198, 0.05) 0%, transparent 50%);
+}

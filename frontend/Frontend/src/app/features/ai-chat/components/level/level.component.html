@@ -1,0 +1,181 @@
+<div class="w-full">
+    <div class="mb-2">
+        <div class="flex items-center mb-2">
+            <div
+                class="w-8 h-8 bg-[#238636] rounded-full flex items-center justify-center text-white text-xl font-bold mr-4">
+                {{numberLevel}}
+            </div>
+            <h2 class="text-2xl font-bold text-[#24292f] dark:text-[#c9d1d9] flex items-center gap-2">
+                {{levelName}}
+            </h2>
+        </div>
+        <p class="text-[#57606a] text-[15px] font-medium dark:text-[#8b949e] mb-2 px-4">
+            {{ level.objective }}
+        </p>
+
+        <div class="space-y-2">
+            <div *ngFor="let module of level.module"
+                class="bg-white dark:bg-[#161b22] rounded-md overflow-hidden border border-transparent dark:border-[#30363d] hover:border-[#0969da] dark:hover:border-[#1f6feb] transition-all duration-300">
+                <!-- Accordion Header -->
+                <button (click)="toggleModule(module)"
+                    class="w-full px-4 py-3 flex items-center justify-between cursor-pointer group">
+                    <div class="flex items-center gap-2">
+                        <span class=" text-[12px] sm:text-sm md:text-xl  dark:text-white text-black font-bold">Module : {{module.order}}</span>
+                        <h3 class="text-sm md:text-xl line-clamp-1 font-bold dark:text-white text-black flex items-center gap-2">
+                            {{module.title}}</h3>
+                    </div>
+                    <i class='bx text-2xl text-[#57606a] dark:text-[#8b949e] transition-transform duration-300'
+                        [class.bx-chevron-down]="!module.isExpanded" [class.bx-chevron-up]="module.isExpanded"></i>
+                </button>
+
+                <!-- Accordion Content -->
+                <div class="overflow-hidden transition-all duration-300"
+                    [style.maxHeight]="module.isExpanded ? '2000px' : '0'" [style.opacity]="module.isExpanded ? 1 : 0">
+                    <div class="px-4 pb-4">
+                        <!-- Topics -->
+                      
+
+                        <!-- Lessons -->
+                        <div class="mb-4">
+                            <h4
+                                class="text-lg font-medium mb-3 text-[#24292f] dark:text-[#c9d1d9] flex items-center gap-2">
+                                <i class='bx bx-book-open text-[#000000]'></i>
+                                Practical Lessons
+                            </h4>
+                            <ul class="space-y-1">
+                                <li *ngFor="let lesson of module.lesson; let i = index"
+                                    class="flex items-start p-2 rounded-lg hover:bg-[#f6f8fa] dark:hover:bg-[#21262d] transition-all duration-200">
+                                    <div class="flex flex-col w-full">
+                                        <div class="flex items-center">
+                                            <span
+                                                class="w-5 h-5 flex items-center justify-center bg-[#dafbe1] dark:bg-[#1c2431] text-[#238636] dark:text-[#7ee787] rounded-full mr-3 text-xs font-medium">
+                                                {{i + 1}}
+                                            </span>
+                                            <span class="text-[#24292f] dark:text-[#c9d1d9] text-[16px] font-medium">
+                                                {{ lesson.title }}
+                                            </span>
+                                        </div>
+                                        <p class="text-[#57606a] dark:text-[#8b949e] text-xs mt-1 ml-8">
+                                            {{ lesson.content }}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Recommended Resources -->
+                        <div class="mb-1 px-4 py-4 bg-[#f6f8fa] dark:bg-[#21262d] rounded-lg">
+                            <div class="mb-4">
+                                <h4
+                                    class="text-base font-medium mb-2 text-[#24292f] dark:text-[#c9d1d9] flex items-center gap-2">
+                                    <i class='bx bx-bookmark text-[#0969da]'></i>
+                                    Topics Covered
+                                </h4>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span *ngFor="let topic of module.topic"
+                                        class="px-2 py-0.5 bg-[#ddf4ff] dark:bg-[#1c2431] text-[#0969da] dark:text-[#58a6ff] rounded-lg text-xs font-medium border border-[#bfdbfe] dark:border-[#30363d] hover:shadow-sm transition-all">
+                                        {{ topic }}
+                                    </span>
+                                </div>
+                            </div>
+                            <h4
+                                class="text-[18px] md:text-lg font-medium mb-4 text-[#24292f] dark:text-[#c9d1d9] flex items-center gap-3">
+                                <i class='bx bx-library text-[#8250df]'></i>
+                                Recommended Resources
+                            </h4>
+                            <div class="space-y-3">
+                                <a *ngFor="let resource of module.recommendedResource" [href]="resource.link"
+                                    target="_blank"
+                                    class="block bg-white dark:bg-[#161b22] p-4 rounded-lg border border-[#d0d7de] dark:border-[#30363d] hover:border-[#8250df] dark:hover:border-[#8250df] transition-all duration-300">
+                                    <div class="flex items-center gap-4">
+                                        <span [ngClass]="{
+                                            'bg-[#ffebe9] dark:bg-[#21262d] text-[#cf222e] dark:text-[#ff7b72] border-[#cf222e]': resource.type === 'YouTube',
+                                            'bg-[#f6f8fa] dark:bg-[#21262d] text-[#8250df] dark:text-[#d2a8ff] border-[#8250df]': resource.type === 'Documentation'
+                                        }" class="flex items-center justify-center w-8 h-8 rounded-lg border">
+                                            <i [ngClass]="{
+                                                'bx bxl-youtube text-xl': resource.type === 'YouTube',
+                                                'bx bx-book-open text-xl': resource.type === 'Documentation'
+                                            }" class=''></i>
+                                        </span>
+                                        <div class="flex-1">
+                                            <p class="text-sm md:text-[18px] text-[#24292f] dark:text-[#c9d1d9] mb-1 leading-snug">
+                                                {{ resource.title }}
+                                            </p>
+                                            <span class="text-sm text-[#57606a] dark:text-[#8b949e] font-medium">
+                                                <i [ngClass]="{
+                                                    'bx-play text-[#cf222e]': resource.type === 'YouTube',
+                                                    'bx-book text-[#8250df]': resource.type === 'Documentation'
+                                                }" class='bx align-middle mr-1'></i>
+                                                {{ resource.type }}
+                                            </span>
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-center w-10 h-10 bg-[#f6f8fa] dark:bg-[#21262d] rounded-full hover:bg-[#f3f4f6] dark:hover:bg-[#30363d] transition-colors">
+                                            <i class='bx bx-link-external text-xl text-[#8250df]'></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Technologies Used -->
+                        <!-- <div
+                            class="px-4 py-4 mb-2 mt-2 border border-[#d0d7de] dark:border-[#30363d] rounded-lg bg-[#fdfefe] dark:bg-[#21262d] hover:border-[#238636] dark:hover:border-[#238636] transition-all duration-300">
+                            <h4
+                                class="text-base font-bold mb-3 text-[#24292f] dark:text-[#c9d1d9] flex items-center gap-2">
+                                <i class='bx bx-chip text-[#238636]'></i>
+                                Technologies / Tools / Concepts
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span *ngFor="let tech of module.technologiesUsed"
+                                    class="px-3 py-1.5 bg-[#fbefff] dark:bg-[#271052] text-[#8250df] dark:text-[#d2a8ff] rounded-lg text-xs font-medium border border-[#e6dcf5] dark:border-[#30363d] hover:shadow-sm transition-all duration-200">
+                                    {{ tech }}
+                                </span>
+                            </div>
+                        </div> -->
+                    
+
+                        <!-- Project -->
+                        <div class="p-4 bg-[#f6f8fa] dark:bg-[#21262d] rounded-lg">
+                            <div class="space-y-3 mt-2">
+                                <div class="flex flex-col md:flex-row items-center gap-2">
+                                    <!-- Problem Practice -->
+                                    <div class="w-full md:w-[50%]" *ngIf="module.problemPractice">
+                                        <h5
+                                            class="text-sm md:text-xl font-medium text-[#24292f] dark:text-[#c9d1d9] mb-2 flex items-center gap-2">
+                                            <i class='bx bx-code-block text-[#238636]'></i>
+                                            Practice Tasks
+                                        </h5>
+                                        <ul class="space-y-1">
+                                            <li *ngFor="let problem of module.problemPractice"
+                                                class="text-xs text-[#57606a] dark:text-[#8b949e] flex items-center gap-2">
+                                                <i class='bx bx-right-arrow-alt text-[#0969da]'></i>
+                                                {{ problem }}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Learning Tips -->
+                                    <div class="w-full md:w-[50%]" *ngIf="module.learningTips">
+                                        <h5
+                                            class="text-sm md:text-xl font-medium text-[#24292f] dark:text-[#c9d1d9] mb-2 flex items-center gap-2">
+                                            <i class='bx bx-bulb text-[#f85149]'></i>
+                                            Learning Tips
+                                        </h5>
+                                        <ul class="space-y-1">
+                                            <li *ngFor="let tip of module.learningTips"
+                                                class="text-xs text-[#57606a] dark:text-[#8b949e] flex items-center gap-2">
+                                                <i class='bx bx-check text-[#238636]'></i>
+                                                {{ tip }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

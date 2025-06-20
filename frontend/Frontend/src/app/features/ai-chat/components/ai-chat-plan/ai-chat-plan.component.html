@@ -1,0 +1,40 @@
+<div class="overflow-y-auto w-full mt-12 py-4 relative border px-2 rounded-sm border-gray-300 dark:border-neutral-600 dark:bg-[#121212] bg-[#ffffff] h-screen">
+
+  <div class="px-2 py-4">
+  <!-- Course Summary Section -->
+  <div class="mb-6">
+    <div class="flex items-center mb-3">
+      <i class="fas fa-graduation-cap text-gray-500 dark:text-gray-400 text-sm"></i>
+      <h2 class="text-base dark:text-white">Course Overview</h2>
+    </div>
+    <p class="text-xs text-gray-600 dark:text-gray-300 animate-typing">{{courseSummary?.description}}</p>
+  </div>
+
+  <!-- Projects List -->
+  <div class="flex items-center mb-3">
+    <i class="fas fa-tasks text-gray-500 dark:text-gray-400 text-sm"></i>
+    <h2 class="text-base dark:text-white">Projects Overview</h2>
+  </div>
+
+  <div class="space-y-2">
+    <div *ngFor="let project of courseSummary?.project; let i = index" 
+         class="bg-white dark:bg-neutral-800 mt-2 border border-gray-200 rounded-md shadow-sm dark:border-neutral-700 p-3"
+         [class.animate-slide-up]="true"
+         [style.animation-delay]="i * 100 + 'ms'">
+      
+      <!-- Project Header -->
+      <div class="flex mb-2">
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium dark:text-white animate-typing">{{project.title}}</h3>
+        </div>
+      </div>
+
+      <!-- Project Content -->
+      <div class="space-y-2">
+        <p class="text-xs text-gray-600 dark:text-gray-300 animate-typing" [style.animation-delay]="(i * 100 + 100) + 'ms'">{{project.description}}</p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</div>

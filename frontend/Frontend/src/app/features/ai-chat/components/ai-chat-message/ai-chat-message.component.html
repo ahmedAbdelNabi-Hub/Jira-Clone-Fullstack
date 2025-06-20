@@ -1,0 +1,183 @@
+
+<div [ngClass]="{'md:mt-40':!isDowen,'mt-14':isDowen}"
+    class="flex flex-col  bg-[#ffffff] dark:bg-[#0d1117] mx-auto w-full">
+    <!-- Existing ngx-graph component comment preserved -->
+    <div class="flex gap-2 pb-4 px-5">
+        <button
+            class="flex items-center gap-1 px-3 py-1.5 text-sm bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded-md hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+            <i class='bx bx-star text-yellow-500'></i>
+            Star Plan
+        </button>
+        <button
+            class="flex items-center gap-1 px-3 py-1.5 text-sm bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded-md hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+            <i class='bx bx-map-alt text-blue-500'></i>
+            View Roadmap
+        </button>
+        <button
+            class="flex items-center gap-1 px-3 py-1.5 text-sm bg-[#f0b100] dark:bg-[#f4b30249] text-white dark:text-white  rounded-md  cursor-pointer transition-all duration-200">
+            <i class='bx bx-right-arrow-alt text-white text-lg'></i>
+            Continue
+        </button>
+    </div>
+    <div *ngIf="isLoading" class="flex px-4">
+        <div class="flex items-center space-x-2">
+            <div
+                class="w-8 h-8 animate-spin border bg-[#0b0622dd] dark:bg-[#238636] text-white border-gray-200 dark:border-gray-700 px-2 rounded-full flex items-center justify-center">
+                <i class='bx bxl-foursquare rotate-45 text-[23px] text-white bx-flip-vertical'></i>
+            </div>
+            <div class="flex flex-col items-center text-sm text-gray-800 dark:text-gray-200 font-medium">
+                <span>Generating your personalized course roadmap...</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400 mt-1 animate-pulse">
+                    This may take a few moments while we prepare detailed modules, lessons, and resources.
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!isDowen && isEmpty() && !isLoading" class="flex items-center flex-col justify-center px-1 md:px-8">
+        <div class="text-3xl flex items-center space-x-2 font-bold dark:text-white">
+            <div
+                class="w-8 h-8 border bg-[#0b0622dd]/90 dark:bg-[#0d1117] text-white border-gray-200 dark:border-gray-700/50 px-2 rounded-full flex items-center justify-center">
+                <i class='bx bxl-foursquare rotate-45 text-[23px] text-white bx-flip-vertical'></i>
+            </div>
+            <p>Good evening, Jolly.</p>
+        </div>
+        <p
+            class="text-[15px] max-w-[80%] font-extrabold bg-gradient-to-r from-pink-500 via-indigo-500 to-yellow-300 bg-clip-text text-transparent text-center">
+            Tell me what you want to learn — I'll build a full course plan just for you.
+        </p>
+    </div>
+
+    <div class="flex mb-20 flex-col px-2 md:px-8  bg-[#ffffff] dark:bg-[#0d1117] justify-center w-full">
+        <div *ngIf="!isEmpty() && !isLoading" [@fadeUpDown] class="overflow-y-auto mb-20">
+            <div class="">
+                <!-- Course Header -->
+                <div class=" bg-gradient-to-r rounded-lg mb-6 text-[#1f1f1f] dark:text-white">
+                    <div class="flex items-center w-full justify-between mb-1">
+                        <h1 class="text-xl uppercase font-semibold">
+                            {{ courseData.courseTitle }}
+                        </h1>
+                    
+                    </div>
+                    <p class="text-sm opacity-85">
+                        {{ courseData.targetAudience }}
+                    </p>
+                </div>
+
+                <!-- Prerequisites Section -->
+                <div class="w-full mx-auto rounded-xl mb-8">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Prerequisites</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div *ngFor="let prereq of courseData.prerequisites"
+                            class="block bg-white dark:bg-[#161b22] col-span-1 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-300">
+                            <div class="relative flex items-center overflow-hidden p-5">
+                                <div class="grow">
+                                    <div class="flex flex-col justify-center space-y-2">
+                                        <h3
+                                            class="font-semibold text-[12px] text-gray-800 dark:text-white flex items-center gap-2">
+                                            {{prereq.category}}
+                                        </h3>
+                                        <ul class=" flex gap-4  items-center flex-wrap">
+                                            <li *ngFor="let item of prereq.items" class="flex items-start group">
+                                                <span
+                                                    class="text-[#238636] mr-2 group-hover:scale-110 transition-transform">
+                                                    <i class='bx bx-check-circle text-[#000000] dark:text-gray-300'></i>
+                                                </span>
+                                                <span class="text-gray-600 dark:text-gray-300 text-sm font-medium">
+                                                    {{item}}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <app-level [level]="courseData.learningRoadmap.beginnerLevel" [levelName]="'Beginner Level'"
+                    [numberLevel]="'1'"></app-level>
+                <app-level [level]="courseData.learningRoadmap.intermediateLevel" [levelName]="'Intermediate Level'"
+                    [numberLevel]="'2'"></app-level>
+                <app-level [level]="courseData.learningRoadmap.advancedLevel" [levelName]="'Advanced Level'"
+                    [numberLevel]="'3'"></app-level>
+            </div>
+        </div>
+
+        <div class="py-4 relative px-2 md:px-6 flex items-center justify-center  w-full">
+            <div [ngClass]="{ 'move-down': isDowen , 'relative':!isDowen}"
+                class="flex-1 relative items-center justify-center max-w-4xl mx-auto w-full">
+                <div class="relative bg-white dark:bg-[#141414] w-full h-[150px] flex items-center justify-center">
+                    <textarea (keydown.enter)="onEnter($event)" (blur)="hideFake=true" (focus)="hideFake=false" rows="1"
+                        class="w-full z-10 relative h-full transition-opacity duration-300 p-4 pr-12 text-sm text-gray-900 dark:text-white bg-[#fbfbfb00] dark:bg-[#14141414] border border-gray-300 dark:border-stone-700  shadow-sm rounded-lg focus:ring-2 outline-none focus:ring-[#3f399485] focus:border-transparent resize-none"></textarea>
+                    <div *ngIf="placeholderMessage && hideFake" [@fadeUpDown]
+                        class="placeholder absolute w-full h-full top-4 left-2 text-gray-400 dark:text-white">
+                        <span>
+                            {{ placeholderMessage }}
+                        </span>
+                    </div>
+
+                    <!-- <button class="absolute right-3 bottom-1 p-1 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <div class="bg-[#f8fff8fb] px-2 py-2 border border-[#238636] rounded-md flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </button> -->
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!isDowen" class="flex flex-wrap justify-center gap-2 mb-6 px-2 md:px-6">
+            <button
+                class="flex items-center gap-2 px-2.5 py-1 text-xs bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                    </path>
+                </svg>
+                Frontend
+            </button>
+            <button
+                class="flex items-center gap-2 px-2.5 py-1 text-xs bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                </svg>
+                Full Stack
+            </button>
+            <button
+                class="flex items-center gap-2 px-2.5 py-1 text-xs bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4"></path>
+                </svg>
+                C# Guide
+            </button>
+            <button
+                class="flex items-center gap-2 px-2.5 py-1 text-xs bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Backend
+            </button>
+            <button
+                class="flex items-center gap-2 px-2.5 py-1 text-xs bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#30363d] rounded hover:bg-gray-50 dark:hover:bg-[#161b22] hover:border-blue-500 dark:hover:border-[#238636] transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                    </path>
+                </svg>
+                DevOps
+            </button>
+        </div>
+    </div>
+</div>

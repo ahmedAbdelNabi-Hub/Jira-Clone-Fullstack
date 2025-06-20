@@ -1,0 +1,51 @@
+<div
+class="overflow-y-auto w-full md:w-[310px] relative md:fixed left-0 border py-2 border-gray-100 dark:border-neutral-900 dark:bg-[#121212] bg-white shadow-sm h-screen">
+<div class="max-w-sm space-y-3 px-3 pt-2 pb-3 relative border-b dark:border-[#222222]">
+  <input type="text"
+    class="py-2 px-5 block w-full border outline-none border-gray-200 dark:border-[#222222] dark:bg-[#171717] dark:text-white rounded-full sm:text-sm "
+    placeholder="Search" />
+</div>
+
+<div class="px-3 py-2 relative">
+  <div
+    class="fixed w-[310px] inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent dark:from-black dark:to-transparent">
+  </div>
+  <ul class="flex flex-col justify-center w-full space-y-2">
+    <li
+      class="flex backdrop-blur-md bg-opacity-50 relative rounded-md shadow-sm  dark:bg-[#0b0b0b] w-full dark:border-[#1e1e1e] p-2">
+      <div
+        class=" w-14  h-12 border bg-[#0b0622dd] dark:bg-[#0a0b62c1] text-white dark:text-blue-300 border-gray-200 px-2 rounded-full flex items-center justify-center">
+        <i class='bx rotate-90 bxl-meta text-2xl'></i>
+      </div>
+
+      <div class="flex flex-col w-full">
+        <div class="flex w-full justify-between mt-1">
+          <p class="text-sm mx-2 text-[#121f35] dark:text-gray-100">{{ 'Genaral' }}</p>
+        </div>
+        <div class="flex relative w-full flex-wrap mx-2">
+          <p class="line-clamp-1 w-[70%] text-[13px] text-gray-500 dark:text-gray-400">{{ 'Genaral Chat For All Member' }}
+            </p>
+
+        </div>
+      </div>
+    </li>
+    <li *ngFor="let user of users" class="flex relative w-full dark:border-[#1e1e1e] p-2">
+      <img class="inline-block border border-gray-200 dark:border-[#1e1e1e] shadow-sm size-12 rounded-full"
+        [src]="user.avatar" alt="Avatar">
+      <div class="flex flex-col w-full">
+        <div class="flex w-full justify-between mt-1">
+          <p class="text-sm mx-2 text-[#121f35] dark:text-gray-100">{{ user.name }}</p>
+          <p class="text-[11px] text-gray-500 dark:text-gray-400">{{ user.time }}</p>
+        </div>
+        <div class="flex relative w-full flex-wrap mx-2">
+          <p class="line-clamp-1 w-[70%] text-[13px] text-gray-500 dark:text-gray-400">{{ user.message }}</p>
+          @if (user.count > 0) {
+          <span
+            class="max-w-8 min-w-4 px-2 flex items-center absolute right-2 top-0 justify-center text-[10px] h-4 rounded-full shadow-sm bg-green-600 text-green-100">{{user.count}}</span>
+          }
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+</div>

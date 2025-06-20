@@ -1,0 +1,15 @@
+# IDE folders
+**/.vs/
+**/.idea/
+**/.vscode/
+
+# Build output folders
+**/bin/
+**/obj/
+**/out/
+
+# Build artifacts
+*.exe
+*.dll
+*.pdb
+*.apphost.exe

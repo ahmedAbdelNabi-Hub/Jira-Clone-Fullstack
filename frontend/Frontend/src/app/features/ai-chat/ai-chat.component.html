@@ -1,0 +1,22 @@
+<app-ai-chat-header></app-ai-chat-header>
+
+<section class="mx-auto mt-10 flex relative dark:bg-[#121212] bg-[#ffffff]">
+  <div class="hidden md:block">
+    <app-sidebar-ai-chat></app-sidebar-ai-chat>
+
+  </div>
+  <div class="grid w-full ps-[4px] md:ps-[80px] grid-cols-8 bg-[#ffffff] dark:bg-[#121212]">
+    <div [ngClass]="{
+      'col-span-full xl:col-span-8': !isSidebarOpen(),
+      'col-span-full xl:col-span-6': isSidebarOpen()
+    }" class="">
+      <app-ai-chat-message (openSidebarSummary)="handelSidebar($event)"
+        (summaryData)="handelSummaryData($event)"></app-ai-chat-message>
+    </div>
+    <div *ngIf="isSidebarOpen()" class="w-full hidden md:block col-span-2 relative bg-[#ffffff] dark:bg-[#121212]">
+      <div class="fixed bg-[#ffffff] dark:bg-[#121212] top-0">
+        <app-ai-chat-plan [courseSummary]="courseSummaryValue()"></app-ai-chat-plan>
+      </div>
+    </div>
+  </div>
+</section>

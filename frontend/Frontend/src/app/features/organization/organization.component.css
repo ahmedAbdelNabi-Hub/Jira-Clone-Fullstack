@@ -1,0 +1,7 @@
+.bg-custom {
+    background-color: #f8f8fb;
+    opacity: 0.9;
+    background-image: radial-gradient(#0a119a 1.1px, transparent 1.1px), radial-gradient(#0a119a 1.1px, #fafaff 1.1px);
+    background-size: 44px 44px;
+    background-position: 0 0, 22px 22px;
+}
