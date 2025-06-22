@@ -5,7 +5,7 @@
             <div class="flex items-center gap-3">
                 <!-- Due Date Filter -->
                 <div class="relative">
-                    <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
+                    <select class="bg-white dark:bg-black px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
                         <option>March 17-20</option>
                         <option>All Dates</option>
                     </select>
@@ -265,7 +265,7 @@
             </div>
         </div>
     </div>
-    <p-dialog  styleClass="dialog"  header="Create New Task" [modal]="true" [(visible)]="visible" [position]="position"
+    <p-dialog  styleClass="dialog" header="Edit Profile" [modal]="true" [(visible)]="visible" [position]="position"
         [style]="{ width: '37rem', height: '100%' }">
         <app-task-form></app-task-form>
     </p-dialog>

@@ -42,19 +42,7 @@
                         <i class='bx bx-plus text-sm'></i>
                     </button>
                 </div>
-                <ul class="space-y-1.5 h-[220px] overflow-y-auto">
-                    <li *ngFor="let project of projectList">
-                        <a href="#"
-                            class="flex items-center space-x-3 px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                            <div class="w-5 h-5 rounded flex items-center justify-center text-white text-xs font-bold"
-                                [ngClass]="project.color">
-                                {{ project.initial }}
-                            </div>
-                            <span class="text-[14px]" >{{ project.name }}</span>
-                        </a>
-                    </li>
-                </ul>
-
+                <app-project-list></app-project-list>
             </div>
         </ul>
 

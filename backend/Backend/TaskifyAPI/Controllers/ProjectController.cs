@@ -36,11 +36,11 @@ namespace TaskifyAPI.Controllers
             if (organization == null)
                 return NotFound(new BaseApiResponse(404, "organization not found"));
 
-            var (uploadResult, fileName) = DocumentSettings.UploadFile(dto.LogoUrl, "organizations");
+            var (uploadResult, fileName) = DocumentSettings.UploadFile(dto.LogoUrl, "projects");
             if (fileName is null)
                 return StatusCode(uploadResult.statusCode, uploadResult);
 
-            var imageUrl = DocumentSettings.GetFileUrl("Project", fileName, Request);
+            var imageUrl = DocumentSettings.GetFileUrl("projects", fileName, Request);
 
             var command = new CreateProjectCommand(
                 dto.Name,

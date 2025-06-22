@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { ProjectListComponent } from "../project-list/project-list.component";
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [PanelMenuModule, RouterModule, CommonModule],
+  imports: [PanelMenuModule, RouterModule, CommonModule, ProjectListComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
