@@ -16,6 +16,9 @@ namespace Taskify.Infrastructure.Data
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Backlog> Backlogs => Set<Backlog>();
+        public DbSet<Sprint> Sprints => Set<Sprint>();
+        public DbSet<TaskItem> Tasks => Set<TaskItem>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

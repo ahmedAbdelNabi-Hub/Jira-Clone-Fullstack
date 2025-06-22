@@ -2,64 +2,59 @@
     <!-- Header -->
     <div class="mb-4">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-                <h1 class="text-xl font-bold text-gray-900">Project Board</h1>
-                <p class="text-sm text-gray-600">Manage your tasks efficiently</p>
-            </div>
-            <div class="flex items-center gap-4">
-                <!-- Filters Section -->
-                <div class="flex items-center gap-3">
-                    <!-- Due Date Filter -->
-                    <div class="relative">
-                        <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
-                            <option>March 17-20</option>
-                            <option>All Dates</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
+            <div class="flex items-center gap-3">
+                <!-- Due Date Filter -->
+                <div class="relative">
+                    <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
+                        <option>March 17-20</option>
+                        <option>All Dates</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
                     </div>
-
-                    <!-- Assignee Filter -->
-                    <div class="relative">
-                        <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
-                            <option>All Assignees</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <!-- Priority Filter -->
-                    <div class="relative">
-                        <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
-                            <option>All Priorities</option>
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <!-- Advanced Filters Button -->
-                    <button class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1">
-                        <span>F</span>
-                        <span>Filters</span>
-                    </button>
                 </div>
 
+                <!-- Assignee Filter -->
+                <div class="relative">
+                    <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
+                        <option>All Assignees</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Priority Filter -->
+                <div class="relative">
+                    <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
+                        <option>All Priorities</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                    </div>
+                </div>
+                <button
+                    class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1">
+                    <span>F</span>
+                    <span>Filters</span>
+                </button>
+            </div>
+            <div class="flex items-center gap-4">
                 <!-- Task Count and Add Button -->
                 <div class="flex items-center gap-2">
                     <div class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm">
                         <span class="text-gray-600">Tasks: </span>
-                        <span class="font-medium">{{ todoTasks.length + inProgressTasks.length + doneTasks.length }}</span>
+                        <span class="font-medium">{{ todoTasks.length + inProgressTasks.length + doneTasks.length
+                            }}</span>
                     </div>
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-sm font-medium">
+                    <button (click)="showDialog('right')"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-sm font-medium">
                         + Add Task
                     </button>
                 </div>
@@ -76,7 +71,8 @@
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
                     <h2 class="text-sm font-medium">To Do</h2>
-                    <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs">{{ todoTasks.length }}</span>
+                    <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs">{{ todoTasks.length
+                        }}</span>
                 </div>
             </div>
 
@@ -110,11 +106,8 @@
 
                         <div class="flex -space-x-1" *ngIf="task.assignees?.length">
                             <img *ngFor="let assignee of task.assignees | slice:0:2" [src]="assignee.avatar"
-                                [alt]="assignee.name" class="w-5 h-5 rounded-full border border-white">
-                            <div *ngIf="task.assignees"
-                                class="w-5 h-5 rounded-full bg-gray-100 border flex items-center justify-center">
-                                <span class="text-xs">+{{ task.assignees.length - 2 }}</span>
-                            </div>
+                                [alt]="assignee.name" class="w-6 h-6 rounded-full border border-white">
+
                         </div>
                     </div>
                 </div>
@@ -127,7 +120,8 @@
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                     <h2 class="text-sm font-medium">In Progress</h2>
-                    <span class="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-xs">{{ inProgressTasks.length }}</span>
+                    <span class="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-xs">{{ inProgressTasks.length
+                        }}</span>
                 </div>
             </div>
 
@@ -178,7 +172,8 @@
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
                     <h2 class="text-sm font-medium">In Review</h2>
-                    <span class="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs">{{ reviewTasks.length }}</span>
+                    <span class="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs">{{ reviewTasks.length
+                        }}</span>
                 </div>
             </div>
 
@@ -229,14 +224,15 @@
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                     <h2 class="text-sm font-medium">Done</h2>
-                    <span class="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-xs">{{ doneTasks.length }}</span>
+                    <span class="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-xs">{{ doneTasks.length
+                        }}</span>
                 </div>
             </div>
 
             <div class="p-2 min-h-[12rem] space-y-2" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'done')">
                 <div *ngFor="let task of doneTasks"
-                    class="bg-white border grab-cursor rounded p-2 shadow-sm hover:shadow-md text-sm opacity-75" draggable="true"
-                    (dragstart)="onDragStart($event, task)" (dragend)="onDragEnd($event)">
+                    class="bg-white border grab-cursor rounded p-2 shadow-sm hover:shadow-md text-sm opacity-75"
+                    draggable="true" (dragstart)="onDragStart($event, task)" (dragend)="onDragEnd($event)">
                     <div class="flex justify-between grab-cursor items-start mb-2">
                         <span [ngClass]="{
                             'bg-red-100 text-red-700': task.priority === 'high',
@@ -269,4 +265,8 @@
             </div>
         </div>
     </div>
+    <p-dialog  styleClass="dialog"  header="Create New Task" [modal]="true" [(visible)]="visible" [position]="position"
+        [style]="{ width: '37rem', height: '100%' }">
+        <app-task-form></app-task-form>
+    </p-dialog>
 </div>

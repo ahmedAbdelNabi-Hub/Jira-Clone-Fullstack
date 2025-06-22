@@ -26,13 +26,11 @@ export class ProjectsComponent implements OnInit {
   activeTab: string = 'board';
 
   tabs: TabConfig[] = [
-    { id: 'summary', label: 'Summary', icon: 'bx bx-world', route: 'summary' },
-    { id: 'Backlog', label: 'Backlog', icon: 'bx bx-columns bx-rotate-270', route: 'Backlog' },
-    { id: 'timeline', label: 'Timeline', icon: 'bx-time', route: 'timeline' },
-    { id: 'board', label: 'Board', icon: 'bx-layout', route: 'board' },
-    { id: 'calendar', label: 'Calendar', icon: 'bx-calendar', route: 'calendar' },
-    { id: 'list', label: 'List', icon: 'bx-list-ul', route: 'list' },
-    { id: 'code', label: 'Code', icon: 'bx-code-alt', route: 'code' }
+    { id: 'Overview', label: 'Overview', icon: 'bx bx-world', route: 'summary' },
+    { id: 'Backlog', label: 'Backlog', icon: 'bx bx-columns bx-rotate-270', route: 'backlog' },
+    { id: 'Table', label: 'Timeline', icon: 'bx-table', route: 'timeline' },
+    { id: 'Board', label: 'Board', icon: 'bx-layout', route: 'board' },
+    { id: 'Calendar', label: 'Calendar', icon: 'bx-calendar', route: 'calendar' },
   ];
 
 

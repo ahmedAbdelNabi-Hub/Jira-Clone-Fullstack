@@ -6,7 +6,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [PanelMenuModule,RouterModule, CommonModule],
+  imports: [PanelMenuModule, RouterModule, CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
@@ -45,5 +45,11 @@ export class SidebarComponent {
       routerLink: ['/reports']
     }
   ];
-  
+  projectList = [
+    { name: 'Website Redesign', color: 'bg-blue-500', initial: 'W' },
+    { name: 'Mobile App', color: 'bg-green-500', initial: 'M' },
+    { name: 'API Development', color: 'bg-purple-500', initial: 'A' },
+    { name: 'Database Migration', color: 'bg-orange-500', initial: 'D' },
+    { name: 'UI Components', color: 'bg-red-500', initial: 'U' }
+  ];
 }

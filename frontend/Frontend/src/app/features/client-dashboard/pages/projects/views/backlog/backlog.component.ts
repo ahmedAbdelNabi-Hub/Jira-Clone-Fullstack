@@ -1,25 +1,20 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface MenuItem {
-  label: string;
-  icon?: string;
-  items?: MenuItem[];
-  isOpen?: boolean;
-}
+import { Component, OnInit } from '@angular/core';
+import { IMenuItem } from '../../../../../../core/interfaces/IMenuItem';
+import { ClickOutsideDirective } from '../../../../../../shared/directives/ClickOutside.directive';
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: [],
-  standalone: true,
-  imports: [CommonModule]
+  selector: 'app-backlog',
+  imports: [CommonModule, ClickOutsideDirective],
+  templateUrl: './backlog.component.html',
+  styleUrl: './backlog.component.css'
 })
-export class TimelineComponent implements OnInit {
+export class BacklogComponent implements OnInit {
   isOpen = true;
+  isCreate = false;
   isDropdownOpen = false;
 
-  items: MenuItem[] = [
+  items: IMenuItem[] = [
     {
       label: 'Task',
       icon: 'bx-task',
@@ -48,7 +43,7 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-  toggleSubMenu(item: MenuItem) {
+  toggleSubMenu(item: IMenuItem) {
     this.items.forEach(i => {
       if (i !== item) i.isOpen = false;
     });

@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Projects\Queries\" />
     <Folder Include="Hubs\" />
     <Folder Include="Filters\" />
     <Folder Include="Middlewares\" />

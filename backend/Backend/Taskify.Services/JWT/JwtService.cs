@@ -44,7 +44,7 @@ namespace Taskify.Services.JWT
                 issuer: _jwt.Issuer,
                 audience: _jwt.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(_jwt.Expiration),
+                expires: DateTime.Now.AddHours(_jwt.Expiration),
                 signingCredentials: creds
             );
 
@@ -54,8 +54,8 @@ namespace Taskify.Services.JWT
             _httpContextAccessor.HttpContext?.Response.Cookies.Append("jwt", jwtToken, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true, // ✅ REQUIRED for SameSite=None
-                SameSite = SameSiteMode.None, // ✅ for cross-origin (Angular on :4200, API on :7182)
+                Secure = true, 
+                SameSite = SameSiteMode.None, 
                 Expires = DateTimeOffset.UtcNow.AddHours(_jwt.Expiration),
                 Path = "/"
             });

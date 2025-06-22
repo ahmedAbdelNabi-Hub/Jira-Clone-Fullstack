@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { TaskFormComponent } from "../../components/task-form/task-form.component";
 interface TaskAssignee {
   name: string;
   avatar: string;
@@ -23,108 +25,9 @@ interface Task {
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DialogModule, ButtonModule, TaskFormComponent],
   templateUrl: './board.component.html',
-  styles: [`
-    .sprint-column {
-      min-height: 400px;
-      background-color: #f9fafb;
-      border-radius: 0.5rem;
-      padding: 1rem;
-    }
-
-    .task-card {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .task-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .task-card.dragging {
-      transform: rotate(5deg) scale(1.05);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-      z-index: 1000;
-      cursor: grabbing !important;
-    }
-
-    .task-card.drag-over {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
-      border-color: #3b82f6;
-    }
-
-    .drop-zone {
-      transition: all 0.3s ease;
-    }
-
-    .drop-zone.drag-over {
-      background-color: rgba(59, 130, 246, 0.05);
-      border: 2px dashed #3b82f6;
-      transform: scale(1.02);
-    }
-
-    .task-enter {
-      animation: taskSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .task-exit {
-      animation: taskSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes taskSlideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes taskSlideOut {
-      from {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(20px) scale(0.9);
-      }
-    }
-
-    .pulse-animation {
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
-      }
-      50% {
-        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-      }
-    }
-
-    .grab-cursor {
-      cursor: grab;
-    }
-
-    .grab-cursor:active {
-      cursor: grabbing;
-    }
-
-    .column-header {
-      transition: all 0.3s ease;
-    }
-
-    .column-header.drag-over {
-      transform: scale(1.05);
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.1));
-    }
-  `]
+  styleUrl: './board.component.css',
 })
 export class BoardComponent implements OnInit {
   todoTasks: Task[] = [];
@@ -135,7 +38,13 @@ export class BoardComponent implements OnInit {
   darkMode: boolean = false;
   dragOverColumn: string | null = null;
   nextTaskId: number = 8;
+  visible: boolean = false;
+  position: 'left' | 'right' | 'top' | 'bottom' | 'center' = 'right';
 
+  showDialog(pos: 'left' | 'right' | 'top' | 'bottom' | 'center') {
+    this.position = pos;
+    this.visible = true;
+  }
   constructor() { }
 
   ngOnInit() {

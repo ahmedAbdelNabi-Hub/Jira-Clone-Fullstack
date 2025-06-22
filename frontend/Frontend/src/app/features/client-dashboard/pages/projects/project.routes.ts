@@ -26,13 +26,10 @@ export const PROJECT_ROUTES: Routes = [
                 loadComponent: () => import('./views/calendar/calendar.component').then(m => m.CalendarComponent)
             },
             {
-                path: 'list',
-                loadComponent: () => import('./views/list/list.component').then(m => m.ListComponent)
+                path: 'backlog',
+                loadComponent: () => import('./views/backlog/backlog.component').then(m => m.BacklogComponent)
             },
-            {
-                path: 'code',
-                loadComponent: () => import('./views/code/code.component').then(m => m.CodeComponent)
-            }
+
         ]
     }
 ];

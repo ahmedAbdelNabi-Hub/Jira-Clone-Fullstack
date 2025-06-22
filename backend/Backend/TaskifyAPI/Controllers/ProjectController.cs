@@ -8,6 +8,7 @@ using TaskifyAPI.Helper.Upload;
 using TaskifyAPI.Extensions;
 using TaskifyAPI.Features.Organizations.Queries;
 using Taskify.Contracts.DTOs.CustomResponses;
+using TaskifyAPI.Features.Projects.Queries;
 
 namespace TaskifyAPI.Controllers
 {
@@ -53,5 +54,15 @@ namespace TaskifyAPI.Controllers
             return StatusCode(result.statusCode, result);
         }
 
+        [Authorize]
+        [HttpGet("org/{orgId}")]
+        public async Task<IActionResult> GetAllProjects(int orgId)
+        {
+            var result = await _mediator.Send(new GetAllProjectQuary(orgId));
+
+            if (!result.Any())
+                return NotFound( new BaseApiResponse(StatusCodes.Status404NotFound,"No projects found for the organization."));
+            return Ok(result);
+        }
     }
 }

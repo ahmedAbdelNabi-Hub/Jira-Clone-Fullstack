@@ -1,6 +1,7 @@
 
 using Taskify.Contracts;
 using TaskifyAPI.Extensions;
+using TaskifyAPI.Helper.mapper;
 
 namespace TaskifyAPI
 {
@@ -12,7 +13,7 @@ namespace TaskifyAPI
             builder.Services.Configure<OpenAiConfig>(builder.Configuration.GetSection("OpenAI"));
             builder.Services.Configure<GeminiConfig>(builder.Configuration.GetSection("DeepSeek"));
             builder.Services.AddHttpClient();
-
+            builder.Services.AddAutoMapper(typeof(Mapper));
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
