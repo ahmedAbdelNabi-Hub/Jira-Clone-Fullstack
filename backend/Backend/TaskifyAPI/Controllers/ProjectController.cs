@@ -9,6 +9,9 @@ using TaskifyAPI.Extensions;
 using TaskifyAPI.Features.Organizations.Queries;
 using Taskify.Contracts.DTOs.CustomResponses;
 using TaskifyAPI.Features.Projects.Queries;
+using Contracts.DTOs._Project;
+using Presentation.Features.Projects.Queries;
+using Presentation.Features.Projects.Commands;
 
 namespace TaskifyAPI.Controllers
 {
@@ -47,7 +50,8 @@ namespace TaskifyAPI.Controllers
                 dto.Key,
                 dto.Description,
                 imageUrl,
-                organization.Id 
+                organization.Id,
+                userId
             );
 
             var result = await _mediator.Send(command);
@@ -55,14 +59,56 @@ namespace TaskifyAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("org/{orgId}")]
+        [HttpGet()]
         public async Task<IActionResult> GetAllProjects(int orgId)
         {
-            var result = await _mediator.Send(new GetAllProjectQuary(orgId));
+            var userId = User.GetUserId();
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User not authenticated");
 
+            var result = await _mediator.Send(new GetAllProjectQuery(userId));
             if (!result.Any())
                 return NotFound( new BaseApiResponse(StatusCodes.Status404NotFound,"No projects found for the organization."));
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("owned")]
+        public async Task<IActionResult> GetOwnedProjects()
+        {
+            var userId = User.GetUserId();
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User not authenticated");
+
+            var result = await _mediator.Send(new GetOwnedProjectsQuery(userId));
+
+            if (!result.Any())
+                return NotFound(new BaseApiResponse(StatusCodes.Status404NotFound, "No owned projects found."));
+
+            return Ok(result);
+        }
+        [Authorize]
+        [HttpGet("{projectId}/members")]
+        public async Task<IActionResult> GetProjectMembers([FromRoute] int projectId)
+        {
+            var result = await _mediator.Send(new GetMemberProjectQuery(projectId));
+
+            if (result == null || !result.Any())
+                return NotFound(new BaseApiResponse(StatusCodes.Status404NotFound, "No members found for this project."));
+
+            return Ok(result);
+        }
+
+
+
+        [HttpPut]
+        public async Task<ActionResult<BaseApiResponse>> UpdateProject([FromForm] UpdateProjectDTO dto)
+        {
+            var project = await  _mediator.Send(new GetByIdQuery(dto.id));
+            if (project is null) return NotFound(new BaseApiResponse(StatusCodes.Status404NotFound, "Not fount the project"));
+
+            var response = await _mediator.Send(new UpdateProjectComment(project, dto));
+            return response.statusCode == 200 ? Ok(response) : BadRequest(response);
         }
     }
 }

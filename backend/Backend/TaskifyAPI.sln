@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskifyAPI", "TaskifyAPI\TaskifyAPI.csproj", "{FECEAAD7-6353-4F8D-BF3C-A19A7CEEF334}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "TaskifyAPI\Presentation.csproj", "{FECEAAD7-6353-4F8D-BF3C-A19A7CEEF334}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskify.Core", "Taskify.Core\Taskify.Core.csproj", "{502BF1E8-167B-49AC-9E58-F28A88828568}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Taskify.Core\Domain.csproj", "{502BF1E8-167B-49AC-9E58-F28A88828568}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskify.Infrastructure", "Taskify.Infrastructure\Taskify.Infrastructure.csproj", "{D266B70D-5738-48B3-B37A-F370AE4C91B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Taskify.Infrastructure\Infrastructure.csproj", "{D266B70D-5738-48B3-B37A-F370AE4C91B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskify.Contracts", "Taskify.Contracts\Taskify.Contracts.csproj", "{035297A4-B759-462E-942D-1E6A02921ACF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Taskify.Contracts\Contracts.csproj", "{035297A4-B759-462E-942D-1E6A02921ACF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taskify.Services", "Taskify.Services\Taskify.Services.csproj", "{D6EE0975-12DC-4D3E-BDF2-61DA4EC0F9EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Taskify.Services\Application.csproj", "{D6EE0975-12DC-4D3E-BDF2-61DA4EC0F9EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,7 +14,6 @@ namespace Taskify.Core.Interface.Repositories
 
         Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> Spec);
         Task<T> GetByIdSpecAsync(ISpecification<T> Spec);
-
         Task<List<TResult>> GetProjectedAsync<TResult>(Expression<Func<T, TResult>> selector, ISpecification<T> spec);
         Task<IReadOnlyList<T>> GetAllAsync();
         IQueryable<T> GetQueryableWithSpec(ISpecification<T> spec);
@@ -22,6 +21,7 @@ namespace Taskify.Core.Interface.Repositories
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+        Task DeleteRangeAsync(IEnumerable<T> entities);
         Task<int> CountWithSpec(ISpecification<T> Spec);
 
     }

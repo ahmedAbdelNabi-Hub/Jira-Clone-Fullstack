@@ -1,0 +1,38 @@
+<label onclick="my_modal_1.showModal()" for="my_modal_7" class="cursor-pointer"> <i for="my_modal_7"
+        class=' bx text-gray-600 bx-edit text-xl'></i>
+</label>
+<dialog id="my_modal_1" class="modal">
+    <div
+        class="flex bg-white rounded-xl border border-gray-200 max-w-4xl w-full  max-h-[90vh] overflow-hidden transform transition-transform duration-300">
+        <div class="w-56 px-5 py-4 border-r border-gray-100 bg-gray-50">
+            <div class="mb-4">
+                <p class="text-gray-900 font-semibold text-sm uppercase py-1">
+                    {{ selectedProject?.name || 'Project' }}
+                </p>
+                <p class="text-xs text-gray-600">Manage Your Project Info</p>
+            </div>
+
+            <ul class="flex flex-col gap-2">
+                <li class="sidebar-item rounded-md py-2 px-3 flex items-center space-x-2 cursor-pointer transition-colors"
+                    [class.bg-blue-50]="activeTab === 'general'" [class.text-blue-600]="activeTab === 'general'"
+                    [class.text-gray-600]="activeTab !== 'general'" (click)="switchTab('general')">
+                    <i class='bx bx-cog'></i>
+                    <p class="font-medium">General</p>
+                </li>
+                <!-- <li class="sidebar-item rounded-md py-2 px-3 flex items-center space-x-2 cursor-pointer transition-colors"
+                    [class.bg-blue-50]="activeTab === 'advanced'" [class.text-blue-600]="activeTab === 'advanced'"
+                    [class.text-gray-600]="activeTab !== 'advanced'" (click)="switchTab('advanced')">
+                    <i class='bx bx-code-alt'></i>
+                    <p class="font-medium">Member</p>
+                </li> -->
+            </ul>
+        </div>
+        <div *ngIf="activeTab === 'general'" class="flex-1 p-6 overflow-y-auto">
+            <app-project-update-form></app-project-update-form>
+        </div>
+        <div *ngIf="activeTab === 'advanced'" class="flex-1 p-6 overflow-y-auto">
+            <app-manage-project-member></app-manage-project-member>
+        </div>
+
+    </div>
+</dialog>

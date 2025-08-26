@@ -1,0 +1,13 @@
+.modal-box {
+    padding: 0px !important;
+    width: 600px !important;
+    max-width: none !important;
+}
+
+.modal.modal-open,
+.modal[open],
+.modal:target {
+    pointer-events: auto;
+    visibility: visible;
+    background-color: oklch(56.241% 0.00006 271.152 / 0.103) !important;
+}

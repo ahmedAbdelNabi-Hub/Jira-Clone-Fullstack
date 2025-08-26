@@ -1,0 +1,60 @@
+<div class="bg-[#fbfbfc] min-h-screen flex flex-col items-center py-10">
+    <div class="flex items-center justify-center space-x-3 mb-1 md:mb-5">
+        <div class="relative">
+            <div
+                class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-white to-slate-50 text-slate-800 border border-slate-200 rounded-2xl flex items-center justify-center">
+                <i class='bx bxl-foursquare rotate-45 text-xl md:text-2xl bx-flip-vertical'></i>
+            </div>
+        </div>
+        <div>
+            <p
+                class="text-slate-800 text-xl md:text-2xl font-bold   ">
+                JOLLY</p>
+        </div>
+    </div>
+    <div class="w-full max-w-md">
+        <div class="bg-white border border-gray-200 rounded-2xl p-4">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-10 h-10 bg-[#4e81ed] rounded-md mb-4">
+                    <i class="bx bx-building text-2xl text-white"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-black mb-2">Organization Invitation</h1>
+                <p class="text-gray-600">You've been invited to join</p>
+            </div>
+
+            <!-- Organization info -->
+            <div class="border border-gray-300 rounded-lg mb-4">
+                <div class="flex items-center space-x-4 py-1 px-4">
+                    <div class="w-12 h-12 border border-gray-200 rounded-lg flex items-center justify-center">
+                        <img src="https://localhost:7182/image/organizations/b23751d8422006290d851e092f4a648b291c147de45f1f8f30530005595afe43.png"
+                            alt="">
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-black">{{ invitationData.teamName }}</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- Accept button -->
+            <div class="mb-6">
+                <button (click)="onAcceptInvitation()" [disabled]="isLoading"
+                    class="w-full bg-[#14cd78] text-white font-semibold py-4 px-6 rounded-lg hover:bg-gray-800 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-gray-300 disabled:opacity-70 disabled:cursor-not-allowed">
+                    <i *ngIf="!isLoading" class="fas fa-check mr-2"></i>
+                    <i *ngIf="isLoading" class="fas fa-spinner fa-spin mr-2"></i>
+                    {{ isLoading ? 'Accepting...' : 'Accept Invitation' }}
+                </button>
+            </div>
+
+            <!-- Simple info under button -->
+            <div class="text-center space-y-2 border-t border-gray-200 pt-4">
+                <p class="text-gray-500 text-sm">
+                    By accepting, you'll get access to all team resources and collaboration tools.
+                </p>
+                <p class="text-gray-400 text-xs">
+                    Need help? <a href="mailto:support@company.com" class="text-black hover:underline">Contact
+                        Support</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

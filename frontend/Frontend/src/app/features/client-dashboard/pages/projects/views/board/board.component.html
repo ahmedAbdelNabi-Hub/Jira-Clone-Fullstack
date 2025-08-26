@@ -1,50 +1,8 @@
-<div class="min-h-screen bg-gray-50 p-4">
+<div class="min-h-screen bg-[#fcfbfb] p-4">
     <!-- Header -->
     <div class="mb-4">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <!-- Due Date Filter -->
-                <div class="relative">
-                    <select class="bg-white dark:bg-black px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
-                        <option>March 17-20</option>
-                        <option>All Dates</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Assignee Filter -->
-                <div class="relative">
-                    <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
-                        <option>All Assignees</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Priority Filter -->
-                <div class="relative">
-                    <select class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm appearance-none pr-8">
-                        <option>All Priorities</option>
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
-                    </div>
-                </div>
-                <button
-                    class="bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1">
-                    <span>F</span>
-                    <span>Filters</span>
-                </button>
-            </div>
+            <app-filters (filtersChanged)="onFiltersChanged($event)"></app-filters>
             <div class="flex items-center gap-4">
                 <!-- Task Count and Add Button -->
                 <div class="flex items-center gap-2">
@@ -65,208 +23,35 @@
     <!-- Kanban Board -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <!-- Todo Column -->
-        <div class="bg-white rounded shadow-sm border">
-            <div class="p-3 border-b bg-gray-50" [class.drag-over]="dragOverColumn === 'todo'">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-                    <h2 class="text-sm font-medium">To Do</h2>
-                    <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs">{{ todoTasks.length
-                        }}</span>
-                </div>
-            </div>
+        <app-kanban-column title="To Do" status="todo" [tasks]="todoTasks()" [dragOverColumn]="dragOverColumn()"
+            (dropTask)="onDrop($event, 0)" (dragStart)="onDragStart($event.event, $event.task)"
+            (dragEnd)="onDragEnd($event)" (dragEnter)="onDragEnter($event, 'todo')" (dragLeave)="onDragLeave($event)"
+            (dragOver)="onDragOver($event)">
+        </app-kanban-column>
 
-            <div class="p-2 min-h-[12rem] space-y-2" [class.drag-over]="dragOverColumn === 'todo'"
-                (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event, 'todo')"
-                (dragleave)="onDragLeave($event)" (drop)="onDrop($event, 'todo')">
+        <app-kanban-column title="In Progress" status="inprogress" [tasks]="inProgressTasks()"
+            [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 1)"
+            (dragStart)="onDragStart($event.event, $event.task)" (dragEnd)="onDragEnd($event)"
+            (dragEnter)="onDragEnter($event, 'inprogress')" (dragLeave)="onDragLeave($event)"
+            (dragOver)="onDragOver($event)">
+        </app-kanban-column>
 
-                <div *ngFor="let task of todoTasks"
-                    class="task-card bg-white border rounded p-2 shadow-sm hover:shadow-md text-sm grab-cursor"
-                    [class.task-enter]="task.isNewTask" [class.pulse-animation]="task.isNewTask"
-                    [class.dragging]="task.isBeingDragged" draggable="true" (dragstart)="onDragStart($event, task)"
-                    (dragend)="onDragEnd($event)">
+        <app-kanban-column title="In Review" status="inreview" [tasks]="reviewTasks()"
+            [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 2)"
+            (dragStart)="onDragStart($event.event, $event.task)" (dragEnd)="onDragEnd($event)"
+            (dragEnter)="onDragEnter($event, 'inreview')" (dragLeave)="onDragLeave($event)"
+            (dragOver)="onDragOver($event)">
+        </app-kanban-column>
 
-                    <div class="flex justify-between items-start mb-2 grab-cursor">
-                        <span [ngClass]="{
-                            'bg-red-100 text-red-700': task.priority === 'high',
-                            'bg-yellow-100 text-yellow-700': task.priority === 'medium',
-                            'bg-green-100 text-green-700': task.priority === 'low'
-                        }" class="px-1.5 py-0.5 rounded text-xs uppercase">{{ task.priority }}</span>
-                        <button class="text-gray-400 hover:text-gray-600">⋮</button>
-                    </div>
+        <app-kanban-column title="Done" status="done" [tasks]="doneTasks()" [dragOverColumn]="dragOverColumn()"
+            (dropTask)="onDrop($event, 3)" (dragStart)="onDragStart($event.event, $event.task)"
+            (dragEnd)="onDragEnd($event)" (dragEnter)="onDragEnter($event, 'done')" (dragLeave)="onDragLeave($event)"
+            (dragOver)="onDragOver($event)">
+        </app-kanban-column>
 
-                    <h3 class="font-medium mb-1 line-clamp-2 grab-cursor">{{ task.title }}</h3>
-                    <p class="text-gray-600 text-xs mb-2 line-clamp-2 grab-cursor">{{ task.description }}</p>
-
-                    <div class="flex items-center justify-between text-xs text-gray-500 pt-2 border-t grab-cursor">
-                        <div class="flex gap-2">
-                            <span *ngIf="task.dueDate">📅 {{ task.dueDate | date:'MMM d' }}</span>
-                            <span *ngIf="task.comments">💬 {{ task.comments }}</span>
-                        </div>
-
-                        <div class="flex -space-x-1" *ngIf="task.assignees?.length">
-                            <img *ngFor="let assignee of task.assignees | slice:0:2" [src]="assignee.avatar"
-                                [alt]="assignee.name" class="w-6 h-6 rounded-full border border-white">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- In Progress Column -->
-        <div class="bg-white rounded shadow-sm border">
-            <div class="p-3 border-b bg-blue-50" [class.drag-over]="dragOverColumn === 'inProgress'">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <h2 class="text-sm font-medium">In Progress</h2>
-                    <span class="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-xs">{{ inProgressTasks.length
-                        }}</span>
-                </div>
-            </div>
-
-            <div class="p-2 min-h-[12rem] space-y-2" [class.drag-over]="dragOverColumn === 'inProgress'"
-                (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event, 'inProgress')"
-                (dragleave)="onDragLeave($event)" (drop)="onDrop($event, 'inProgress')">
-
-                <div *ngFor="let task of inProgressTasks"
-                    class="task-card bg-white border rounded p-2 shadow-sm hover:shadow-md text-sm grab-cursor"
-                    [class.task-enter]="task.isNewTask" [class.dragging]="task.isBeingDragged" draggable="true"
-                    (dragstart)="onDragStart($event, task)" (dragend)="onDragEnd($event)">
-                    <div>
-                        <div class="flex justify-between items-start mb-2 grab-cursor">
-                            <span [ngClass]="{
-                                'bg-red-100 text-red-700': task.priority === 'high',
-                                'bg-yellow-100 text-yellow-700': task.priority === 'medium',
-                                'bg-green-100 text-green-700': task.priority === 'low'
-                            }" class="px-1.5 py-0.5 rounded text-xs uppercase">{{ task.priority }}</span>
-                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
-                        </div>
-
-                        <h3 class="font-medium mb-1 line-clamp-2 grab-cursor">{{ task.title }}</h3>
-                        <p class="text-gray-600 text-xs mb-2 line-clamp-2 grab-cursor">{{ task.description }}</p>
-
-                        <div class="flex items-center justify-between text-xs text-gray-500 pt-2 border-t grab-cursor">
-                            <div class="flex gap-2">
-                                <span *ngIf="task.dueDate">📅 {{ task.dueDate | date:'MMM d' }}</span>
-                                <span *ngIf="task.comments">💬 {{ task.comments }}</span>
-                            </div>
-
-                            <div class="flex -space-x-1" *ngIf="task.assignees?.length">
-                                <img *ngFor="let assignee of task.assignees | slice:0:2" [src]="assignee.avatar"
-                                    [alt]="assignee.name" class="w-5 h-5 rounded-full border border-white">
-                                <div *ngIf="task.assignees"
-                                    class="w-5 h-5 rounded-full bg-gray-100 border flex items-center justify-center">
-                                    <span class="text-xs">+{{ task.assignees.length - 2 }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Review Column -->
-        <div class="bg-white rounded shadow-sm border">
-            <div class="p-3 border-b bg-purple-50" [class.drag-over]="dragOverColumn === 'review'">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <h2 class="text-sm font-medium">In Review</h2>
-                    <span class="bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full text-xs">{{ reviewTasks.length
-                        }}</span>
-                </div>
-            </div>
-
-            <div class="p-2 min-h-[12rem] space-y-2" [class.drag-over]="dragOverColumn === 'review'"
-                (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event, 'review')"
-                (dragleave)="onDragLeave($event)" (drop)="onDrop($event, 'review')">
-
-                <div *ngFor="let task of reviewTasks"
-                    class="task-card bg-white border rounded p-2 shadow-sm hover:shadow-md text-sm grab-cursor"
-                    [class.task-enter]="task.isNewTask" [class.dragging]="task.isBeingDragged" draggable="true"
-                    (dragstart)="onDragStart($event, task)" (dragend)="onDragEnd($event)">
-                    <div>
-                        <div class="flex justify-between items-start mb-2 grab-cursor">
-                            <span [ngClass]="{
-                                'bg-red-100 text-red-700': task.priority === 'high',
-                                'bg-yellow-100 text-yellow-700': task.priority === 'medium',
-                                'bg-green-100 text-green-700': task.priority === 'low'
-                            }" class="px-1.5 py-0.5 rounded text-xs uppercase">{{ task.priority }}</span>
-                            <button class="text-gray-400 hover:text-gray-600">⋮</button>
-                        </div>
-
-                        <h3 class="font-medium mb-1 line-clamp-2 grab-cursor">{{ task.title }}</h3>
-                        <p class="text-gray-600 text-xs mb-2 line-clamp-2 grab-cursor">{{ task.description }}</p>
-
-                        <div class="flex items-center justify-between text-xs text-gray-500 pt-2 border-t grab-cursor">
-                            <div class="flex gap-2">
-                                <span *ngIf="task.dueDate">📅 {{ task.dueDate | date:'MMM d' }}</span>
-                                <span *ngIf="task.comments">💬 {{ task.comments }}</span>
-                            </div>
-
-                            <div class="flex -space-x-1" *ngIf="task.assignees?.length">
-                                <img *ngFor="let assignee of task.assignees | slice:0:2" [src]="assignee.avatar"
-                                    [alt]="assignee.name" class="w-5 h-5 rounded-full border border-white">
-                                <div *ngIf="task.assignees"
-                                    class="w-5 h-5 rounded-full bg-gray-100 border flex items-center justify-center">
-                                    <span class="text-xs">+{{ task.assignees.length - 2 }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Done Column -->
-        <div class="bg-white rounded shadow-sm border">
-            <div class="p-3 border-b bg-green-50">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <h2 class="text-sm font-medium">Done</h2>
-                    <span class="bg-green-100 text-green-600 px-2 py-0.5 rounded-full text-xs">{{ doneTasks.length
-                        }}</span>
-                </div>
-            </div>
-
-            <div class="p-2 min-h-[12rem] space-y-2" (dragover)="onDragOver($event)" (drop)="onDrop($event, 'done')">
-                <div *ngFor="let task of doneTasks"
-                    class="bg-white border grab-cursor rounded p-2 shadow-sm hover:shadow-md text-sm opacity-75"
-                    draggable="true" (dragstart)="onDragStart($event, task)" (dragend)="onDragEnd($event)">
-                    <div class="flex justify-between grab-cursor items-start mb-2">
-                        <span [ngClass]="{
-                            'bg-red-100 text-red-700': task.priority === 'high',
-                            'bg-yellow-100 text-yellow-700': task.priority === 'medium',
-                            'bg-green-100 text-green-700': task.priority === 'low'
-                        }" class="px-1.5 py-0.5 rounded text-xs uppercase">{{ task.priority }}</span>
-                        <span class="text-green-500">✓</span>
-                    </div>
-                    <h3 class="font-medium mb-1 line-clamp-2 line-through grab-cursor">{{ task.title }}</h3>
-                    <div>
-                        <p class="text-gray-600 text-xs mb-2 line-clamp-2 grab-cursor">{{ task.description }}</p>
-
-                        <div class="flex items-center justify-between text-xs text-gray-500 pt-2 border-t grab-cursor">
-                            <div class="flex gap-2">
-                                <span *ngIf="task.dueDate">📅 {{ task.dueDate | date:'MMM d' }}</span>
-                                <span *ngIf="task.comments">💬 {{ task.comments }}</span>
-                            </div>
-
-                            <div class="flex -space-x-1" *ngIf="task.assignees?.length">
-                                <img *ngFor="let assignee of task.assignees | slice:0:2" [src]="assignee.avatar"
-                                    [alt]="assignee.name" class="w-5 h-5 rounded-full border border-white">
-                                <div *ngIf="task.assignees"
-                                    class="w-5 h-5 rounded-full bg-gray-100 border flex items-center justify-center">
-                                    <span class="text-xs">+{{ task.assignees.length - 2 }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    <p-dialog  styleClass="dialog" header="Edit Profile" [modal]="true" [(visible)]="visible" [position]="position"
-        [style]="{ width: '37rem', height: '100%' }">
+
+    <p-drawer [style]="{ width: '37rem', height: '100%' }" header="New Task" [(visible)]="visible" position="right">
         <app-task-form></app-task-form>
-    </p-dialog>
+    </p-drawer>
 </div>

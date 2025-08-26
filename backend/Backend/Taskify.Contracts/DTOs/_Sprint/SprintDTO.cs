@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Taskify.Contracts.DTOs.Task;
-using Taskify.Core.Modals;
 
 namespace Taskify.Contracts.DTOs._Sprint
 {
@@ -15,7 +14,7 @@ namespace Taskify.Contracts.DTOs._Sprint
         public string Name { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public bool IsActive { get; set; }
+        public string Status { get; set; } = string.Empty;
         public int ProjectId { get; set; }
         public IList<TaskItemDTO> Tasks { get; set; } = new List<TaskItemDTO>();
     }

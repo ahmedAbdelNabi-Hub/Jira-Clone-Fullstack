@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using Taskify.Contracts;
 using TaskifyAPI.Extensions;
 using TaskifyAPI.Helper.mapper;
@@ -14,7 +15,7 @@ namespace TaskifyAPI
             builder.Services.Configure<GeminiConfig>(builder.Configuration.GetSection("DeepSeek"));
             builder.Services.AddHttpClient();
             builder.Services.AddAutoMapper(typeof(Mapper));
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>{options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());}); 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.ApplicationExtentions(builder.Configuration);

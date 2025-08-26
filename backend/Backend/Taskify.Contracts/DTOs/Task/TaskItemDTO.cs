@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Contracts.DTOs.Member;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,12 @@ namespace Taskify.Contracts.DTOs.Task
         public int Status { get; set; } 
         public int Type { get; set; }
         public int Priority { get; set; }
-        public int? SprintId { get; set; }
-        public int? BacklogId { get; set; }
-        public int ProjectId { get; set; }
-        public string ProjectName { get; set; } = string.Empty;
+        public string? SprintName { get; set; }
+        public DateTime? SprintStartDate { get; set; }
+        public DateTime? SprintEndDate { get; set; }
+
+        public List<MemberDTO> AssignedUsers { get; set; }
+
+
     }
 }

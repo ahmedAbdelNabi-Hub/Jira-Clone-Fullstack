@@ -14,6 +14,7 @@ import { delay, tap } from 'rxjs';
   templateUrl: './confirm-email.component.html',
   styleUrl: './confirm-email.component.css'
 })
+
 export class ConfirmEmailComponent {
   private AuthService = inject(AuthService);
   public otpForm!: FormGroup;

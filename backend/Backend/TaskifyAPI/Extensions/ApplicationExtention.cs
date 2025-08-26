@@ -7,6 +7,7 @@ using Taskify.Infrastructure.Repositories;
 using Taskify.Infrastructure.UnitOfWork;
 using Taskify.Services.Email;
 
+
 namespace TaskifyAPI.Extensions
 {
     public static class ApplicationExtention

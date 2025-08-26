@@ -1,0 +1,5 @@
+export enum SprintStatus {
+    NotStarted = 0,
+    Started = 1,
+    Completed = 2
+}

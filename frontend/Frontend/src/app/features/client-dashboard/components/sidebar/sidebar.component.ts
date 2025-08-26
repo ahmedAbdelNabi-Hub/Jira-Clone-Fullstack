@@ -1,8 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, Input, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ProjectListComponent } from "../project-list/project-list.component";
+import { OrganizationService } from '../../../../core/services/Organization.service';
+import { IOrganization } from '../../../../core/interfaces/IOrganization';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,46 +14,30 @@ import { ProjectListComponent } from "../project-list/project-list.component";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @Input({ required: true }) menuItems!: any[];
-  items: any[] = [
-    {
-      label: 'Dashboard',
-      icon: 'pi pi-home',
-      routerLink: ['/dashboard']
-    },
-    {
-      label: 'PLANNING',
-      icon: 'pi pi-calendar',
-      items: [
-        {
-          label: 'Appointments',
-          icon: 'pi pi-calendar-plus',
-          routerLink: ['/appointments']
-        },
-        {
-          label: 'Schedule',
-          icon: 'pi pi-clock',
-          routerLink: ['/schedule']
-        },
-        {
-          label: 'Tasks',
-          icon: 'pi pi-check-square',
-          routerLink: ['/tasks']
+  loading: boolean = false;
+  owenOrganization: IOrganization | null = null;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private orgService: OrganizationService) { }
+
+
+  ngOnInit(): void {
+    this.orgService.getByUserId()
+      .pipe(tap(org => {
+        if (org) {
+          this.owenOrganization = org;
         }
-      ]
-    },
-    {
-      label: 'Reports',
-      icon: 'pi pi-chart-line',
-      routerLink: ['/reports']
+      }))
+      .subscribe();
+  }
+
+
+  handleLoading() {
+    this.loading = true;
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
     }
-  ];
-  projectList = [
-    { name: 'Website Redesign', color: 'bg-blue-500', initial: 'W' },
-    { name: 'Mobile App', color: 'bg-green-500', initial: 'M' },
-    { name: 'API Development', color: 'bg-purple-500', initial: 'A' },
-    { name: 'Database Migration', color: 'bg-orange-500', initial: 'D' },
-    { name: 'UI Components', color: 'bg-red-500', initial: 'U' }
-  ];
+  }
 }

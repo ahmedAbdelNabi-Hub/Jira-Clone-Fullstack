@@ -32,26 +32,40 @@ namespace Taskify.Infrastructure.Repositories
             return Task.CompletedTask;
         }
 
-        public Task UpdateAsync(T entity)
+        public  Task UpdateAsync(T entity)
         {
-            var trackedEntity = _dbContext.Set<T>().Local.FirstOrDefault(e => e.Equals(entity));
-            if (trackedEntity == null)
+            var entry = _dbContext.Entry(entity);
+
+            // Check if the entity is already tracked
+            var local = _dbContext.Set<T>().Local.FirstOrDefault(e => e.Id.Equals(entity.Id));
+            if (local != null)
             {
-                _dbContext.Attach(entity);
+                // Detach the local instance to avoid duplicate tracking
+                _dbContext.Entry(local).State = EntityState.Detached;
             }
 
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            // Attach and mark entity as modified
+            _dbContext.Attach(entity);
+            entry.State = EntityState.Modified;
 
-            foreach (var navigation in _dbContext.Entry(entity).Navigations)
+            // Optional: Only update scalar properties (not navigation)
+            foreach (var navigation in entry.Navigations)
             {
-                if (navigation.IsModified)
+                if (navigation.Metadata.IsCollection)
                 {
-                    _dbContext.Entry(navigation.CurrentValue!).State = EntityState.Modified;
+                    // Don't modify collection navigations here
+                    continue;
+                }
+
+                if (navigation.CurrentValue != null)
+                {
+                    _dbContext.Entry(navigation.CurrentValue).State = EntityState.Unchanged;
                 }
             }
 
             return Task.CompletedTask;
         }
+
 
         public async Task<T> GetByIdAsync(int id)
         {
@@ -60,7 +74,7 @@ namespace Taskify.Infrastructure.Repositories
 
         public async Task<T> GetByIdSpecAsync(ISpecification<T> spec)
         {
-            return await ApplySpecification(spec).AsNoTracking().FirstOrDefaultAsync();
+            return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
 
         public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> spec)
@@ -98,5 +112,13 @@ namespace Taskify.Infrastructure.Repositories
             ArgumentNullException.ThrowIfNull(spec);
             return SpecificationsEvaluator<T>.GetQuery(_dbContext.Set<T>(), spec);
         }
+
+        public  Task DeleteRangeAsync(IEnumerable<T> entities)
+        {
+            _dbContext.RemoveRange(entities);
+            return Task.CompletedTask;
+
+        }
+
     }
 }

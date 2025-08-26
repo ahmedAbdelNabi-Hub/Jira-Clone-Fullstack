@@ -9,7 +9,7 @@ import { interval, Subscription, switchMap, take, filter, takeUntil, Subject, ta
 import { IAuthResponse } from '../../core/interfaces/Authentication/IAuthResponse';
 import { AsyncDataHandler } from '../../core/models/Classes/AsyncDataHandler';
 import { AuthService } from '../../core/services/AuthService.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ToastService } from '../../core/services/toast.service';
 import { response } from 'express';
 
@@ -38,13 +38,15 @@ interface Slide {
 export class LoginComponent implements OnInit, OnDestroy {
   private readonly socialAuthService = inject(SocialAuthService);
   private readonly _authService = inject(AuthService);
-  private readonly route = inject(Router);
   private readonly fb = inject(FormBuilder);
   private readonly toast = inject(ToastService);
   private readonly destroy$ = new Subject<void>();
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   readonly isBrowser = signal(false);
   readonly _asyncDataHandler = new AsyncDataHandler<IAuthResponse>();
+  returnUrl: string = '/';
 
   loginForm!: FormGroup;
   currentIndex = 0;
@@ -81,6 +83,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.returnUrl = params['returnUrl'] || '/';
+    });
     this.initializeForm();
     this.setupGoogleAuth();
     this.startAutoSlide();
@@ -149,7 +154,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       tap(response => {
         this._authService.fetchCurrentUser().pipe(takeUntil(this.destroy$)).subscribe();
-        this.route.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']);
         this.loginForm.reset();
       }),
       catchError(error => {

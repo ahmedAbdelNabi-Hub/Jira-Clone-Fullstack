@@ -1,53 +1,120 @@
+<!-- Header -->
 <header
-  class=" fixed z-[150] top-0 text-[#505258] bg-[#ffffff] border border-gray-200 flex flex-wrap sm:justify-start sm:flex-nowrap w-full  text-sm py-2 ">
-  <nav class="w-full px-4 sm:flex sm:items-center ">
-    <div class="flex gap-3 items-center w-[15%] xl:w-[20%] ">
+  class="fixed z-[150] top-0 text-[#42526E] bg-white border-b border-[#DFE1E6] flex flex-wrap sm:justify-start sm:flex-nowrap w-full text-sm py-1.5">
+  <nav class="w-full px-2 sm:px-4 sm:flex sm:items-center">
+    <!-- Left Section - Logo and Menu -->
+    <div class="flex gap-2 sm:gap-3 items-center w-full sm:w-[15%] xl:w-[20%] justify-between sm:justify-start">
+      <!-- Menu Button -->
       <div
-        class="py-1 px-1 border text-[#505258] rounded-md shadow-sm bg-white flex items-center justify-center  border-gray-200">
-        <i class='bx bx-dock-left text-xl'></i>
+        class="py-1 px-1 border text-[#42526E] rounded-md hover:bg-[#F4F5F7] flex items-center justify-center border-[#DFE1E6] transition-colors cursor-pointer">
+        <i class='bx bx-menu text-xl'></i>
       </div>
-    
-      <div class="flex items-center justify-center space-x-3 ">
+
+      <!-- Logo Section -->
+      <div class="flex items-center justify-center space-x-2 sm:space-x-3">
         <div class="relative">
-          <div
-            class="w-7 h-7  bg-black text-white border border-slate-200 rounded-md flex items-center justify-center">
-            <i class='bx bxl-foursquare rotate-45 text-xl bx-flip-vertical'></i>
+          <div class="w-6 h-6 sm:w-8 sm:h-8 bg-[#0052CC] text-white rounded-md flex items-center justify-center">
+            <i class='bx bx-cube-alt text-lg sm:text-xl'></i>
           </div>
         </div>
-        <div>
-          <p
-            class="text-slate-800 text-[16px] bg-gradient-to-r font-bold from-black to-purple-500 bg-clip-text text-transparent">
-            JOLLY</p>
+        <div class="">
+          <p class="text-[#42526E] text-sm sm:text-[16px] font-bold tracking-wide">
+            TEAMFLOW
+          </p>
+        </div>
+      </div>
+
+      <!-- Mobile Right Icons (visible only on small screens) -->
+      <div class="flex sm:hidden items-center gap-2">
+        <div
+          class="py-1.5 px-1.5 border text-[#42526E] rounded-md hover:bg-[#F4F5F7] flex items-center justify-center border-[#DFE1E6] transition-colors cursor-pointer">
+          <i class='bx bx-bell text-lg'></i>
+        </div>
+        <div
+          class="py-1.5 px-1.5 border text-[#42526E] rounded-md hover:bg-[#F4F5F7] flex items-center justify-center border-[#DFE1E6] transition-colors cursor-pointer">
+          <i class='bx bx-moon text-lg'></i>
         </div>
       </div>
     </div>
-    <div class="relative w-[45%] xl:w-[50%]">
+
+    <!-- Center Section - Search (hidden on mobile, shown on larger screens) -->
+    <div class="hidden sm:block relative w-full sm:w-[45%] xl:w-[50%] mx-0 sm:mx-4">
       <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
-        <svg class="shrink-0 size-4 " xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="shrink-0 size-4 text-[#42526E]" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.3-4.3"></path>
         </svg>
       </div>
-      <input class="py-[5px] border text-black ps-10 pe-4 block w-full border-gray-400 rounded-md sm:text-sm "
-        type="text" role="combobox" aria-expanded="false" placeholder="Search Split" value=""
-        data-hs-combo-box-input="">
-    </div>
-    <div class="mx-2 flex items-center max-w-[50%] w-[35%] xl:w-[30%] justify-end  gap-3">
-      <button class="flex items-center text-white justify-center space-x-1 py-[5px] px-4 rounded-sm bg-[#4c52cc] ">
-        <p class="font-semibold text-[14.5px] ">Create Task</p>
-      </button>
-      <button
-        class="flex items-center flex-nowrap w-[150px] shadow-sm text-[#1868db] border border-blue-400 justify-center space-x-1 py-[5px] px-3 rounded-sm bg-[#ffffff] ">
-        <i class='bx bxs-credit-card text-[15px]  '></i>
-        <p class="font-semibold flex flex-nowrap line-clamp-1 text-[14px] ">Premium trial</p>
-      </button>
-      <div
-        class="py-1 px-1 border text-[#505258] rounded-md shadow-sm bg-white flex items-center justify-center  border-gray-200">
-        <i class='bx bx-bell text-xl'></i>
-      </div>
-    
+      <input
+        class="py-2 px-4 border bg-[#F4F5F7] text-[#42526E] ps-10 pe-4 block w-full border-[#DFE1E6] rounded-md sm:text-sm focus:border-[#0052CC] focus:ring-1 focus:ring-[#0052CC] outline-none"
+        type="text" role="combobox" aria-expanded="false" placeholder="Search tasks..." value="">
     </div>
 
+    <!-- Right Section - Action Buttons (hidden on mobile) -->
+    <div class="hidden sm:flex mx-2 items-center max-w-[50%] w-full sm:w-[35%] xl:w-[30%] justify-end gap-2 lg:gap-3">
+      <!-- Create Task Button -->
+      <button
+        class="flex items-center text-white justify-center space-x-1 py-2 px-2 lg:px-4 rounded-sm bg-[#0052CC] hover:bg-[#0747A6] transition-colors">
+        <p class="font-semibold text-xs lg:text-[14px] whitespace-nowrap">Create Task</p>
+      </button>
+
+      <!-- Try Premium Button -->
+      <button
+        class="hidden md:flex items-center flex-nowrap w-auto lg:w-[150px] text-[#0052CC] border border-[#0052CC] justify-center space-x-1 py-2 px-2 lg:px-3 rounded-sm bg-white hover:bg-[#F4F5F7] transition-colors">
+        <i class='bx bx-crown text-sm lg:text-[16px]'></i>
+        <p class="font-semibold flex flex-nowrap line-clamp-1 text-xs lg:text-[14px] whitespace-nowrap">Try Premium</p>
+      </button>
+
+      <!-- Crown icon only for medium screens -->
+      <button
+        class="md:hidden flex items-center text-[#0052CC] border border-[#0052CC] justify-center py-2 px-2 rounded-sm bg-white hover:bg-[#F4F5F7] transition-colors">
+        <i class='bx bx-crown text-[16px]'></i>
+      </button>
+
+      <!-- Notification Bell -->
+      <div
+        class="py-1.5 px-1.5 border text-[#42526E] rounded-md hover:bg-[#F4F5F7] flex items-center justify-center border-[#DFE1E6] transition-colors cursor-pointer">
+        <i class='bx bx-bell text-xl'></i>
+      </div>
+
+      <!-- Dark Mode Toggle -->
+      <div
+        class="py-1.5 px-1.5 border text-[#42526E] rounded-md hover:bg-[#F4F5F7] flex items-center justify-center border-[#DFE1E6] transition-colors cursor-pointer">
+        <i class='bx bx-moon text-xl'></i>
+      </div>
+    </div>
   </nav>
+
+  <!-- Mobile Search Bar (visible only on small screens) -->
+  <div class="w-full px-2 mt-2 sm:hidden">
+    <div class="relative">
+      <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+        <svg class="shrink-0 size-4 text-[#42526E]" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </div>
+      <input
+        class="py-2 px-4 border bg-[#F4F5F7] text-[#42526E] ps-10 pe-4 block w-full border-[#DFE1E6] rounded-md text-sm focus:border-[#0052CC] focus:ring-1 focus:ring-[#0052CC] outline-none"
+        type="text" role="combobox" aria-expanded="false" placeholder="Search tasks..." value="">
+    </div>
+  </div>
+
+  <!-- Mobile Action Buttons (visible only on small screens) -->
+  <div class="w-full px-2 mt-2 sm:hidden flex gap-2">
+    <button
+      class="flex-1 flex items-center text-white justify-center space-x-1 py-2 px-4 rounded-sm bg-[#0052CC] hover:bg-[#0747A6] transition-colors">
+      <p class="font-semibold text-sm">Create Task</p>
+    </button>
+    <button
+      class="flex items-center text-[#0052CC] border border-[#0052CC] justify-center space-x-1 py-2 px-3 rounded-sm bg-white hover:bg-[#F4F5F7] transition-colors">
+      <i class='bx bx-crown text-[16px]'></i>
+      <p class="font-semibold text-sm">Premium</p>
+    </button>
+  </div>
 </header>
+

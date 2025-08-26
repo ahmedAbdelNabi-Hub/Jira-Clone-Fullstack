@@ -57,9 +57,9 @@ namespace Taskify.Infrastructure.UnitOfWork
                 _transaction = null!;
             }
         }
-        public async Task<int> SaveChangeAsync()
+        public async Task<int> SaveChangeAsync(CancellationToken cancellationToken = default)
         {
-            return await _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync(cancellationToken);
         }
         public void Dispose()
         {

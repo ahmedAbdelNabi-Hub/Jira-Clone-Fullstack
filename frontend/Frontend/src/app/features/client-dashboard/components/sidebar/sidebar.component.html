@@ -1,7 +1,11 @@
-<div class="bg-[#ffffff] relative">
+<div class="bg-[#ffffff]  ">
     <div
         class=" bg-[#ffffff] translate-x-full left-3 top-[49px]  shadow-sm transition-all duration-300 transform w-[240px] h-full hidden md:fixed inset-y-0 start-0 z-0  border-x border-gray-200 lg:block lg:translate-x-0 lg:end-auto lg:bottom-0">
         <ul class="py-4 flex flex-col gap-2.5 text-[14.2px] px-5 font-medium  text-[#474850] ">
+            <li class=" flex items-center space-x-2  ">
+                <i class='bx bx-bar-chart-alt-2'></i>
+                <p>Dashboard</p>
+            </li>
             <li class=" flex items-center space-x-2  ">
                 <i class=' bx bx-user-circle'></i>
                 <p>For you</p>
@@ -14,47 +18,62 @@
                 <i class='bx bx-star'></i>
                 <p>Starred</p>
             </li>
-            <li class=" flex items-center space-x-2  ">
-                <i class='bx bx-customize'></i>
-                <p>Apps</p>
+
+            <li routerLink="/dashboard/members" class=" flex items-center space-x-2  ">
+                <i class='bx bx-group'></i>
+                <p>Member</p>
             </li>
             <li class=" flex items-center space-x-2  ">
-                <i class='bx bx-directions'></i>
-                <p>Plans</p>
+                <i class='bx bx-chat'></i>
+                <p>Chat</p>
+            </li>
+            <li class=" flex items-center space-x-2  ">
+                <i class='bx bx-list-check'></i>
+                <p>Issues</p>
             </li>
 
-            <li class=" flex items-center space-x-2  ">
-                <i class='bx bx-filter'></i>
-                <p>Filter</p>
-            </li>
-            <li class=" flex items-center space-x-2  ">
-                <i class='bx bx-layout'></i>
-                <p>Dashboards</p>
-            </li>
-            <li class=" flex items-center space-x-2  ">
-                <i class='bx bx-group'></i>
-                <p>Teams</p>
-            </li>
-            <div class="mb-6 ">
+            <div class=" ">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="text-xs font-semibold text-gray-700 uppercase tracking-wider">Projects</h3>
-                    <button class="text-gray-400 hover:text-gray-600 transition-colors">
-                        <i class='bx bx-plus text-sm'></i>
+                    <button
+                        class="bg-[#7764e2] text-white w-6 h-6 rounded-md flex items-center justify-center transition-colors">
+                        <i class='bx bx-plus text-xl'></i>
                     </button>
                 </div>
-                <app-project-list></app-project-list>
+                <app-project-list (loding)="handleLoading()"></app-project-list>
+
+            </div>
+            <div class=" ">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xs font-semibold text-gray-700 uppercase tracking-wider">Organization</h3>
+                </div>
+                
+                <div class="relative overflow-hidden bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 group w-full max-w-xs">
+             
+                    <div class="absolute inset-0 opacity-15" style="background-image: 
+                                linear-gradient(rgba(21, 22, 98, 0.15) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(164, 165, 181, 0.734) 1px, transparent 1px);
+                                background-size: 12px 12px;">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-r  bg-blue-800 to-transparent opacity-0 -translate-x-full group-hover:translate-x-full group-hover:opacity-30 transition-all duration-700 ease-out transform skew-x-12">
+                    </div>
+                    <div class="relative z-10 p-3">
+                        <i class='bx bx-rocket absolute text-3xl right-2 bottom-3 text-stone-400'></i>
+                        <div class="mb-1">
+                            <h4
+                                class="font-medium text-gray-800 text-sm truncate group-hover:text-indigo-600 transition-colors duration-200">
+                                {{owenOrganization?.name}}
+                            </h4>
+                            <p class="text-xs text-gray-500">Organization</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </ul>
-
     </div>
-
 </div>
-<div class="flex items-end justify-end gap-2  fixed left-0 bottom-0  px-3 py-4 border-t border-gray-200    ">
-    <button class="px-10 text-[14px] text-[#505258] py-1 flex items-center justify-center rounded-sm shadow-sm  
-    border border-gray-300
-    ">Invite people</button>
-    <div
-        class="py-1 px-1 border text-[#505258] rounded-sm shadow-sm bg-white flex items-center justify-center  border-gray-200">
-        <i class='bx bx-broadcast'></i>
-    </div>
+
+<div *ngIf="loading"
+    class="w-full absolute bg-gray-50 backdrop-blur-[2px] top-0 z-[1000] h-full flex items-center justify-center">
+    <div class="loaders"></div>
 </div>

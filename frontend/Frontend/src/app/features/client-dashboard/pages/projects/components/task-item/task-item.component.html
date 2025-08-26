@@ -1,0 +1,74 @@
+<div
+    class="flex flex-col md:flex-row items-start justify-between md:items-center bg-white py-2 md:py-1 px-1 md:px-4 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+    <div class="flex items-center gap-4 mb-2 md:mb-0">
+        <input type="checkbox" [checked]="task.id"
+            class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+        <i *ngIf="getTaskTypeLabel(task.type)=='Task'" class="bx bx-task text-xl text-blue-600"></i>
+        <i *ngIf="getTaskTypeLabel(task.type)=='Bug'" class="bx bx-bug text-xl text-red-600 rotate-12"></i>
+        <span class="text-gray-700 text-xs md:text-[15px]">SCRUM-{{task.id}}</span>
+        <span class="text-gray-700 break-all text-xs md:text-[15px]">{{task.title}}</span>
+        <span
+            [class]="'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ' + getPriorityColor(getPriorityLabel(task.priority))">
+            {{getPriorityLabel(task.priority)}}
+        </span>
+    </div>
+    <div class="flex items-center gap-3 w-full md:w-auto">
+        <span
+            class="px-2 py-0.5  text-xs font-medium bg-blue-500/10 text-blue-800 rounded">{{getStatusLabel(task.status)}}</span>
+        <div class="h-6 rounded-full -space-x-2 flex items-center justify-center">
+            <div *ngFor="let user of task.assignedUsers; let i = index" class="relative group -space-x-4"
+                [style.z-index]="task.assignedUsers?.length ?? 0 - i">
+                <div class="w-7 h-7">
+                    <img [src]="user.image || 'https://ui-avatars.com/api/?name=' + user.fullName + '&background=e5e7eb&color=6b7280&size=128'"
+                        [alt]="user.fullName" (error)="onImageError($event)"
+                        class="w-full h-full rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform duration-200 cursor-pointer" />
+                </div>
+                <div
+                    class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-8 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-50">
+                    {{ user.fullName }}
+                    <div
+                        class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center px-2 space-x-2 bg-white rounded-md border border-gray-200">
+            <button (click)="handelEdit(task)" class="p-0.5 hover:bg-gray-100 rounded-sm transition-colors">
+                <i class='bx bx-edit-alt text-gray-600'></i>
+            </button>
+
+            <!-- Delete button with relative positioning for popup -->
+            <div class="relative">
+                <button (click)="toggleDeleteConfirm(task.id)"
+                    class="p-0.5 hover:bg-red-100 rounded-sm transition-colors">
+                    <i class='bx bx-trash text-red-600'></i>
+                </button>
+
+                <!-- Delete confirmation popup -->
+                <div *ngIf="showDeleteConfirm && taskId() === task.id"
+                    class="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
+                    <div class="flex items-start gap-2 mb-3">
+                        <i class="bx bx-error text-red-500 text-lg flex-shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-900">Delete Task</h4>
+                            <p class="text-xs text-gray-600 mt-1">
+                                Are you sure you want to delete "<span class="font-medium">{{task.title}}</span>"?
+                                This action cannot be undone.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-2">
+                        <button (click)="cancelDelete()"
+                            class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                            Cancel
+                        </button>
+                        <button (click)="confirmDelete()"
+                            class="px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded transition-colors">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

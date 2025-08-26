@@ -1,5 +1,9 @@
-<div class="p-4 bg-gray-50 min-h-screen">
-    <div class="bg-[#f8f8f8]  px-2 ">
+<div class="md:p-4  min-h-screen">
+    <div *ngFor="let sprint of sprints()">
+        <app-sprint [Members]="projectMembers" (sprintStatusChange)="handleSprintOutput()"
+            [sprint]="sprint"></app-sprint>
+    </div>
+    <div class="bg-[#f8f8f8] rounded-md px-2 ">
         <div class="flex justify-between items-center cursor-pointer  p-3 rounded-t-md">
             <div class="flex items-center gap-2 w-[50%] ">
                 <i (click)="isOpen = !isOpen" class=""
@@ -14,23 +18,18 @@
                         <span class="bg-[#8fb8f6] px-2 rounded-sm text-sm">0</span>
                         <span class="bg-[#efffd6] px-2 rounded-sm text-sm">0</span>
                     </div>
-                    <button
+                    <button (click)="showDialog()"
                         class="px-3 text-sm py-1 border bg-white font-semibold border-gray-300 hover:bg-gray-50 active:bg-gray-100 transition-colors duration-200 text-black rounded-md flex items-center gap-2">
                         <span>Create Sprint</span>
                     </button>
                 </div>
-
-
                 <button class="p-1 hover:bg-gray-100 rounded">
                     <i class='bx bx-dots-horizontal-rounded'></i>
                 </button>
             </div>
-
         </div>
-
-        <!-- Accordion Content -->
-        <div *ngIf="isOpen" class=" text-gray-900 hidden py-10 px-4 rounded-b-md border-2 border-stone-300 border-dashed ">
-            <div class="flex items-center justify-center gap-6">
+        <div *ngIf="isOpen" class=" text-gray-900  py-10 px-4 rounded-b-md border-2 border-stone-300 border-dashed ">
+            <div class="flex  items-center justify-center gap-6">
                 <img class="w-24 h-24"
                     src="https://jira-frontend-bifrost.prod-east.frontend.public.atl-paas.net/assets/design.e096ff32.svg"
                     alt="">
@@ -44,138 +43,63 @@
             </div>
 
         </div>
-<div class="border border-gray-300">
-    <div class="bg-gray-50">
-        <div class="mx-auto bg-white rounded-lg shadow-sm">
-            <!-- Task Item 1 -->
-            <div class="flex items-center justify-between py-2 px-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <div class="flex items-center space-x-2">
-                    <div class="w-5 h-5 bg-red-500 rounded flex items-center justify-center">
-                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <span class="text-xs font-medium text-gray-900">SCRUM-16</span>
-                        <span class="ml-1.5 text-xs text-gray-700">Design Dashboard</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded px-2 py-0.5 pr-6 text-xs font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <option>TO DO</option>
-                            <option>IN PROGRESS</option>
-                            <option>DONE</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-1.5 pointer-events-none">
-                            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
+        <!-- <div *ngIf="isOpen" class="border border-gray-200">
+            <div class="bg-white">
+                <div class="mx-auto bg-white rounded-lg shadow-sm">
+                    <div *ngFor="let i of [00,00,0,0,0]"
+                        class="flex items-center justify-between py-2 px-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox"
+                                class="w-4 h-4 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <i class="bx bx-bug-alt text-xl text-red-600 rotate-12"></i>
+                            <div>
+                                <span class="text-[15px]  text-gray-700">SCRUM-16</span>
+                                <span class="ml-1.5 text-[15px] text-gray-700">Design Dashboard</span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative">
+                                <select
+                                    class="appearance-none bg-white border border-gray-300 rounded px-2 py-0.5 pr-6 text-xs font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                    <option>TO DO</option>
+                                    <option>IN PROGRESS</option>
+                                    <option>DONE</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-1.5 pointer-events-none">
+                                    <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
 
-                    <button class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
-                        <span class="text-xs font-medium text-gray-600">−</span>
-                    </button>
+                            <button
+                                class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                <span class="text-xs font-medium text-gray-600">−</span>
+                            </button>
 
-                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center">
-                        <span class="text-[10px] font-medium text-white">AN</span>
+                            <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center">
+                                <span class="text-[10px] font-medium text-white">AN</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Task Item 2 -->
-            <div class="flex items-center justify-between py-2 px-3 border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                <div class="flex items-center space-x-2">
-                    <div class="w-5 h-5 bg-green-500 rounded flex items-center justify-center">
-                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <div>
-                        <span class="text-xs font-medium text-gray-900">SCRUM-17</span>
-                        <span class="ml-1.5 text-xs text-gray-700">Setup Database Schema</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded px-2 py-0.5 pr-6 text-xs font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <option>DONE</option>
-                            <option>TO DO</option>
-                            <option>IN PROGRESS</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-1.5 pointer-events-none">
-                            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <button class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
-                        <span class="text-xs font-medium text-gray-600">−</span>
-                    </button>
-
-                    <div class="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <span class="text-[10px] font-medium text-white">JD</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Task Item 3 -->
-            <div class="flex items-center justify-between py-2 px-3 hover:bg-gray-50 transition-colors">
-                <div class="flex items-center space-x-2">
-                    <div class="w-5 h-5 bg-blue-500 rounded flex items-center justify-center">
-                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <div>
-                        <span class="text-xs font-medium text-gray-900">SCRUM-18</span>
-                        <span class="ml-1.5 text-xs text-gray-700">Create API Documentation</span>
-                    </div>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <div class="relative">
-                        <select class="appearance-none bg-white border border-gray-300 rounded px-2 py-0.5 pr-6 text-xs font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <option>IN PROGRESS</option>
-                            <option>TO DO</option>
-                            <option>DONE</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-1.5 pointer-events-none">
-                            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <button class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
-                        <span class="text-xs font-medium text-gray-600">−</span>
-                    </button>
-
-                    <div class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-                        <span class="text-[10px] font-medium text-white">SM</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        </div> -->
         <div (click)="isCreate=true" *ngIf="!isCreate"
             class="px-4 py-3 flex items-center font-semibold gap-1 transition-all duration-100 cursor-pointer hover:bg-gray-100">
             <i class='bx bx-plus text-xl  '></i>
             <p class="text-[15px] text-teal-800">Create</p>
         </div>
-        <div appClickOutside (clickOutside)="isCreate=false" *ngIf="isCreate" class="relative mt-2 w-full">
+        <div appClickOutside (clickOutside)="isCreate=false" *ngIf="isCreate" class="relative mt-2 pb-2 w-full">
             <div class="flex items-center w-full">
                 <div class="relative flex-shrink-0">
                     <button (click)="toggleDropdown()"
                         class="flex items-center gap-2 px-4 py-1.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 transition-all duration-200">
                         <i class="bx bx-collection"></i>
                         <span>Type</span>
-                        <i class="bx" [ngClass]="isDropdownOpen ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                        <i class="bx" [ngClass]="isDropdownOpen() ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                     </button>
                     <div *ngIf="isDropdownOpen"
                         class="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
@@ -207,3 +131,6 @@
         </div>
     </div>
 </div>
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{ width: '38rem' }">
+    <app-sprint-form (sprintStatusChange)="handleSprintOutput()"></app-sprint-form>
+</p-dialog>

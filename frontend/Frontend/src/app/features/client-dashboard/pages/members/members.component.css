@@ -1,0 +1,60 @@
+/* Custom styles for members component */
+
+/* Small compact sizing */
+.compact-text {
+  @apply text-xs;
+}
+
+/* Custom focus styles for better accessibility */
+input:focus,
+select:focus {
+  @apply outline-none ring-1 ring-gray-400;
+}
+
+/* Button hover transitions */
+button {
+  @apply transition-colors duration-200;
+}
+
+/* Member avatar hover effect */
+img {
+  @apply transition-transform duration-200;
+}
+
+img:hover {
+  @apply scale-105;
+}
+
+/* Custom scrollbar for long lists */
+.member-list {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb #f9fafb;
+}
+
+.member-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.member-list::-webkit-scrollbar-track {
+  background: #f9fafb;
+  border-radius: 3px;
+}
+
+.member-list::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.member-list::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* Animation for member removal */
+.member-removing {
+  @apply opacity-50 transform scale-95 transition-all duration-300;
+}
+
+/* Loading state for invite button */
+.invite-loading {
+  @apply opacity-75 cursor-not-allowed;
+}

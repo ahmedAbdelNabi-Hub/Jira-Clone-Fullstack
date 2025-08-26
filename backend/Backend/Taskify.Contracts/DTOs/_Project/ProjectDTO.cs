@@ -9,6 +9,7 @@ namespace Taskify.Contracts.DTOs._Project
 {
     public class ProjectDTO
     {
+        public int id { get; set; }
         public string Name { get; set; }
         public string Key { get; set; }
         public string Slug { get; set; }

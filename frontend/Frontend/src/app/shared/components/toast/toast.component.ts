@@ -52,6 +52,6 @@ export class ToastComponent {
       updatedQueue.shift();
       this.messageQueue.set(updatedQueue);
       this.showNextMessage();
-    }, 5500);
+    }, 4000);
   }
 }

@@ -21,7 +21,8 @@ export class RedirectIfHasOrgGuard implements CanActivate {
                 }
             }),
             catchError(() => {
-                return of(false);
+                this.router.navigate(['/orgss']);    
+                return of(true);
             })
         );
     }

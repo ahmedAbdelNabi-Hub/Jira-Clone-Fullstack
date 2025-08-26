@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Domain.Modals;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace Taskify.Infrastructure.Data
         public DbSet<Backlog> Backlogs => Set<Backlog>();
         public DbSet<Sprint> Sprints => Set<Sprint>();
         public DbSet<TaskItem> Tasks => Set<TaskItem>();
+        public DbSet<ProjectMember> ProjectMembers => Set<ProjectMember>();
+        public DbSet<Invitation> Invitation => Set<Invitation>();
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,29 +1,42 @@
 <main class="bg-white">
-    <div class="px-6 py-2">
+    <div class="px-1.5 md:px-6 py-2">
         <p class="text-sm text-gray-600">Projects</p>
         <div class="flex items-center justify-between  ">
-            <div class="flex items-center gap-2">
-                <img src="https://abdalnabyahmed724.atlassian.net/rest/api/2/universal_avatar/view/type/project/avatar/10410"
-                    alt="Project Icon" class="w-6 h-6 object-cover">
-                <span class="font-medium text-[20px] text-gray-900">My Scrum Project</span>
-                <button class="mx-2 flex items-center justify-center hover:bg-gray-100 rounded-md">
-                    <i class='bx bx-dots-horizontal-rounded text-xl'></i>
-                </button>
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2">
+                    <img [src]="this.selectedProject()?.logoUrl" alt="Project Icon" class="w-6 h-6 object-cover">
+                    <span class="font-medium text-[20px] text-gray-900">{{this.selectedProject()?.name}}</span>
+                    <app-modal-project-update></app-modal-project-update>
+                </div>
+                <span class="text-sm max-w-[400px] line-clamp-1  text-gray-600 ">
+                    {{this.selectedProject()?.description}}
+                </span>
             </div>
             <div class="flex items-center gap-2 ">
-                <div
-                    class="group relative py-1 rounded-md shadow-sm px-1 border border-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-50">
-                    <i class='bx bx-share-alt text-xl'></i>
-                    <div
-                        class="absolute invisible group-hover:visible -bottom-8 left-[20%] transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
-                        Share project</div>
+
+                <div class="h-6 rounded-full -space-x-2 flex items-center justify-center">
+                    <div *ngFor="let user of member(); let i = index" class="relative group -space-x-4"
+                        [style.z-index]="member()?.length ?? 0 - i">
+                        <div class="w-9 h-9">
+                            <img [src]="user.image || 'https://ui-avatars.com/api/?name=' + user.fullName + '&background=e5e7eb&color=6b7280&size=135'"
+                                [alt]="user.fullName" (error)="onImageError($event)"
+                                class="w-full h-full rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform duration-200 cursor-pointer" />
+                        </div>
+                        <div
+                            class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-8 py-1 bg-gray-900 text-white text-xs rounded whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-50">
+                            {{ user.fullName }}
+                            <div
+                                class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div
                     class="group relative py-1 rounded-md shadow-sm px-1 border border-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-50">
-                    <i class='bx bx-fullscreen text-xl'></i>
+                    <i class='bx text-gray-600 bx-share-alt text-xl'></i>
                     <div
                         class="absolute invisible group-hover:visible -bottom-8 left-[20%] transform -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
-                        Toggle fullscreen</div>
+                        Share project</div>
                 </div>
             </div>
         </div>
@@ -50,11 +63,11 @@
                     </div>
                 </div>
                 <i class='group-hover:opacity-0 text-slate-600 bx {{tab.icon}} text-xl mr-1'></i>
-                <span class="text-[#353232] text-[13px] font-medium  " >{{tab.label}}</span>
+                <span class="text-[#504f4f]  font-arial text-[14.8px] font-medium  ">{{tab.label}}</span>
                 <button (click)="toggleMenu($event, tab.id + '-menu')"
                     class="invisible absolute -left-2  group-hover:visible ml-2 p-1 hover:bg-[#F4F5F7] ">
                     <i class='bx bx-dots-vertical-rounded'
-                        [ngClass]="{'text-[#0052CC]': activeTab === tab.id, 'text-[#42526E]': activeTab !== tab.id}"></i>
+                        [ngClass]="{'text-[#0052CC]': activeTab === tab.id, 'text-[#504f4f]': activeTab !== tab.id}"></i>
                 </button>
 
             </div>

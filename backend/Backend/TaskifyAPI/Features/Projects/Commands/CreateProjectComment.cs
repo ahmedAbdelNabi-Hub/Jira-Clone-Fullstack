@@ -9,6 +9,7 @@ namespace TaskifyAPI.Features.Projects.Commands
             string Key,
             string Description,
             string LogoUrl,
-            int OrganizationId
+            int OrganizationId,
+            string UserId
         ) : IRequest<BaseApiResponse>;
 }

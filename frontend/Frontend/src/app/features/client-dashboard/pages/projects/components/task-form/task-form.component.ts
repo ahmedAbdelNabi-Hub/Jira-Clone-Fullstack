@@ -1,3 +1,4 @@
+// Updated task-form.component.ts
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -7,28 +8,12 @@ import { SelectModule } from 'primeng/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ButtonModule } from 'primeng/button';
+import { WorkItemStatus } from '../../../../../../core/enum/WorkItemStatus';
+import { TaskPriority } from '../../../../../../core/enum/TaskPriority';
+import { TaskType } from '../../../../../../core/enum/TaskType';
+import { UserAssignmentDropdownComponent } from "../user-assignment-dropdown/user-assignment-dropdown/user-assignment-dropdown.component";
 
-
-export enum WorkItemStatus {
-  ToDo = 0,
-  InProgress = 1,
-  Done = 2,
-  Blocked = 3
-}
-
-export enum TaskType {
-  Task = 0,
-  Bug = 1,
-  Story = 2,
-  Epic = 3
-}
-
-export enum TaskPriority {
-  Low = 0,
-  Medium = 1,
-  High = 2,
-  Critical = 3
-}
+// Import the new dropdown component
 
 interface TaskItem {
   title: string;
@@ -54,7 +39,8 @@ interface TaskItem {
     FloatLabelModule,
     MultiSelectModule,
     ButtonModule,
-  ],
+    UserAssignmentDropdownComponent
+],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
@@ -64,21 +50,18 @@ export class TaskFormComponent implements OnInit {
 
   taskForm!: FormGroup;
   isSubmitting = false;
-  showDebug = false; // Set to true for debugging
+  showDebug = false;
 
   statusOptions = [
     { label: 'To Do', value: WorkItemStatus.ToDo, icon: 'bx bx-list-ul' },
     { label: 'In Progress', value: WorkItemStatus.InProgress, icon: 'bx bx-time' },
     { label: 'Done', value: WorkItemStatus.Done, icon: 'bx bx-check-circle' },
-    { label: 'Blocked', value: WorkItemStatus.Blocked, icon: 'bx bx-block' }
   ];
-  
 
   typeOptions = [
     { label: 'Task', value: TaskType.Task, icon: 'bx bx-check' },
     { label: 'Bug', value: TaskType.Bug, icon: 'bx bx-bug' },
     { label: 'Story', value: TaskType.Story, icon: 'bx bx-book' },
-    { label: 'Epic', value: TaskType.Epic, icon: 'bx bx-trophy' }
   ];
 
   priorityOptions = [
@@ -100,11 +83,14 @@ export class TaskFormComponent implements OnInit {
     { id: 3, name: 'Sprint 3' }
   ];
 
-  users = [
-    { id: 1, name: 'Ahmed', avatar: 'https://i.pravatar.cc/150?img=3' },
-    { id: 2, name: 'Sarah', avatar: 'https://i.pravatar.cc/150?img=5' },
-    { id: 3, name: 'Omar', avatar: 'https://i.pravatar.cc/150?img=7' },
-    { id: 4, name: 'Fatima', avatar: 'https://i.pravatar.cc/150?img=9' }
+  // Updated users array with email for better search functionality
+  users: any[] = [
+    { id: 1, name: 'Ahmed Hassan', avatar: 'https://i.pravatar.cc/150?img=3', email: 'ahmed.hassan@company.com' },
+    { id: 2, name: 'Sarah Johnson', avatar: 'https://i.pravatar.cc/150?img=5', email: 'sarah.johnson@company.com' },
+    { id: 3, name: 'Omar Ali', avatar: 'https://i.pravatar.cc/150?img=7', email: 'omar.ali@company.com' },
+    { id: 4, name: 'Fatima Ahmed', avatar: 'https://i.pravatar.cc/150?img=9', email: 'fatima.ahmed@company.com' },
+    { id: 5, name: 'John Smith', avatar: 'https://i.pravatar.cc/150?img=11', email: 'john.smith@company.com' },
+    { id: 6, name: 'Maria Garcia', avatar: 'https://i.pravatar.cc/150?img=13', email: 'maria.garcia@company.com' }
   ];
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
@@ -121,6 +107,10 @@ export class TaskFormComponent implements OnInit {
       projectId: [this.projects[0].id, Validators.required],
       assigneeIds: [[]]
     });
+  }
+
+  onUserAssignmentChange(selectedUserIds: string[]): void {
+    this.taskForm.patchValue({ assigneeIds: selectedUserIds });
   }
 
   submit(): void {
@@ -149,11 +139,9 @@ export class TaskFormComponent implements OnInit {
         error: (err) => {
           console.error('Failed to submit task:', err);
           this.isSubmitting = false;
-          // You might want to show a toast or error message here
         }
       });
     } else {
-      // Mark all fields as touched to show validation errors
       Object.keys(this.taskForm.controls).forEach(key => {
         this.taskForm.get(key)?.markAsTouched();
       });

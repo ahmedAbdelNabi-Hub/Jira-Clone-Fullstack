@@ -5,8 +5,6 @@ import { CarMapComponent } from "./car-map/car-map.component";
 import { AuthService } from './core/services/AuthService.service';
 import { ToastComponent } from "./shared/components/toast/toast.component";
 
-
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,8 +12,13 @@ import { ToastComponent } from "./shared/components/toast/toast.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   encapsulation: ViewEncapsulation.None
-
 })
-export class AppComponent {
+
+export class AppComponent implements OnInit {
+  constructor(private authService: AuthService) { }
+
+  ngOnInit() {
+    this.authService.fetchCurrentUser().subscribe(); 
+  }
 
 }

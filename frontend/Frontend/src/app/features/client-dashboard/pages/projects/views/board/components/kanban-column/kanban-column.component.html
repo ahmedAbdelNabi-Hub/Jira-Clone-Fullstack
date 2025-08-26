@@ -1,0 +1,20 @@
+<!-- kanban-column.component.html -->
+<div [ngClass]="{ 'drag-over': dragOverColumn === status }" class="bg-white kanban-column rounded-lg shadow-sm border" (dragover)="dragOver.emit($event)" (drop)="onDrop($event)"
+    (dragenter)="dragEnter.emit($event)" (dragleave)="dragLeave.emit($event)">
+
+    <div class="p-3 border-b  " [ngClass]="getHeaderBgColor(status)">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+            <h2 class="text-sm font-medium">{{ title }}</h2>
+            <span class="bg-[#4e81ed] text-white px-1.5 py-0.5 rounded-full text-xs">
+                {{ tasks.length }}
+            </span>
+        </div>
+    </div>
+
+    <div class="p-2 min-h-[12rem] space-y-2">
+        <app-task-card *ngFor="let task of tasks" [task]="task" (dragStart)="onCardDragStart($event, task)"
+            (dragEnd)="onCardDragEnd($event)">
+        </app-task-card>
+    </div>
+</div>

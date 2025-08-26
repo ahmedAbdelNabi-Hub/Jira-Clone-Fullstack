@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Modals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,9 @@ namespace Taskify.Core.Modals
         public Backlog? Backlog { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; } = null!;
+        public ICollection<TaskAssignment> TaskAssignments { get; set; }
+        public ICollection<TaskNote> Notes { get; set; } = new List<TaskNote>();
+
+
     }
 }

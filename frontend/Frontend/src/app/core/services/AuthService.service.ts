@@ -121,8 +121,6 @@ export class AuthService {
     return this._Http.post<IAuthResponse>(this.baseUrl + 'register', formData);
   }
 
-
-
   public loginWithGoogle(tokenId: string): Observable<IAuthResponse> {
     return this._Http.post<IAuthResponse>(this.baseUrl + 'google-login?TokenId=' + tokenId, {});
   }

@@ -1,3 +1,4 @@
+
 .sprint-column {
     min-height: 400px;
     background-color: #f9fafb;
@@ -124,7 +125,7 @@
 }
 
 :host ::ng-deep .p-dialog-header .p-dialog-title {
-    
+
     font-size: 14px !important;
 
 }

@@ -1,0 +1,39 @@
+:host ::ng-deep .p-dialog-header {
+    box-sizing: border-box;
+    border-width: 0;
+    font-size: 11px !important;
+    padding-top: 2px;
+    padding-inline: 20px;
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    z-index: 100;
+}
+
+:host ::ng-deep .p-dialog-header .p-dialog-title {
+    font-size: 14px !important;
+}
+
+:host ::ng-deep .p-dialog-close-button {
+    background: #f6f6ffd7;
+    border: transparent !important;
+    color: #101111 !important;
+    width: 30px;
+    height: 28px;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
+:host ::ng-deep .p-dialog-close-button:hover {
+    background: rgba(108, 117, 125, 0.1);
+    color: #495057;
+}
+
+:host ::ng-deep .p-dialog-close-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #c7d2fe;
+}
+
+:host ::ng-deep .p-dialog {
+    border-radius: 6px !important;
+}

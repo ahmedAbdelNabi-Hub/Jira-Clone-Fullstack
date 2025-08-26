@@ -1,3 +1,4 @@
+
 <form [formGroup]="taskForm" (ngSubmit)="submit()" class="space-y-4 px-2 max-w-2xl mx-auto">
     <div class="form-group w-full">
         <label for="title" class="block text-base font-semibold text-gray-700 mb-2">
@@ -24,10 +25,7 @@
             <span class="absolute top-3 left-3 text-gray-500">
                 <i class="bx bx-message-detail"></i>
             </span>
-            <textarea
-                id="description"
-                formControlName="description"
-                rows="4"
+            <textarea id="description" formControlName="description" rows="4"
                 class="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg outline-none shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
                 placeholder="Enter detailed task description...">
             </textarea>
@@ -83,9 +81,10 @@
 
         <!-- Project -->
         <div class="w-full">
-            <p class="block text-sm font-semibold text-gray-600 px-1 mb-2">Project <span class="text-red-500">*</span></p>
-            <p-select inputId="project" formControlName="projectId" [options]="projects" optionLabel="name" optionValue="id"
-                class="w-full">
+            <p class="block text-sm font-semibold text-gray-600 px-1 mb-2">Project <span class="text-red-500">*</span>
+            </p>
+            <p-select inputId="project" formControlName="projectId" [options]="projects" optionLabel="name"
+                optionValue="id" class="w-full">
             </p-select>
         </div>
     </div>
@@ -98,42 +97,27 @@
         </p-select>
     </div>
 
-    <!-- Assign Users -->
+    <!-- Assign Users - Using Custom Dropdown Component -->
     <div class="w-full mt-4">
-        <p class="block text-sm font-semibold text-gray-600 px-1 mb-2">Assign Users</p>
-        <p-multiselect formControlName="assigneeIds" [options]="users" optionLabel="name" optionValue="id"
-            display="chip" placeholder="Select users to assign" class="w-full">
-            <ng-template let-user pTemplate="item">
-                <div class="flex items-center">
-                    <img [src]="user.avatar" class="w-6 h-6 rounded-full mr-2" alt="{{user.name}}" />
-                    <span class="text-sm">{{ user.name }}</span>
-                </div>
-            </ng-template>
-
-            <ng-template let-user pTemplate="selectedItem">
-                <div class="flex items-center">
-                    <img [src]="user.avatar" class="w-6 h-6 rounded-full mr-2" alt="{{user.name}}" />
-                    <span class="text-sm">{{ user.name }}</span>
-                </div>
-            </ng-template>
-        </p-multiselect>
+        <label class="block text-sm font-semibold text-gray-600 px-1 mb-2">
+            Assign Users
+        </label>
+        <app-user-assignment-dropdown [availableUsers]="users"
+            [selectedUserIds]="taskForm.get('assigneeIds')?.value || []"
+            (selectionChange)="onUserAssignmentChange($event)" placeholder="Search and select users to assign...">
+        </app-user-assignment-dropdown>
+        <small class="text-gray-500 mt-1 block">
+            Search by name or email to quickly find and assign team members
+        </small>
     </div>
-
     <!-- Submit Button -->
     <div class="flex flex-col sm:flex-row items-end justify-end gap-4 mt-10  ">
-        <p-button type="submit" 
-            label="Create Task" 
-            icon="pi pi-plus" 
-            [disabled]="taskForm.invalid"
-            [loading]="isSubmitting" 
-            class="w-auto transform hover:opacity-90 transition-all"
+        <p-button type="submit" label="Create Task" icon="pi pi-plus" [disabled]="taskForm.invalid"
+            [loading]="isSubmitting" class="w-auto transform hover:opacity-90 transition-all"
             styleClass="bg-blue-500 border-none text-white text-sm px-4 py-2 rounded-md">
         </p-button>
 
-        <p-button type="button" 
-            label="Cancel" 
-            severity="secondary" 
-            (onClick)="onCancel()"
+        <p-button type="button" label="Cancel" severity="secondary" (onClick)="onCancel()"
             class="w-auto transform hover:opacity-90 transition-all"
             styleClass="bg-gray-500 border-none text-white text-sm px-4 py-2 rounded-md">
         </p-button>

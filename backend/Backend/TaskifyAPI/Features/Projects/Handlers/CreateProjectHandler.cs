@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Modals;
+using MediatR;
 using Taskify.Contracts.DTOs.CustomResponses;
 using Taskify.Core.Interface.UnitOfWork;
 using Taskify.Core.Modals;
@@ -34,8 +35,16 @@ namespace TaskifyAPI.Features.Projects.Handlers
             };
 
             await _unitOfWork.Repository<Project>().AddAsync(project);
-            await _unitOfWork.SaveChangeAsync();
 
+            var projectMember = new ProjectMember
+            {
+                Project = project,
+                UserId = request.UserId,
+                Role = "Owner",
+            };
+
+            await _unitOfWork.Repository<ProjectMember>().AddAsync(projectMember);
+            await _unitOfWork.SaveChangeAsync();
             return new BaseApiResponse(201, "Project created successfully");
 
         }

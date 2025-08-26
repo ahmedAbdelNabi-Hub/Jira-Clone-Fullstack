@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Features.Organizations.Queries;
 using System.Security.Claims;
 using Taskify.Contracts.DTOs._Organization;
 using Taskify.Contracts.DTOs.CustomResponses;
@@ -21,6 +22,45 @@ namespace TaskifyAPI.Controllers
         {
             _mediator = mediator;
         }
+
+        [Authorize]
+        [HttpGet("/api/v1/organization/by-userId")]
+        public async Task<IActionResult> GetByUserId()
+        {
+            var userId = User.GetUserId();
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User not authenticated");
+
+            var result = await _mediator.Send(new GetOrganizationByUserIdQuery(userId));
+            if (result == null)
+                return NotFound(new BaseApiResponse(StatusCodes.Status404NotFound, "Organization not found"));
+
+            var dto = new OrganizationDTO
+            {
+                Id = result.Id,
+                Name = result.Name,
+                Slug = result.Slug,
+                Type = result.Type,
+                Image = result.ImageUrl
+            };
+            return StatusCode(200, dto);
+        }
+
+        [Authorize]
+        [HttpGet("/api/v1/organization/{orgId}/members")]
+        public async Task<IActionResult> GetMembersByOrganizationId(int orgId)
+        {
+
+            var members = await _mediator.Send(new GetOrganizationMemberQuery(orgId));
+
+            if (members == null || members.Count == 0)
+                return NotFound(new BaseApiResponse(StatusCodes.Status404NotFound, "No members found"));
+
+            return Ok(members);
+        }
+
+
 
         [Authorize]
         [HttpPost("/api/v1/organization/create")]
@@ -49,28 +89,9 @@ namespace TaskifyAPI.Controllers
             return StatusCode(result.statusCode, result);
         }
 
-        [Authorize]
-        [HttpGet("/api/v1/organization/by-userId")]
-        public async Task<IActionResult> GetByUserId()
-        {
-            var userId = User.GetUserId();
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("User not authenticated");
+     
 
-            var result = await _mediator.Send(new GetOrganizationByUserIdQuery(userId));
-            if (result == null)
-                return NotFound(new BaseApiResponse(StatusCodes.Status404NotFound, "Organization not found"));
-
-            var dto = new OrganizationDTO
-            {
-                Id = result.Id,
-                Name = result.Name,
-                Slug = result.Slug,
-                Type = result.Type,
-                Image = result.ImageUrl
-            };
-            return StatusCode(200, dto);
-        }
+        
     }
 }

@@ -13,7 +13,7 @@ namespace Taskify.Core.Interface.UnitOfWork
         Task BeginTransactionAsync();
         Task<bool> CommitAsync();
         Task RollbackAsync();
-        Task<int> SaveChangeAsync();
+        Task<int> SaveChangeAsync(CancellationToken cancellationToken = default);
         IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseModal;
 
     }

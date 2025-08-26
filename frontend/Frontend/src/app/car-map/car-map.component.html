@@ -1,4 +1,78 @@
-<div style="margin-bottom: 1rem;">
+<div class="spotify-sidebar" id="sidebar">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-semibold">Your Library</h2>
+    <div class="flex items-center space-x-2">
+      <button class="bg-[#1f1f1f] hover:bg-[#2a2a2a] rounded-full p-1 transition">
+        <i class='bx bx-plus text-xl'></i>
+      </button>
+      <button class="hover:bg-[#1f1f1f] rounded-full p-1 transition">
+        <i class='bx bx-fullscreen text-lg'></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Buttons -->
+  <div class="flex space-x-2 mb-4">
+    <button class="bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-1 rounded-full text-sm">Playlists</button>
+    <button class="bg-[#2a2a2a] hover:bg-[#3a3a3a] px-3 py-1 rounded-full text-sm">Artists</button>
+  </div>
+
+  <!-- Search & Sort -->
+  <div class="flex items-center justify-between mb-4">
+    <i class='bx bx-search text-xl text-gray-400'></i>
+    <div class="flex items-center space-x-1 text-gray-400 text-sm cursor-pointer hover:text-white">
+      <span>Recents</span>
+      <i class='bx bx-list-ul text-lg'></i>
+    </div>
+  </div>
+
+  <!-- Playlist Items -->
+  <div class="space-y-3">
+    <!-- Playlist Item -->
+    <div class="flex items-center space-x-3 hover:bg-[#1f1f1f] p-2 rounded-lg cursor-pointer transition">
+      <img src="https://i.scdn.co/image/ab67616d0000b273f9f6cfd2b2a499ccaa99f49f" class="w-12 h-12 rounded"
+        alt="Liked Songs">
+      <div>
+        <p class="text-white text-sm font-medium">Liked Songs</p>
+        <p class="text-gray-400 text-xs">📌 Playlist • 1 song</p>
+      </div>
+    </div>
+
+    <!-- Playlist Item -->
+    <div class="flex items-center space-x-3 hover:bg-[#1f1f1f] p-2 rounded-lg cursor-pointer transition">
+      <img src="https://i.scdn.co/image/ab67616d0000b273b35c2b9d6b31fbfa4d73aa7e" class="w-12 h-12 rounded"
+        alt="Infinity">
+      <div>
+        <p class="text-white text-sm font-medium">Infinity</p>
+        <p class="text-gray-400 text-xs">Playlist • Ahmed Abd alnaby</p>
+      </div>
+    </div>
+
+    <!-- Playlist Item -->
+    <div class="flex items-center space-x-3 hover:bg-[#1f1f1f] p-2 rounded-lg cursor-pointer transition">
+      <img src="https://i.scdn.co/image/ab6761610000e5eb9b9b9b9b9b9b9b9b9b9b9b9" class="w-12 h-12 rounded"
+        alt="Bronze Radio Return Mix">
+      <div>
+        <p class="text-white text-sm font-medium">Bronze Radio Return Mix</p>
+        <p class="text-gray-400 text-xs">Playlist • Spotify</p>
+      </div>
+    </div>
+
+    <!-- Playlist Item -->
+    <div class="flex items-center space-x-3 hover:bg-[#1f1f1f] p-2 rounded-lg cursor-pointer transition">
+      <img src="https://i.scdn.co/image/ab6761610000e5ebcd7f42e3ee3f1dd80fca47a0" class="w-12 h-12 rounded"
+        alt="Fitz and The Tantrums">
+      <div>
+        <p class="text-white text-sm font-medium">Fitz and The Tantrums</p>
+        <p class="text-gray-400 text-xs">Artist</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div style="margin-bottom: 1rem;">
     <input type="text" [(ngModel)]="searchQuery" (input)="fetchSuggestions()" placeholder="Search location in Egypt..." />
     <ul *ngIf="suggestions.length > 0" class="suggestions">
       <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
@@ -9,4 +83,4 @@
   
   <p>Or click anywhere on the map to go there.</p>
   <div id="map" style="height: 500px;"></div>
-  
+   -->

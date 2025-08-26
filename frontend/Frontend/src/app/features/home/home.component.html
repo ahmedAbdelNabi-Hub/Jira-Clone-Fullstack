@@ -204,58 +204,202 @@
         <!-- End Collapse -->
     </nav>
 </header>
-<!-- ========== END HEADER ========== -->
-<div class="relative mt-10" x-data="{ state: false }">
-    <div class="absolute overflow-hidden -z-10 inset-0 blur-xl h-[580px]" style="
-        background: linear-gradient(
-          143.6deg,
-          rgba(192, 132, 252, 0) 20.79%,
-          rgba(122, 243, 151, 0.26) 40.92%,
-          rgba(204, 171, 238, 0) 70.35%
-        );
-      "></div>
-    <section>
-        <div
-            class="flex  flex-col lg:flex-row lg:items-center max-w-[85rem] justify-between  mx-auto px-4 py-10 gap-12 text-gray-600 ">
-            <div class="w-full lg:w-[40%] space-y-5 max-w-4xl mx-auto ">
-                <h1 class="text-sm text-indigo-600 font-medium">
-                    PROJECT MANAGEMENT
-                </h1>
-                <h2 class="text-4xl text-gray-800 font-bold  md:text-5xl">
-                    The all-in-one platform for project management
-                </h2>
-                <p class="max-w-2xl ">
-                    Stay on top of tasks, collaborate seamlessly, and streamline your workflow with powerful project
-                    management—just like Jira, but tailored to your needs. Now with built-in chat for real-time
-                    discussions. </p>
-                <ul class="space-y-4  text-sm px-5">
-                    <li class="flex items-start">
-                        <span class="text-gray-700 font-medium">All-in-One Knowledge & Work Management</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-gray-700 font-medium">Tailored Views for Cross-Functional Projects</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-gray-700 font-medium">Increase Efficiency with Automation & Reporting</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-gray-700 font-medium">Standardize & Scale Project Management Best
-                            Practices</span>
-                    </li>
-                </ul>
-                <button routerLink="login"
-                    class="z-[1000] py-2 px-4 bg-black text-white  hover:bg-neutral-600 font-medium duration-150 border rounded-md">
-                    Get Started
-                </button>
-            </div>
-            <div class="w-full -z-20 lg:w-[60%]">
+<div class="bg-slate-50 overflow-x-hidden">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 grid-pattern opacity-30"></div>
 
-                <video autoplay loop src="SMAR_Morphy_White_EN_0.mp4"></video>
+    <!-- Blur Orbs -->
+    <div class="absolute top-40 right-20 w-96 h-96 bg-blue-400 rounded-full blur-orb"></div>
+    <div class="absolute bottom-20 left-1/2 w-72 h-64 bg-green-300 rounded-full blur-orb"></div>
+
+    <!-- Main Content -->
+    <div class="relative z-10">
+        <!-- Hero Section -->
+        <section class="py-20 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+                    <!-- Left Content -->
+                    <div class="lg:w-1/2 space-y-8">
+                        <div class="space-y-4">
+                            <span
+                                class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 text-sm font-medium rounded-full">
+                                PROJECT MANAGEMENT
+                            </span>
+                            <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                                The all-in-one platform for
+                                <span class="gradient-text">project management</span>
+                            </h1>
+                            <p class="text-xl text-gray-600 leading-relaxed">
+                                Stay on top of tasks, collaborate seamlessly, and streamline your workflow with powerful
+                                project management—just like Jira, but tailored to your needs. Now with built-in chat
+                                for real-time discussions.
+                            </p>
+                        </div>
+
+                        <!-- Features List -->
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">All-in-One Knowledge & Work Management</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">Tailored Views for Cross-Functional
+                                    Projects</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">Increase Efficiency with Automation &
+                                    Reporting</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">Standardize & Scale Project Management Best
+                                    Practices</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button
+                                class="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+                                Get Started Free
+                            </button>
+                            <button
+                                class="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-200">
+                                Watch Demo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Dashboard Mockup -->
+                    <div class="lg:w-1/2 floating">
+                        <div class="dashboard-mockup bg-white rounded-lg shadow-xl p-6 space-y-6">
+                            <!-- Project Header -->
+                            <div class="flex items-center justify-between border-b pb-4">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://raw.githubusercontent.com/microsoft/fluentui-system-icons/master/assets/Project/SVG/ic_fluent_project_24_regular.svg" alt="Project Icon" class="w-8 h-8">
+                                    <div>
+                                        <h3 class="text-xl font-semibold text-gray-900">Marketing Campaign</h3>
+                                        <p class="text-sm text-gray-500">Company Project • MAR-2024</p>
+                                    </div>
+                                </div>
+                                <button class="text-blue-600 hover:text-blue-700">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Project Progress -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-600">Progress</span>
+                                    <span class="font-medium">65%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Stats -->
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
+                                        <span class="text-sm text-gray-600">To Do</span>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 mt-2">12</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                        <span class="text-sm text-gray-600">In Progress</span>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 mt-2">8</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="text-sm text-gray-600">Done</span>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 mt-2">15</p>
+                                </div>
+                            </div>
+
+                            <!-- Recent Issues -->
+                            <div class="space-y-4">
+                                <h4 class="font-medium text-gray-900">Recent Issues</h4>
+                                <div class="space-y-3">
+                                    <div
+                                        class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="flex-1">
+                                            <div class="flex items-center space-x-2">
+                                                <span
+                                                    class="px-2 py-1 text-xs bg-red-100 text-red-700 rounded-full">Bug</span>
+                                                <h5 class="text-sm font-medium text-gray-900">Homepage Layout Issue</h5>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Updated 2 hours ago</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <img src="assets/avatar1.jpg" alt="Assignee" class="w-6 h-6 rounded-full">
+                                            <span class="text-xs font-medium text-gray-500">MAR-123</span>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                                        <div class="flex-1">
+                                            <div class="flex items-center space-x-2">
+                                                <span
+                                                    class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">Feature</span>
+                                                <h5 class="text-sm font-medium text-gray-900">Add Social Share Buttons
+                                                </h5>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Updated 5 hours ago</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <img src="assets/avatar2.jpg" alt="Assignee" class="w-6 h-6 rounded-full">
+                                            <span class="text-xs font-medium text-gray-500">MAR-124</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+
+    </div>
 </div>
-
 
 <div class="py-14">
     <div class="max-w-screen-xl mx-auto px-4 md:px-8">

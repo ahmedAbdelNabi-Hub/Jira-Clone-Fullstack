@@ -1,0 +1,74 @@
+/* Smoother dragging effect */
+.task-card.dragging {
+    opacity: 0.7;
+    transform: rotate(3deg) scale(1.03);
+    cursor: grabbing !important;
+    z-index: 999;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Subtle hover effect */
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Fade-in on insert */
+.task-enter {
+    animation: fadeSlideIn 0.3s ease-out;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Shows hand when hovering */
+.task-card {
+    cursor: grab;
+}
+
+.task-card:active {
+    cursor: grabbing;
+}
+
+.avatar-group {
+    position: relative;
+}
+
+.avatar:hover {
+    z-index: 100 !important;
+}
+
+/* Smooth animations */
+.avatar img {
+    transition: all 0.2s ease-in-out;
+}
+
+.avatar:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Tooltip animations */
+.avatar .tooltip-content {
+    transform: translateX(-50%) translateY(-8px);
+    transition: all 0.3s ease-in-out;
+}
+
+.avatar:hover .tooltip-content {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Prevent tooltip overflow */
+.avatar-group {
+    padding-top: 40px;
+    margin-top: -32px;
+}

@@ -9,5 +9,6 @@ namespace TaskifyAPI.Features.Sprints.Commands
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int ProjectId { get; set; }
+        public string Goal { get ; set; }   
     }
 }

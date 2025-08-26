@@ -1,0 +1,137 @@
+<div class="max-w-2xl mx-auto px-2 py-4 mt-2">
+    <p class="text-sm py-2 font-bold text-gray-600">{{projectName}} </p>
+    <p class="text-sm">Required fields are marked with an asterisk * </p>
+
+    <form [formGroup]="sprintForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div class="space-y-2 mt-5">
+            <label for="name" class="flex items-center text-sm font-medium text-gray-700">
+                <i class='bx bx-edit-alt mr-2 text-gray-500'></i>
+                Sprint name *
+            </label>
+            <div class="relative">
+                <input type="text" id="name" formControlName="name"
+                    class="w-full pl-5 pr-4 py-1.5 border border-gray-200 rounded-sm outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    [class.border-red-500]="isFieldInvalid('name')" [class.border-gray-300]="!isFieldInvalid('name')"
+                    placeholder="Enter sprint name (e.g., Sprint 1, Feature Development)"
+                    style="::placeholder { color: #9CA3AF; font-size: 0.875rem; }">
+            </div>
+            <div class="flex items-center text-sm text-red-600" *ngIf="isFieldInvalid('name')">
+                <i class='bx bx-error mr-1'></i>
+                {{ getFieldError('name') }}
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-2 mt-1">
+                <label for="startDate" class="flex items-center text-sm font-medium text-gray-700">
+                    <i class='bx bx-calendar-event mr-2 text-gray-500'></i>
+                    Start Date
+                </label>
+                <div class="relative">
+                    <input type="date" id="startDate" formControlName="startDate"
+                        class="w-full pl-10 pr-4 py-1.5 border border-gray-200 rounded-sm outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        [class.border-red-500]="isFieldInvalid('startDate') || sprintForm.errors?.['dateRange']"
+                        [class.border-gray-300]="!isFieldInvalid('startDate') && !sprintForm.errors?.['dateRange']">
+                    <i class='bx bx-calendar absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'></i>
+                </div>
+                <div class="flex items-center text-sm text-red-600" *ngIf="isFieldInvalid('startDate')">
+                    <i class='bx bx-error mr-1'></i>
+                    {{ getFieldError('startDate') }}
+                </div>
+            </div>
+
+            <div class="space-y-2 mt-1">
+                <label for="endDate" class="flex items-center text-sm font-medium text-gray-700">
+                    <i class='bx bx-calendar-check mr-2 text-gray-500'></i>
+                    End Date
+                </label>
+                <div class="relative">
+                    <input type="date" id="endDate" formControlName="endDate"
+                        class="w-full pl-10 pr-4 py-1.5 border border-gray-200 rounded-sm outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        [class.border-red-500]="isFieldInvalid('endDate') || sprintForm.errors?.['dateRange']"
+                        [class.border-gray-300]="!isFieldInvalid('endDate') && !sprintForm.errors?.['dateRange']">
+                    <i class='bx bx-calendar absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400'></i>
+                </div>
+                <div class="flex items-center text-sm text-red-600" *ngIf="isFieldInvalid('endDate')">
+                    <i class='bx bx-error mr-1'></i>
+                    {{ getFieldError('endDate') }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Range Error -->
+        <div class="flex items-center text-sm text-red-600"
+            *ngIf="sprintForm.errors?.['dateRange'] && (sprintForm.get('startDate')?.touched || sprintForm.get('endDate')?.touched)">
+            <i class='bx bx-error mr-1'></i>
+            {{ getFieldError('dateRange') }}
+        </div>
+        <div class="space-y-2 mt-5">
+            <label for="goal" class="flex items-center text-sm font-medium text-gray-700">
+                <i class='bx bx-target-lock mr-2 text-gray-500'></i>
+                Sprint Goal *
+            </label>
+            <div class="relative">
+                <textarea formControlName="goal" id="goal" rows="3"
+                    class="w-full pl-5 pr-4 py-1.5 border border-gray-200 rounded-sm outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    [class.border-red-500]="isFieldInvalid('goal')" [class.border-gray-300]="!isFieldInvalid('goal')"
+                    placeholder="Enter sprint goal (e.g., Implement core user authentication features)"></textarea>
+            </div>
+            <div class="flex items-center text-sm text-red-600" *ngIf="isFieldInvalid('goal')">
+                <i class='bx bx-error mr-1'></i>
+                {{ getFieldError('goal') }}
+            </div>
+        </div>
+        <!-- Active Status Toggle -->
+        <div class="space-y-2 mt-5">
+            <div class="flex items-center space-x-3">
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" formControlName="isActive" class="sr-only peer">
+                    <div
+                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-sm peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-sm after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                        <i
+                            class='bx bx-check absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity'></i>
+                    </div>
+                </label>
+                <span class="flex items-center text-sm font-medium text-gray-700">
+                    <i class='bx bx-play-circle mr-2 text-gray-500'></i>
+                    Set as Active Sprint
+                </span>
+            </div>
+            <div class="flex items-center text-xs text-gray-500 ml-14">
+                <i class='bx bx-info-circle mr-1'></i>
+                Active sprints will be highlighted in the project dashboard
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-6">
+            <button type="button"
+                class="flex items-center justify-center px-6 py-1.5 border border-gray-200 text-gray-700 bg-white rounded-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+                (click)="onReset()">
+                <i class='bx bx-reset mr-2'></i>
+                Reset
+            </button>
+
+            <button type="submit"
+                class="flex items-center justify-center px-6 py-1.5 bg-blue-600 text-white rounded-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                [disabled]="sprintForm.invalid">
+
+                <ng-container *ngIf="!loading()">
+                    <i class='bx bx-plus-circle mr-2'></i>
+                    {{buttonType}} Sprint
+                </ng-container>
+                <ng-container *ngIf="loading()">
+                    <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                </ng-container>
+            </button>
+        </div>
+
+        <div class="bg-gray-100 p-4 rounded-sm space-y-2 text-sm" *ngIf="false">
+            <h4 class="font-semibold text-gray-900">Form Debug Info:</h4>
+            <p class="text-gray-700">Form Valid: {{ sprintForm.valid }}</p>
+            <p class="text-gray-700">Form Value: {{ sprintForm.value | json }}</p>
+            <p class="text-gray-700">Form Errors: {{ sprintForm.errors | json }}</p>
+        </div>
+
+    </form>
+</div>

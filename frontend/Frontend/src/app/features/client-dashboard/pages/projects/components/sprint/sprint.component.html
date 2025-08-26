@@ -1,0 +1,168 @@
+<div class="mb-4">
+    <div class="bg-[#f8f8f8] rounded-md px-2">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center cursor-pointer p-3 rounded-t-md">
+            <i (click)="isOpen = !isOpen" class="mr-2 text-xl"
+                [ngClass]="isOpen ? 'bx bx-chevron-up' : 'bx bx-chevron-down'"></i>
+            <div class="flex flex-col md:flex-row md:items-center gap-2 w-full md:w-[50%] mb-3 md:mb-0">
+                <h2 class="font-semibold text-[15px]">{{sprint.name}}</h2>
+                <div class="flex flex-row items-center gap-2">
+                    <span class="text-gray-600 text-[13px]">Start <span class="font-bold">:</span> {{sprint.startDate |
+                        date}}</span>
+                    <span class="text-gray-600 text-[13px]">End <span class="font-bold">:</span> {{sprint.endDate |
+                        date}}</span>
+                    <p class="text-gray-700 text-[14px]">({{sprint.tasks.length}} work items)</p>
+                </div>
+            </div>
+            <div
+                class="flex flex-col md:flex-row items-start md:items-end justify-start md:justify-end gap-4 w-full md:w-[50%]">
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="relative">
+                        <button
+                            class="px-3 text-sm py-0.5 border bg-[#f9f8f8] font-semibold border-gray-300 hover:bg-gray-50 active:bg-gray-100 transition-colors duration-200 text-black rounded-md flex items-center gap-2">
+                            <span *ngIf="sprint.status=='NotStarted'" (click)="setStatus(sprint.status)">Start
+                                Sprint</span>
+                            <span *ngIf="sprint.status=='Started'" (click)="setStatus(sprint.status)">Completed
+                                Sprint</span>
+                            <span class="text-gray-300 cursor-not-allowed " *ngIf="sprint.status=='Completed'">Completed</span>
+                            <span *ngIf="isLoading" class="loader"></span>
+                        </button>
+                        <div *ngIf="showStatusConfirm"
+                            class="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
+                            <div class="flex items-start gap-2 mb-3">
+                                <i class="bx bx-collection text-blue-500 text-lg flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-900">Start Sprint</h4>
+                                    <p class="text-xs text-gray-600 mt-1">
+                                        Are you sure you want to start sprint <span
+                                            class="font-medium">{{sprint.name}}</span>
+                                        This action cannot be undone.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-end gap-2">
+                                <button (click)="showStatusConfirm = false"
+                                    class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded transition-colors">
+                                    Cancel
+                                </button>
+                                <button
+                                    class="px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors">
+                                    <span *ngIf="sprint.status=='NotStarted'"
+                                        (click)="changeStatus(sprint.id,sprint.status)">Start
+                                    </span>
+                                    <span *ngIf="sprint.status=='Started'"
+                                        (click)="changeStatus(sprint.id,sprint.status)">Completed
+                                    </span>
+                                    <span *ngIf="sprint.status=='Completed'">Completed </span>
+                                    <span *ngIf="false" class="loader"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button (click)="toggleActionMenu()" class="p-1 hover:bg-gray-100 rounded">
+                            <i class='bx bx-dots-horizontal-rounded'></i>
+                        </button>
+                        <div *ngIf="showActionMenu"
+                            class="absolute right-0 mt-1 w-36 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                            <button (click)="showDialog()"
+                                class="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all duration-200">
+                                <i class='bx bx-edit-alt'></i>
+                                <span>Edit Sprint</span>
+                            </button>
+
+                            <label for="my_modal_6"
+                                class="w-full flex cursor-pointer items-center gap-2 px-5 py-2 text-sm bg-green-600 text-white transition-all duration-200"
+                                onclick="my_modal_1.showModal()">
+                                <i class='bx bx-trash'></i>
+                                <button (click)="showActionMenu=false">Delete Sprint</button>
+                            </label>
+                            <input type="checkbox" #modalToggle id="my_modal_6" class="modal-toggle" />
+                            <div class="modal" role="dialog">
+                                <div class="modal-box">
+                                    <h3 class="text-lg font-bold text-gray-800">Delete Sprint</h3>
+                                    <p class="py-4 text-[16px] text-gray-700">
+                                        Are you sure you want to delete this sprint?
+                                        <span class=" text-red-600">All associated tasks will also be
+                                            permanently deleted.</span>
+                                    </p>
+                                    <div class="modal-action flex items-center gap-2">
+                                        <label for="my_modal_6" class="btn">Cancel</label>
+                                        <button
+                                            class="bg-green-600 px-4 py-2 rounded-md text-white flex items-center justify-center gap-2"
+                                            [disabled]="isLoading" (click)="deleteSprint()">
+                                            <ng-container *ngIf="!isLoading; else loadingTpl">
+                                                Delete
+                                            </ng-container>
+                                            <ng-template #loadingTpl>
+                                                <svg class="animate-spin h-5 w-5 text-white"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                    <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                        stroke="currentColor" stroke-width="4"></circle>
+                                                    <path class="opacity-75" fill="currentColor"
+                                                        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z">
+                                                    </path>
+                                                </svg>
+                                                <span>Deleting...</span>
+                                            </ng-template>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isOpen" class="mx-auto py-2">
+            <app-task-item (taskDeleted)="HandelDeleted($event)" *ngFor="let task of sprint.tasks" [task]="task"
+                (taskUpdated)="sentTaskToForm($event)" [sprintId]="sprint.id"></app-task-item>
+            <div *ngIf="sprint.tasks.length==0" class="text-center">
+                <div class="text-gray-900 py-10 px-4 rounded-b-md border-2 border-stone-300 border-dashed">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                        <svg class="w-24 h-24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2"
+                                stroke="#2A4157" stroke-opacity="0.24" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M22 2L13 11" stroke="#222222" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M13 2H22V11" stroke="#222222" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex flex-col text-[15px] max-w-[500px] text-center md:text-left">
+                            <p class="font-semibold">Get Started with Your Sprint</p>
+                            <p>Begin by moving tasks from the <span class="font-semibold">Backlog</span> or creating new
+                                tasks
+                                to organize your sprint workflow. Click <span class="font-semibold">Start Sprint</span>
+                                to begin tracking progress.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div (click)="visibleItemForm=true" *ngIf="!visibleItemForm"
+            class="px-4 py-3 flex items-center font-semibold gap-1 transition-all duration-100 cursor-pointer hover:bg-gray-100">
+            <i class='bx bx-plus text-xl'></i>
+            <p class="text-[15px] text-teal-800">Create</p>
+        </div>
+    </div>
+</div>
+<p-dialog [style]="{ hight: '100vw', maxWidth: '40rem' }" [modal]="true" [(visible)]="visibleItemForm">
+    <app-item-form [projectMembers]="Members" (workItemCreated)="handelCreated($event)" [task]="task"
+        [sprintId]="sprint.id"></app-item-form>
+</p-dialog>
+<p-dialog [style]="{ width: '100vw', maxWidth: '38rem' }" [modal]="true" [(visible)]="visible">
+    <app-sprint-form (sprintStatusChange)="handleSprintStatusChange($event)" [sprint]="sprint"> </app-sprint-form>
+</p-dialog>
+<dialog id="my_modal_1" class="modal">
+    <div class="modal-box">
+        <h3 class="text-lg font-bold">Hello!</h3>
+        <p class="py-4">Press ESC key or click the button below to close</p>
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">Close</button>
+            </form>
+        </div>
+    </div>
+</dialog>

@@ -1,0 +1,146 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="max-w-2xl mx-auto px-2 pt-4 pb-8 bg-white">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Create Task</h2>
+
+    <div class="space-y-2 mb-6">
+        <label for="title" class="flex items-center text-sm font-medium text-gray-700">
+            <i class='bx bx-edit-alt mr-2 text-gray-500 text-lg'></i>
+            Title *
+        </label>
+        <div class="relative">
+            <input type="text" id="title" formControlName="title"
+                class="w-full px-4 py-2 border border-gray-200 outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                [class.border-red-500]="isFieldInvalid('title')" [class.border-gray-300]="!isFieldInvalid('title')"
+                placeholder="Enter work item title">
+        </div>
+        <small class="text-gray-500 text-xs block">
+            Provide a clear and descriptive title for your work item (minimum 3 characters)
+        </small>
+        <div class="flex items-center text-sm text-red-600" *ngIf="isFieldInvalid('title')">
+            <i class='bx bx-error-circle mr-1'></i>
+            {{ getFieldError('title') }}
+        </div>
+    </div>
+
+    <div class="space-y-2 mb-6">
+        <label for="description" class="flex items-center text-sm font-medium text-gray-700">
+            <i class='bx bx-detail mr-2 text-gray-500 text-lg'></i>
+            Description
+        </label>
+        <div class="relative">
+            <textarea id="description" formControlName="description" rows="3"
+                class="w-full px-4 py-2 border border-gray-200 outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+                [class.border-red-500]="isFieldInvalid('description')"
+                [class.border-gray-300]="!isFieldInvalid('description')"
+                placeholder="Enter detailed description..."></textarea>
+        </div>
+        <small class="text-gray-500 text-xs block">
+            Add detailed information about what needs to be accomplished (optional)
+        </small>
+        <div class="flex items-center text-sm text-red-600" *ngIf="isFieldInvalid('description')">
+            <i class='bx bx-error-circle mr-1'></i>
+            {{ getFieldError('description') }}
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6">
+        <div class="space-y-2">
+            <label for="status" class="flex items-center text-sm font-medium text-gray-700">
+                <i class='bx bx-task mr-2 text-gray-500 text-lg'></i>
+                Status *
+            </label>
+            <div class="relative">
+                <select id="status" formControlName="status"
+                    class="w-full px-4 py-2 border border-gray-200 outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none bg-white"
+                    [class.border-red-500]="isFieldInvalid('status')"
+                    [class.border-gray-300]="!isFieldInvalid('status')">
+                    <option value="" disabled>Select status</option>
+                    <option *ngFor="let status of taskStatusOptions" [value]="status.value">
+                        {{ status.label }}
+                    </option>
+                </select>
+                <i
+                    class='bx bx-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl pointer-events-none'></i>
+            </div>
+            <small class="text-gray-500 text-xs block">
+                Current workflow status of the work item
+            </small>
+        </div>
+
+        <div class="space-y-2">
+            <label for="type" class="flex items-center text-sm font-medium text-gray-700">
+                <i class='bx bx-category mr-2 text-gray-500 text-lg'></i>
+                Type *
+            </label>
+            <div class="relative">
+                <select id="type" formControlName="type"
+                    class="w-full px-4 py-2 border border-gray-200 outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none bg-white"
+                    [class.border-red-500]="isFieldInvalid('type')" [class.border-gray-300]="!isFieldInvalid('type')">
+                    <option value="" disabled>Select type</option>
+                    <option *ngFor="let type of taskTypeOptions" [value]="type.value">
+                        {{ type.label }}
+                    </option>
+                </select>
+                <i
+                    class='bx bx-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl pointer-events-none'></i>
+            </div>
+            <small class="text-gray-500 text-xs block">
+                Category that best describes this work item
+            </small>
+        </div>
+
+        <div class="space-y-2 col-span-2">
+            <label for="priority" class="flex items-center text-sm font-medium text-gray-700">
+                <i class='bx bx-flag mr-2 text-gray-500 text-lg'></i>
+                Priority *
+            </label>
+            <div class="relative">
+                <select id="priority" formControlName="priority"
+                    class="w-full px-4 py-2 border border-gray-200 outline-none text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none bg-white"
+                    [class.border-red-500]="isFieldInvalid('priority')"
+                    [class.border-gray-300]="!isFieldInvalid('priority')">
+                    <option value="" disabled>Select priority</option>
+                    <option *ngFor="let priority of taskPriorityOptions" [value]="priority.value">
+                        {{ priority.label }}
+                    </option>
+                </select>
+                <i
+                    class='bx bx-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl pointer-events-none'></i>
+            </div>
+            <small class="text-gray-500 text-xs block">
+                Urgency level to help with task prioritization and resource allocation
+            </small>
+        </div>
+
+        <div class="w-full col-span-2">
+            <label class="flex items-center text-sm font-medium text-gray-700 mb-2">
+                <i class='bx bx-user mr-2 text-gray-500 text-lg'></i>
+                Assign Users
+            </label>
+            <app-user-assignment-dropdown [availableUsers]="projectMembers()"
+                [selectedUserIds]="form.get('assignedUsers')?.value || []"
+                (selectionChange)="onUserAssignmentChange($event)" placeholder="Search and select users to assign...">
+            </app-user-assignment-dropdown>
+            <small class="text-gray-500 text-xs block mt-1">
+                Select team members who will be responsible for completing this work item
+            </small>
+        </div>
+    </div>
+
+    <div class="flex justify-end space-x-3 mt-8 pt-4 border-t border-gray-200">
+        <button type="button" (click)="onReset()"
+            class="px-4 py-2 text-sm rounded-md font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+            Reset
+        </button>
+        <button type="submit" [disabled]="form.invalid"
+            class="px-4 py-2 text-sm font-medium rounded-md text-white bg-blue-600 border border-transparent hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000">
+            </div>
+            <span *ngIf="!isSubmitting()" class="relative z-10">{{buttonType}}</span>
+            <span *ngIf="isSubmitting()" class="relative z-10 flex items-center justify-center">
+                <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                {{buttonType}}...
+            </span>
+        </button>
+    </div>
+</form>

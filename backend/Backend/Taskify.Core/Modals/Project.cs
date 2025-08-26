@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Modals;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Taskify.Core.Modals
         public string Key { get; set; } 
 
         [Required]
-        public string Slug { get; set; }
+        public string Slug { get; set; } 
         public string Description { get; set; }
         public string LogoUrl { get; set; }
 
@@ -28,5 +29,7 @@ namespace Taskify.Core.Modals
         public Backlog Backlog { get; set; } = null!;
         public ICollection<Sprint> Sprints { get; set; } = new List<Sprint>();
         public ICollection<TaskItem> Tasks { get; set; } = new List<TaskItem>();
+        public ICollection<ProjectMember> ProjectMembers { get; set; } = new List<ProjectMember>();
+
     }
 }
