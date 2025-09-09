@@ -22,6 +22,7 @@ export class KanbanColumnComponent {
   @Output() dragEnter = new EventEmitter<DragEvent>();
   @Output() dragLeave = new EventEmitter<DragEvent>();
   @Output() dragOver = new EventEmitter<DragEvent>();
+  @Output() openCommend = new EventEmitter<number>();
 
   onDrop(event: DragEvent) {
     this.dropTask.emit(event);
@@ -39,7 +40,7 @@ export class KanbanColumnComponent {
       case 'todo':
         return 'bg-gray-50';
       case 'inprogress':
-        return 'bg-blue-50'; 
+        return 'bg-blue-50';
       case 'inreview':
         return 'bg-stone-100';
       case 'done':
@@ -62,6 +63,10 @@ export class KanbanColumnComponent {
       default:
         return 'bg-gray-400';
     }
+  }
+
+  handelOpenCommend(event: number): void {
+    this.openCommend.emit(event);
   }
 
 }

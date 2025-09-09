@@ -13,8 +13,8 @@ export class TaskCardComponent {
   @Input({ required: true }) task!: Task;
   @Output() dragStart = new EventEmitter<DragEvent>();
   @Output() dragEnd = new EventEmitter<DragEvent>();
+  @Output() openCommend = new EventEmitter<number>();
 
-  // Computed properties for task card styling
   priorityClass = computed(() => ({
     'bg-red-100 text-red-700': this.task.priority === 2,
     'bg-yellow-100 text-yellow-700': this.task.priority === 1,
@@ -34,5 +34,9 @@ export class TaskCardComponent {
     event.target.src = 'https://ui-avatars.com/api/?name=' +
       encodeURIComponent(event.target.alt || 'User') +
       '&background=e5e7eb&color=6b7280&size=128';
+  }
+
+  openCommentModal(taskId: number): void {
+    this.openCommend.emit(taskId);
   }
 }

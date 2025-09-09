@@ -23,10 +23,10 @@
     <!-- Kanban Board -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <app-kanban-column title="To Do" status="todo" [tasks]="todoTasks()" [dragOverColumn]="dragOverColumn()"
-            (dropTask)="onDrop($event, 0)" (dragStart)="onDragStart($event.event, $event.task)"
-            (dragEnd)="onDragEnd($event)" (dragEnter)="onDragEnter($event, 'todo')" (dragLeave)="onDragLeave($event)"
-            (dragOver)="onDragOver($event)">
+        <app-kanban-column (openCommend)="OpenCommendModal()" title="To Do" status="todo" [tasks]="todoTasks()"
+            [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 0)"
+            (dragStart)="onDragStart($event.event, $event.task)" (dragEnd)="onDragEnd($event)"
+            (dragEnter)="onDragEnter($event, 'todo')" (dragLeave)="onDragLeave($event)" (dragOver)="onDragOver($event)">
         </app-kanban-column>
 
         <app-kanban-column title="In Progress" status="inprogress" [tasks]="inProgressTasks()"
@@ -55,3 +55,7 @@
         <app-task-form></app-task-form>
     </p-drawer>
 </div>
+
+<app-comment-modal [isModalOpen]="isCommendModalOpen" [comments]="taskComments" [currentUser]="currentUserName"
+    (commentAdded)="onCommentAdded($event)">
+</app-comment-modal>

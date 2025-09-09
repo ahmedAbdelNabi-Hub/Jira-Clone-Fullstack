@@ -11,6 +11,8 @@ import { EnumLabelPipe } from '../../../../../../shared/pipes/EnumLabel.pipe';
 import { IMember } from '../../../../../../core/interfaces/IMember';
 import { FiltersComponent } from "./components/filters/filters.component";
 import { ITaskFilters } from '../../../../../../core/interfaces/ITaskFilters';
+import { CommentModalComponent, IComment } from "./components/comment-modal/comment-modal.component";
+import { DialogModule } from 'primeng/dialog';
 
 
 interface TaskAssignee {
@@ -39,7 +41,7 @@ export interface Task {
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, KanbanColumnComponent, DrawerModule, TaskFormComponent, FiltersComponent],
+  imports: [CommonModule, KanbanColumnComponent, DialogModule, DrawerModule, TaskFormComponent, FiltersComponent, CommentModalComponent],
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
 })
@@ -56,7 +58,28 @@ export class BoardComponent implements OnInit, OnDestroy {
   private projectService = inject(ProjectService);
   readonly selectedProject = this.projectService.selectedProject;
   private destroy$ = new Subject<void>();
+  taskComments: IComment[] = [
+    {
+      id: '1',
+      text: 'This looks great! I have a few suggestions for improvement.',
+      author: 'John Smith',
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
+    },
+    {
+      id: '2',
+      text: 'Thanks for the feedback. I will implement the changes.',
+      author: 'Jane Doe',
+      timestamp: new Date(Date.now() - 30 * 60 * 1000) // 30 minutes ago
+    }
+  ];
 
+  currentUserName = 'Current User';
+
+  onCommentAdded(comment: IComment) {
+    this.taskComments.push(comment);
+    console.log('New comment added:', comment);
+    // Here you would typically save to your backend
+  }
 
   tasks = signal<Task[]>([]);
   draggedTask = signal<Task | null>(null);
@@ -64,7 +87,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   nextTaskId = signal(8);
   visible = signal(false);
   position = signal<'right'>('right');
-
+  isCommendModalOpen = signal(false);
   todoTasks = computed(() => this.tasks().filter(t => t.status === WorkItemStatus.ToDo));
   inProgressTasks = computed(() => this.tasks().filter(t => t.status === WorkItemStatus.InProgress));
   reviewTasks = computed(() => this.tasks().filter(t => t.status === WorkItemStatus.InReview));
@@ -203,6 +226,11 @@ export class BoardComponent implements OnInit, OnDestroy {
       case 'done': return this.doneTasks();
       default: return [];
     }
+  }
+
+  OpenCommendModal():void {
+    this.isCommendModalOpen.set(true);
+    console.log(this.isCommendModalOpen());
   }
 
   ngOnDestroy(): void {

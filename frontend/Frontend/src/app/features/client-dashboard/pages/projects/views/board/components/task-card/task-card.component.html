@@ -8,25 +8,65 @@
                 enumLabel :'priority'}}</span>
             <i *ngIf="task.type==0" class="bx bx-task mx-1 py-1 text-[15px] text-blue-600"></i>
             <i *ngIf="task.type==1" class="bx bx-bug  mx-1 py-1 text-[15px] text-red-600 rotate-12"></i>
-
-
-
         </div>
-
         <div class="flex items-center ">
-            <div class=" w-7 h-7 rounded-md shadow-sm flex items-center justify-center  bg-[#f8f8f9] hover:bg-[#eee] transition-all">
+            <div
+                class=" w-7 h-7 rounded-md shadow-sm flex items-center justify-center  bg-[#f8f8f9] hover:bg-[#eee] transition-all">
                 <img class="w-5 h-5 cursor-pointer"
-                    src="https://cdn-icons-png.freepik.com/256/11274/11274014.png?semt=ais_white_label"
-                    alt="">
-
+                    src="https://cdn-icons-png.freepik.com/256/11274/11274014.png?semt=ais_white_label" alt="">
             </div>
-            <button class="text-gray-400  hover:text-gray-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
-            </button>
+
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class=" text-gray-400  hover:text-gray-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                    </svg>
+                </div>
+                <ul tabindex="0"
+                    class="dropdown-content shadow-md menu bg-base-100 rounded-box z-1 w-52  border border-gray-100">
+
+
+                    <a href="#"
+                        class="flex items-center px-1 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-all group">
+                        <div
+                            class="flex items-center justify-center w-8 h-8 bg-green-100 group-hover:bg-green-200 rounded-lg mr-3 transition-colors">
+                            <i class='bx bx-paperclip text-green-600'></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">Attach File</div>
+                            <div class="text-xs text-gray-500">Upload documents</div>
+                        </div>
+                    </a>
+
+                    <a href="#"
+                        class="flex items-center px-1 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-700 transition-all group">
+                        <div
+                            class="flex items-center justify-center w-8 h-8 bg-purple-100 group-hover:bg-purple-200 rounded-lg mr-3 transition-colors">
+                            <i class='bx bx-image-add text-purple-600'></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">Add Image</div>
+                            <div class="text-xs text-gray-500">Upload screenshots</div>
+                        </div>
+                    </a>
+
+                    <hr class="my-2 border-gray-100">
+
+                    <a href="#"
+                        class="flex items-center px-1 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-all group">
+                        <div
+                            class="flex items-center justify-center w-8 h-8 bg-indigo-100 group-hover:bg-indigo-200 rounded-lg mr-3 transition-colors">
+                            <i class='bx bx-detail text-indigo-600'></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">View Details</div>
+                            <div class="text-xs text-gray-500">Full task information</div>
+                        </div>
+                    </a>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -46,7 +86,15 @@
 
             </span>
         </div>
-        <div class="flex -space-x-1 overflow-visible">
+        <div class="flex  overflow-visible">
+            <button (click)="openCommentModal(task.id)"
+                class="flex items-center hover:text-blue-600  px-1 py-2 text-gray-600  transition-all duration-200">
+
+                <i class='bx bx-comment text-sm'></i>
+                <span class=" text-gray-800 text-xs font-medium px-1 py-0.5 rounded-full">
+                    {{85}}
+                </span>
+            </button>
             <div class=" -space-x-3 flex">
                 <div *ngFor="let user of task.assignedUsers; let i = index" class="relative group"
                     [style.z-index]="task.assignedUsers?.length ?? 0 - i">
