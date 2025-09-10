@@ -6,6 +6,7 @@ import { Task } from '../../features/client-dashboard/pages/projects/views/board
 import { ITaskItem } from '../interfaces/ITaskItem';
 import { ITaskFilters } from '../interfaces/ITaskFilters';
 import { convertFilters } from '../utils/convertFilters';
+import { IComment } from '../interfaces/IComment';
 @Injectable({ providedIn: 'root' })
 export class TaskService {
     baseUrl = 'https://localhost:7182/api/v1/Tasks';
@@ -24,6 +25,14 @@ export class TaskService {
     getTasksByProject(projectId: number, filters: ITaskFilters): Observable<Task[]> {
         const params = new HttpParams({ fromObject: convertFilters(filters) });
         return this.http.get<Task[]>(`${this.baseUrl}/${projectId}`, { params });
+    }
+
+    createComment(formData: any): Observable<IBaseApiResponse> {
+        return this.http.post<IBaseApiResponse>(`https://localhost:7182/api/comments`, formData);
+    }
+
+    getComments(taskId: number): Observable<IComment[]> {
+        return this.http.get<IComment[]>(`https://localhost:7182/api/comments/${taskId}`);
     }
 
 }

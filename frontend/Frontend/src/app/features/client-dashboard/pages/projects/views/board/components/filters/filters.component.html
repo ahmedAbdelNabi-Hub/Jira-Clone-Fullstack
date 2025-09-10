@@ -1,7 +1,7 @@
 <div class="flex items-center gap-2">
     <app-search-bar (searchChange)="onSearchChange($event)"></app-search-bar>
+    <app-filter-button (filtersChanged)="onFiltersChanged($event)"></app-filter-button>
     <div class="flex items-center -space-x-2">
         <app-user-avatar (onUserIdChange)="onUserIdChange($event)"></app-user-avatar>
     </div>
-    <app-filter-button (filtersChanged)="onFiltersChanged($event)"></app-filter-button>
 </div>

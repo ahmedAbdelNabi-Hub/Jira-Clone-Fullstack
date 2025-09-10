@@ -11,8 +11,10 @@ import { EnumLabelPipe } from '../../../../../../shared/pipes/EnumLabel.pipe';
 import { IMember } from '../../../../../../core/interfaces/IMember';
 import { FiltersComponent } from "./components/filters/filters.component";
 import { ITaskFilters } from '../../../../../../core/interfaces/ITaskFilters';
-import { CommentModalComponent, IComment } from "./components/comment-modal/comment-modal.component";
+import { CommentModalComponent } from "./components/comment-modal/comment-modal.component";
 import { DialogModule } from 'primeng/dialog';
+import { ICreateCommet } from '../../../../../../core/interfaces/ICreateCommet';
+import { AuthService } from '../../../../../../core/services/AuthService.service';
 
 
 interface TaskAssignee {
@@ -56,30 +58,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   });
 
   private projectService = inject(ProjectService);
+  private authService = inject(AuthService);
   readonly selectedProject = this.projectService.selectedProject;
   private destroy$ = new Subject<void>();
-  taskComments: IComment[] = [
-    {
-      id: '1',
-      text: 'This looks great! I have a few suggestions for improvement.',
-      author: 'John Smith',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
-    },
-    {
-      id: '2',
-      text: 'Thanks for the feedback. I will implement the changes.',
-      author: 'Jane Doe',
-      timestamp: new Date(Date.now() - 30 * 60 * 1000) // 30 minutes ago
-    }
-  ];
-
-  currentUserName = 'Current User';
-
-  onCommentAdded(comment: IComment) {
-    this.taskComments.push(comment);
-    console.log('New comment added:', comment);
-    // Here you would typically save to your backend
-  }
+  commetData: ICreateCommet = {
+    userId: '',
+    taskItemId: undefined,
+    content: ''
+  };
 
   tasks = signal<Task[]>([]);
   draggedTask = signal<Task | null>(null);
@@ -228,10 +214,21 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  OpenCommendModal():void {
+  OpenCommendModal(taskId: number): void {
+    this.authService.fetchCurrentUser().subscribe(user => {
+      if (user?.id) {
+        this.commetData = {
+          ...this.commetData,  
+          userId: user.id,     
+          taskItemId: taskId   
+        };
+        console.log('commetData after update:', this.commetData);
+      }
+    });
+    
     this.isCommendModalOpen.set(true);
-    console.log(this.isCommendModalOpen());
   }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

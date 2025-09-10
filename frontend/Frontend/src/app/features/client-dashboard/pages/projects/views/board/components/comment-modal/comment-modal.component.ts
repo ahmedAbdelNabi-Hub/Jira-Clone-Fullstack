@@ -1,104 +1,92 @@
-// comment-modal.component.ts
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, signal, effect } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-export interface IComment {
-  id: string;
-  text: string;
-  author: string;
-  timestamp: Date;
-}
+import { ICreateCommet } from '../../../../../../../../core/interfaces/ICreateCommet';
+import { TaskService } from '../../../../../../../../core/services/Task.service';
+import { catchError, of, tap } from 'rxjs';
+import { ToastService } from '../../../../../../../../core/services/toast.service';
+import { IComment } from '../../../../../../../../core/interfaces/IComment';
 
 @Component({
   selector: 'app-comment-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-
     <div *ngIf="isModalOpen()" 
-         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+         class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-2"
          (click)="closeModal()">
       
       <!-- Modal Content -->
-      <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden"
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-lg max-h-[80vh] overflow-hidden"
            (click)="$event.stopPropagation()">
         
         <!-- Modal Header -->
-        <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-              <i class='bx bx-chat text-xl text-blue-600'></i>
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-blue-50">
+          <div class="flex items-center justify-center space-x-2">
+            <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+              <i class='bx bx-comment text-xl text-white'></i>
             </div>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900">Comments</h2>
-              <p class="text-sm text-gray-600">{{comments.length}} comment{{comments.length !== 1 ? 's' : ''}}</p>
+            <div class="flex items-center space-x-3">
+              <h2 class="text-lg font-semibold text-gray-800">Comments</h2>
+              <p class="text-xs text-gray-500">{{comments.length}} comment{{comments.length !== 1 ? 's' : ''}}</p>
             </div>
           </div>
           <button (click)="closeModal()" 
-                  class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-            <i class='bx bx-x text-xl'></i>
+                  class="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
+            <i class='bx bx-x text-lg'></i>
           </button>
         </div>
 
         <!-- Modal Body -->
-        <div class="flex flex-col h-96">
+        <div class="flex flex-col h-80">
           <!-- Comments List -->
-          <div class="flex-1 overflow-y-auto p-4 space-y-4">
+          <div class="flex-1 overflow-y-auto px-4 py-3 space-y-3">
             <!-- No Comments State -->
-            <div *ngIf="comments.length === 0" class="text-center py-8">
-              <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                <i class='bx bx-chat text-2xl text-gray-400'></i>
+            <div *ngIf="comments.length === 0" class="text-center py-6">
+              <div class="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
+                <i class='bx bx-comment text-xl text-gray-400'></i>
               </div>
-              <p class="text-gray-500 mb-2">No comments yet</p>
-              <p class="text-sm text-gray-400">Be the first to share your thoughts!</p>
+              <p class="text-sm text-gray-500">No comments yet</p>
+              <p class="text-xs text-gray-400">Be the first to share!</p>
             </div>
 
             <!-- Comments -->
             <div *ngFor="let comment of comments; trackBy: trackByCommentId" 
-                 class="flex space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                 class="flex space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
               <!-- Avatar -->
               <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                  {{getInitials(comment.author)}}
+                <div class="w-6 h-6 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                  {{getInitials(comment.userName)}}
                 </div>
               </div>
               
               <!-- Comment Content -->
               <div class="flex-1 min-w-0">
-                <div class="flex items-center space-x-2 mb-1">
-                  <span class="text-sm font-medium text-gray-900">{{comment.author}}</span>
-                  <span class="text-xs text-gray-500">{{formatTimestamp(comment.timestamp)}}</span>
+                <div class="flex items-center space-x-1 mb-0.5">
+                  <span class="text-xs font-medium text-gray-800">{{comment.userName}}</span>
+                  <span class="text-xs text-gray-400">{{formatTimestamp(comment.createAt)}}</span>
                 </div>
-                <p class="text-sm text-gray-700 leading-relaxed">{{comment.text}}</p>
+                <p class="text-xs text-gray-600 leading-relaxed break-words">{{comment.content}}</p>
               </div>
             </div>
           </div>
 
           <!-- Add Comment Form -->
-          <div class="border-t border-gray-200 p-4 bg-gray-50">
-            <form (ngSubmit)="addComment()" #commentForm="ngForm" class="space-y-3">
-              <!-- Author Input -->
-           
-
-              <!-- Comment Input -->
-              <div class="flex space-x-2">
-                <div class="flex-1">
-                  <textarea 
-                    [(ngModel)]="newComment.text"
-                    name="comment"
-                    required
-                    rows="2"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm resize-none"
-                    placeholder="Write a comment..."></textarea>
-                </div>
-                <button 
-                  type="submit" 
-                  [disabled]="!commentForm.form.valid || isSaving"
-                  class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg transition-all font-medium text-sm h-fit">
-                  <i class='bx bx-send' [class.bx-loader-alt]="isSaving" [class.bx-spin]="isSaving"></i>
-                </button>
-              </div>
+          <div class="border-t border-gray-100 px-4 py-3 bg-gray-50">
+            <form (ngSubmit)="addComment()" #commentForm="ngForm" class="flex space-x-2">
+              <textarea 
+                [(ngModel)]="data.content"
+                name="comment"
+                required
+                rows="1"
+                class="flex-1 px-2 py-1.5 border border-gray-200 rounded-md focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all text-xs resize-none"
+                placeholder="Add a comment..."></textarea>
+              <button 
+                type="submit" 
+                [disabled]="!commentForm.form.valid || isSaving"
+                class="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-md transition-all text-xs font-medium">
+                <i class='bx bx-send' [class.bx-loader-alt]="isSaving" [class.bx-spin]="isSaving"></i>
+              </button>
             </form>
           </div>
         </div>
@@ -114,34 +102,55 @@ export interface IComment {
     .bx-spin {
       animation: spin 1s linear infinite;
     }
+    .overflow-y-auto {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    }
+
+    .overflow-y-auto::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .overflow-y-auto::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+
+    @media (max-width: 640px) {
+      .max-w-lg {
+        max-width: 100%;
+      }
+      textarea {
+        font-size: 11px;
+      }
+      button {
+        font-size: 11px;
+        padding: 0.25rem 0.5rem;
+      }
+    }
   `]
 })
-export class CommentModalComponent {
+export class CommentModalComponent implements OnChanges, OnInit {
   @Input() comments: IComment[] = [];
-  @Input() currentUser: string = '';
+  @Input() data!: ICreateCommet;
   @Output() commentAdded = new EventEmitter<IComment>();
-
   @Input() isModalOpen = signal<boolean>(false);
-
   isSaving = false;
 
-  newComment = {
-    author: '',
-    text: ''
-  };
+  constructor(private taskService: TaskService, private toastService: ToastService) { }
 
+  ngOnInit(): void { }
 
-
-  constructor() {
-    this.newComment.author = this.currentUser;
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']?.currentValue?.taskItemId) {
+      this.loadComments(); // يحصل مرّة واحدة بس لما يتغير TaskId
+    }
   }
 
   openModal() {
     this.isModalOpen.set(true);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
 
-    // Auto-focus on textarea after modal opens
     setTimeout(() => {
       const textarea = document.querySelector('textarea[name="comment"]') as HTMLTextAreaElement;
       if (textarea) textarea.focus();
@@ -150,42 +159,12 @@ export class CommentModalComponent {
 
   closeModal() {
     this.isModalOpen.set(false);
-    document.body.style.overflow = 'auto'; // Restore scrolling
-    this.resetForm();
-  }
-
-  async addComment() {
-    if (!this.newComment.author.trim() || !this.newComment.text.trim()) {
-      return;
-    }
-    this.isSaving = true;
-    try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      const comment: IComment = {
-        id: this.generateId(),
-        text: this.newComment.text.trim(),
-        author: this.newComment.author.trim(),
-        timestamp: new Date()
-      };
-
-      this.commentAdded.emit(comment);
-      this.resetForm();
-
-    } catch (error) {
-      console.error('Failed to save comment:', error);
-    } finally {
-      this.isSaving = false;
-    }
-  }
-
-  resetForm() {
-    this.newComment = {
-      author: this.currentUser,
-      text: ''
-    };
+    this.comments = [];
+    document.body.style.overflow = 'auto';
   }
 
   getInitials(name: string): string {
+    if (!name) return 'AN';
     return name
       .split(' ')
       .map(word => word.charAt(0))
@@ -194,9 +173,13 @@ export class CommentModalComponent {
       .substring(0, 2);
   }
 
-  formatTimestamp(timestamp: Date): string {
+  formatTimestamp(timestamp: string | Date): string {
+    const dateObj = timestamp instanceof Date ? timestamp : new Date(timestamp);
+
+    if (isNaN(dateObj.getTime())) return '';
+
     const now = new Date();
-    const diff = now.getTime() - timestamp.getTime();
+    const diff = now.getTime() - dateObj.getTime();
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
@@ -205,51 +188,42 @@ export class CommentModalComponent {
     if (minutes < 60) return `${minutes}m ago`;
     if (hours < 24) return `${hours}h ago`;
     if (days < 7) return `${days}d ago`;
-
-    return timestamp.toLocaleDateString();
+    return dateObj.toLocaleDateString();
   }
 
-  trackByCommentId(index: number, comment: IComment): string {
+  trackByCommentId(index: number, comment: IComment): number {
     return comment.id;
   }
 
-  private generateId(): string {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  addComment(): void {
+    this.isSaving = true;
+    this.taskService.createComment(this.data).pipe(
+      tap(response => {
+        if (response) {
+          this.isSaving = false;
+          this.data = { ...this.data, content: '' };
+          this.loadComments();
+        }
+      }),
+      catchError(error => {
+        this.toastService.showError(error.error.message);
+        this.isSaving = false;
+        return of();
+      })
+    ).subscribe();
+  }
+
+  loadComments(): void {
+    this.taskService.getComments(this.data.taskItemId!).pipe(
+      tap(response => {
+        if (response) {
+          this.comments = response;
+        }
+      }),
+      catchError(error => {
+        this.comments = [];
+        return of();
+      })
+    ).subscribe();
   }
 }
-
-// Parent component example:
-/*
-// parent.component.ts
-export class ParentComponent {
-  taskComments: Comment[] = [
-    {
-      id: '1',
-      text: 'This looks great! I have a few suggestions for improvement.',
-      author: 'John Smith',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
-    },
-    {
-      id: '2',
-      text: 'Thanks for the feedback. I will implement the changes.',
-      author: 'Jane Doe',
-      timestamp: new Date(Date.now() - 30 * 60 * 1000) // 30 minutes ago
-    }
-  ];
-  
-  currentUserName = 'Current User';
-
-  onCommentAdded(comment: Comment) {
-    this.taskComments.push(comment);
-    console.log('New comment added:', comment);
-    // Here you would typically save to your backend
-  }
-}
-
-// parent.component.html
-<app-comment-modal 
-  [comments]="taskComments"
-  [currentUser]="currentUserName"
-  (commentAdded)="onCommentAdded($event)">
-</app-comment-modal>
-*/

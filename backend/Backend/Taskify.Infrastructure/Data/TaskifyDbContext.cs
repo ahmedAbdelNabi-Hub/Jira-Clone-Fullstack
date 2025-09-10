@@ -23,6 +23,8 @@ namespace Taskify.Infrastructure.Data
         public DbSet<ProjectMember> ProjectMembers => Set<ProjectMember>();
         public DbSet<Invitation> Invitation => Set<Invitation>();
 
+        public DbSet<TaskNote> TaskNotes { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

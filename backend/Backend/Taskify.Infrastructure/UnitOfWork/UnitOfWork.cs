@@ -70,7 +70,6 @@ namespace Taskify.Infrastructure.UnitOfWork
             var nameEntity = typeof(TEntity).Name;
             if (!repositories.ContainsKey(nameEntity))
             {
-                // create here instant from this class
                 var typeEntity = typeof(GenericRepository<>);
                 var Instance = Activator.CreateInstance(typeEntity.MakeGenericType(typeof(TEntity)), _dbContext);
                 repositories.Add(nameEntity, Instance!);

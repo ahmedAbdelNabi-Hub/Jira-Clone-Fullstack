@@ -1,14 +1,10 @@
 <div class="relative" #dropdownContainer>
     <button (click)="toggleDropdown()"
         class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        <svg class="h-4 w-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z">
-            </path>
-        </svg>
+        <i class="bx bx-filter-alt mr-2"></i>
         Filter
         <!-- Dropdown arrow -->
-        <svg class="ml-2 h-4 w-4 transition-transform duration-200" [class.rotate-180]="isDropdownOpen" fill="none"
+        <svg class="ml-2 h-3 w-3 transition-transform duration-200" [class.rotate-180]="isDropdownOpen" fill="none"
             stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>

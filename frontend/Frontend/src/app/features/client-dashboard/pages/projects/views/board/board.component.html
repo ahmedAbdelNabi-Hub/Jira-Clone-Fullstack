@@ -23,27 +23,27 @@
     <!-- Kanban Board -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-        <app-kanban-column (openCommend)="OpenCommendModal()" title="To Do" status="todo" [tasks]="todoTasks()"
+        <app-kanban-column (openCommend)="OpenCommendModal($event)" title="To Do" status="todo" [tasks]="todoTasks()"
             [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 0)"
             (dragStart)="onDragStart($event.event, $event.task)" (dragEnd)="onDragEnd($event)"
             (dragEnter)="onDragEnter($event, 'todo')" (dragLeave)="onDragLeave($event)" (dragOver)="onDragOver($event)">
         </app-kanban-column>
 
-        <app-kanban-column title="In Progress" status="inprogress" [tasks]="inProgressTasks()"
+        <app-kanban-column (openCommend)="OpenCommendModal($event)" title="In Progress" status="inprogress" [tasks]="inProgressTasks()"
             [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 1)"
             (dragStart)="onDragStart($event.event, $event.task)" (dragEnd)="onDragEnd($event)"
             (dragEnter)="onDragEnter($event, 'inprogress')" (dragLeave)="onDragLeave($event)"
             (dragOver)="onDragOver($event)">
         </app-kanban-column>
 
-        <app-kanban-column title="In Review" status="inreview" [tasks]="reviewTasks()"
+        <app-kanban-column (openCommend)="OpenCommendModal($event)" title="In Review" status="inreview" [tasks]="reviewTasks()"
             [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 2)"
             (dragStart)="onDragStart($event.event, $event.task)" (dragEnd)="onDragEnd($event)"
             (dragEnter)="onDragEnter($event, 'inreview')" (dragLeave)="onDragLeave($event)"
             (dragOver)="onDragOver($event)">
         </app-kanban-column>
 
-        <app-kanban-column title="Done" status="done" [tasks]="doneTasks()" [dragOverColumn]="dragOverColumn()"
+        <app-kanban-column (openCommend)="OpenCommendModal($event)" title="Done" status="done" [tasks]="doneTasks()" [dragOverColumn]="dragOverColumn()"
             (dropTask)="onDrop($event, 3)" (dragStart)="onDragStart($event.event, $event.task)"
             (dragEnd)="onDragEnd($event)" (dragEnter)="onDragEnter($event, 'done')" (dragLeave)="onDragLeave($event)"
             (dragOver)="onDragOver($event)">
@@ -56,6 +56,5 @@
     </p-drawer>
 </div>
 
-<app-comment-modal [isModalOpen]="isCommendModalOpen" [comments]="taskComments" [currentUser]="currentUserName"
-    (commentAdded)="onCommentAdded($event)">
+<app-comment-modal [data]="commetData" [isModalOpen]="isCommendModalOpen">
 </app-comment-modal>

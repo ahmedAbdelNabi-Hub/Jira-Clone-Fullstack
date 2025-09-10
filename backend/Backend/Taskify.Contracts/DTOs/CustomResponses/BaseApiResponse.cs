@@ -10,6 +10,8 @@ namespace Taskify.Contracts.DTOs.CustomResponses
     {
         public string message { get; set; }
         public int statusCode { get; set; }
+        public object? data { get; set; }
+
         public BaseApiResponse()
         {
 
@@ -20,7 +22,6 @@ namespace Taskify.Contracts.DTOs.CustomResponses
             this.message = message ?? GetDefaultMessageForStatusCode(this.statusCode); ;
 
         }
-
         private string GetDefaultMessageForStatusCode(int? statusCode)
         {
             return statusCode switch

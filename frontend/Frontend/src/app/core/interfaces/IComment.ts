@@ -1,6 +1,10 @@
 export interface IComment {
-    id: string;
+    id: number;
+    taskItemId: number;
     userId: string;
     content: string;
-    taskItemId: Date;
+    createAt: Date;
+    userName: string;
+    email: string;
+    image: string;
 }

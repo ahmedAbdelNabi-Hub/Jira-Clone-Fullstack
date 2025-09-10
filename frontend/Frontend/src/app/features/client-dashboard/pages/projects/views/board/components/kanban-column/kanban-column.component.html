@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="p-2 min-h-[12rem] space-y-2">
+    <div class="p-2 min-h-[30rem] space-y-2">
         <app-task-card (openCommend)="handelOpenCommend($event)" *ngFor="let task of tasks" [task]="task" (dragStart)="onCardDragStart($event, task)"
             (dragEnd)="onCardDragEnd($event)">
         </app-task-card>
