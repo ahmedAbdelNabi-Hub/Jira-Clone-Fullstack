@@ -30,7 +30,7 @@ namespace Presentation.Features.TaskNotes.Handlers
                                             note.UserId,
                                             note.Content,
                                             note.CreateAt,
-                                            UserName = user.UserName,
+                                            UserName = user.FullName,
                                             Email = user.Email,
                                             Image = user.ProfileImage,
                                         })

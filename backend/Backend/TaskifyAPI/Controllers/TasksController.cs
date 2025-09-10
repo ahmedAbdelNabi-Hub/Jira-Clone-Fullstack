@@ -43,6 +43,18 @@ namespace TaskifyAPI.Controllers
             var result = await _mediator.Send(command);
             return StatusCode(result.statusCode, result);
         }
+        [HttpPut("{taskId}/status/{newStatus}")]
+        public async Task<IActionResult> ChangeStatus(int taskId,  int newStatus, CancellationToken cancellationToken)
+        {
+            var command = new ChangeTaskStatusCommand
+            {
+                TaskId = taskId,
+                NewStatus = newStatus
+            };
+             
+            var response = await _mediator.Send(command, cancellationToken);
+            return StatusCode(response.statusCode, response);
+        }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<BaseApiResponse>> DeleteTask(int id)

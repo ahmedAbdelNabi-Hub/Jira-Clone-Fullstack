@@ -18,7 +18,8 @@ namespace Taskify.Contracts.DTOs.Task
         public string? SprintName { get; set; }
         public DateTime? SprintStartDate { get; set; }
         public DateTime? SprintEndDate { get; set; }
-
+       
+        public int CountComment { get; set; } 
         public List<MemberDTO> AssignedUsers { get; set; }
 
 

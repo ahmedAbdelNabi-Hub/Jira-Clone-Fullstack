@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Features.TaskNotes.Commands;
 using Presentation.Features.TaskNotes.Queries;
@@ -19,6 +20,7 @@ namespace Presentation.Controllers
         /// <summary>
         /// Get all notes for a given task
         /// </summary>
+        [Authorize]
         [HttpGet("/api/comments/{taskId}")]
         public async Task<IActionResult> GetNotesByTaskId(int taskId, CancellationToken cancellationToken)
         {
@@ -31,6 +33,7 @@ namespace Presentation.Controllers
         /// <summary>
         /// Create a new note for a task
         /// </summary>
+        [Authorize]
         [HttpPost("/api/comments")]
         public async Task<IActionResult> CreateNote([FromBody] CreateNotesCommand command, CancellationToken cancellationToken)
         {

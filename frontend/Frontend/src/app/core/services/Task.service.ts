@@ -35,4 +35,8 @@ export class TaskService {
         return this.http.get<IComment[]>(`https://localhost:7182/api/comments/${taskId}`);
     }
 
+    changeStatus(taskId: number, status: number): Observable<IBaseApiResponse> {
+        return this.http.put<IBaseApiResponse>(`${this.baseUrl}/${taskId}/status/${status}`, {});
+    }
+
 }

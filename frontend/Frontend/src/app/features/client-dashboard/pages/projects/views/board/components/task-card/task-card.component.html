@@ -89,10 +89,9 @@
         <div class="flex  overflow-visible">
             <button (click)="openCommentModal(task.id)"
                 class="flex items-center hover:text-blue-600  px-1 py-2 text-gray-600  transition-all duration-200">
-
                 <i class='bx bx-comment text-sm'></i>
                 <span class=" text-gray-800 text-xs font-medium px-1 py-0.5 rounded-full">
-                    {{85}}
+                    {{task.countComment}}
                 </span>
             </button>
             <div class=" -space-x-3 flex">

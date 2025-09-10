@@ -17,17 +17,17 @@ import { IComment } from '../../../../../../../../core/interfaces/IComment';
          (click)="closeModal()">
       
       <!-- Modal Content -->
-      <div class="bg-white rounded-lg shadow-lg w-full max-w-lg max-h-[80vh] overflow-hidden"
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-[900px] max-h-[90vh] overflow-hidden"
            (click)="$event.stopPropagation()">
         
         <!-- Modal Header -->
-        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-blue-50">
+        <div class="flex items-center justify-between px-4 py-2 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-blue-50">
           <div class="flex items-center justify-center space-x-2">
-            <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-              <i class='bx bx-comment text-xl text-white'></i>
+            <div class="w-5 h-5 bg-green-600 rounded-full flex items-center justify-center">
+              <i class='bx bx-comment text-sm text-white'></i>
             </div>
             <div class="flex items-center space-x-3">
-              <h2 class="text-lg font-semibold text-gray-800">Comments</h2>
+              <h2 class="text-sm font-semibold text-gray-800">Comments</h2>
               <p class="text-xs text-gray-500">{{comments.length}} comment{{comments.length !== 1 ? 's' : ''}}</p>
             </div>
           </div>
@@ -55,7 +55,7 @@ import { IComment } from '../../../../../../../../core/interfaces/IComment';
                  class="flex space-x-2 p-2 rounded-md hover:bg-gray-50 transition-colors">
               <!-- Avatar -->
               <div class="flex-shrink-0">
-                <div class="w-6 h-6 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
+                <div  class="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-xs font-medium">
                   {{getInitials(comment.userName)}}
                 </div>
               </div>
@@ -66,20 +66,23 @@ import { IComment } from '../../../../../../../../core/interfaces/IComment';
                   <span class="text-xs font-medium text-gray-800">{{comment.userName}}</span>
                   <span class="text-xs text-gray-400">{{formatTimestamp(comment.createAt)}}</span>
                 </div>
+                   <div class="flex items-center space-x-1 mb-2">
+                  <span class="text-[11px] text-gray-700">{{comment.email}}</span>
+                </div>
                 <p class="text-xs text-gray-600 leading-relaxed break-words">{{comment.content}}</p>
+                
               </div>
             </div>
           </div>
-
           <!-- Add Comment Form -->
-          <div class="border-t border-gray-100 px-4 py-3 bg-gray-50">
+          <div *ngIf="data.isUser" class="border-t border-gray-100 px-4 py-3 bg-gray-50">
             <form (ngSubmit)="addComment()" #commentForm="ngForm" class="flex space-x-2">
               <textarea 
                 [(ngModel)]="data.content"
                 name="comment"
                 required
-                rows="1"
-                class="flex-1 px-2 py-1.5 border border-gray-200 rounded-md focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all text-xs resize-none"
+                rows="2"
+                class="flex-1 px-2 py-1.5 border border-gray-200  rounded-md text-sm resize-none outline-none"
                 placeholder="Add a comment..."></textarea>
               <button 
                 type="submit" 

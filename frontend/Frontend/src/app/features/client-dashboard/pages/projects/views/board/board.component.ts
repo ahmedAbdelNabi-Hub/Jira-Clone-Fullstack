@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TaskFormComponent } from "../../components/task-form/task-form.component";
 import { DrawerModule } from 'primeng/drawer';
 import { TaskService } from '../../../../../../core/services/Task.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { ProjectService } from '../../../../../../core/services/Project.service';
 import { WorkItemStatus } from '../../../../../../core/enum/WorkItemStatus';
 import { KanbanColumnComponent } from './components/kanban-column/kanban-column.component';
@@ -34,6 +34,7 @@ export interface Task {
   sprintEndDate?: Date;
   image?: string;
   dueDate?: Date;
+  countComment: number;
   comments?: number;
   assignedUsers?: IMember[];
   isBeingDragged?: boolean;
@@ -64,7 +65,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   commetData: ICreateCommet = {
     userId: '',
     taskItemId: undefined,
-    content: ''
+    content: '',
+    isUser: false
   };
 
   tasks = signal<Task[]>([]);
@@ -125,6 +127,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       const element = event.target as HTMLElement;
       element.classList.add('dragging');
     }, 0);
+    console.log("task onDragStart")
   }
 
   onDragOver(event: DragEvent) {
@@ -165,6 +168,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.draggedTask.set(null);
     this.dragOverColumn.set(null);
+    console.log("task onDragEnd")
+
   }
 
   onDrop(event: DragEvent, status: WorkItemStatus) {
@@ -190,15 +195,24 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.tasks.set(updatedTasks);
     this.draggedTask.set(null);
-    // Reset isNewTask after animation
     setTimeout(() => {
       const finalTasks = this.tasks().map(task =>
         task.id === draggedTask.id ? { ...task, isNewTask: false } : task
       );
       this.tasks.set(finalTasks);
     }, 500);
+    console.log("task onDrop", status)
+    this.changeTaskStatus(draggedTask.id, status);
   }
 
+
+  changeTaskStatus(taskId: number, status: WorkItemStatus) {
+    this.taskService.changeStatus(taskId, status).pipe(tap(response => {
+      if (response) {
+        this.loadTasks();
+      }
+    }), takeUntil(this.destroy$)).subscribe();
+  }
 
   getTotalTasks(): number {
     return this.todoTasks.length + this.inProgressTasks.length + this.reviewTasks.length + this.doneTasks.length;
@@ -214,18 +228,19 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
   }
 
-  OpenCommendModal(taskId: number): void {
+  OpenCommendModal(data: { taskId: number, isUser: boolean }): void {
     this.authService.fetchCurrentUser().subscribe(user => {
       if (user?.id) {
         this.commetData = {
-          ...this.commetData,  
-          userId: user.id,     
-          taskItemId: taskId   
+          ...this.commetData,
+          userId: user.id,
+          taskItemId: data.taskId,
+          isUser: data.isUser
         };
         console.log('commetData after update:', this.commetData);
       }
     });
-    
+
     this.isCommendModalOpen.set(true);
   }
 

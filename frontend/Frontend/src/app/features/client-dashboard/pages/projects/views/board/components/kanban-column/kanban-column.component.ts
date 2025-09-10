@@ -22,7 +22,7 @@ export class KanbanColumnComponent {
   @Output() dragEnter = new EventEmitter<DragEvent>();
   @Output() dragLeave = new EventEmitter<DragEvent>();
   @Output() dragOver = new EventEmitter<DragEvent>();
-  @Output() openCommend = new EventEmitter<number>();
+  @Output() openCommend = new EventEmitter<{ taskId: number, isUser: boolean }>();
 
   onDrop(event: DragEvent) {
     this.dropTask.emit(event);
@@ -65,8 +65,9 @@ export class KanbanColumnComponent {
     }
   }
 
-  handelOpenCommend(event: number): void {
-    this.openCommend.emit(event);
+  handelOpenCommend(data: { taskId: number, isUser: boolean } ): void {
+    console.log(data)
+    this.openCommend.emit(data);
   }
 
 }
