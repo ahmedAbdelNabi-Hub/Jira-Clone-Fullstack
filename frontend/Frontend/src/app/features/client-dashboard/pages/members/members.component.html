@@ -103,7 +103,7 @@
                     <div *ngFor="let member of members; trackBy: trackByMemberId"
                         class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
                         <div class="flex items-center space-x-3">
-                            <img [src]="member.image" [alt]="member.fullName"
+                            <img [src]="(member.image | memberImage )" [alt]="member.fullName"
                                 class="w-10 h-10 rounded-full border border-gray-200">
                             <div class="flex flex-col">
                                 <span class="text-xs font-medium text-black">{{ member.fullName }}</span>

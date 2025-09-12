@@ -8,11 +8,12 @@ import { IProject } from '../../../../core/interfaces/IProject';
 import { tap } from 'rxjs';
 import { IMember } from '../../../../core/interfaces/IMember';
 import { OrganizationService } from '../../../../core/services/Organization.service';
+import { MemberImagePipe } from "../../../../shared/pipes/MemberImage.pipe";
 
 @Component({
   selector: 'app-members',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MemberImagePipe],
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.css']
 })

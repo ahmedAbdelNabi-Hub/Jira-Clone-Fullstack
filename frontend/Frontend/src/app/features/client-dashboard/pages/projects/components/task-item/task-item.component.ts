@@ -8,10 +8,11 @@ import { ITaskItem } from '../../../../../../core/interfaces/ITaskItem';
 import { TaskService } from '../../../../../../core/services/Task.service';
 import { ToastService } from '../../../../../../core/services/toast.service';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { MemberImagePipe } from "../../../../../../shared/pipes/MemberImage.pipe";
 
 @Component({
   selector: 'app-task-item',
-  imports: [CommonModule],
+  imports: [CommonModule, MemberImagePipe],
   templateUrl: './task-item.component.html',
   styleUrl: './task-item.component.css'
 })

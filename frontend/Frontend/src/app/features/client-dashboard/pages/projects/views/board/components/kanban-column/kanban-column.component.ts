@@ -53,19 +53,19 @@ export class KanbanColumnComponent {
   getDotColor(status: string): string {
     switch (status) {
       case 'todo':
-        return 'bg-gray-50';
+        return 'bg-gray-500';
       case 'inprogress':
-        return 'bg-blue-50';
+        return 'bg-blue-500';
       case 'inreview':
-        return 'bg-yellow-50';
+        return 'bg-yellow-500';
       case 'done':
-        return 'bg-green-50';
+        return 'bg-green-500';
       default:
         return 'bg-gray-400';
     }
   }
 
-  handelOpenCommend(data: { taskId: number, isUser: boolean } ): void {
+  handelOpenCommend(data: { taskId: number, isUser: boolean }): void {
     console.log(data)
     this.openCommend.emit(data);
   }

@@ -1,20 +1,54 @@
 <!-- kanban-column.component.html -->
-<div [ngClass]="{ 'drag-over': dragOverColumn === status }" class="bg-white kanban-column rounded-lg shadow-sm border" (dragover)="dragOver.emit($event)" (drop)="onDrop($event)"
-    (dragenter)="dragEnter.emit($event)" (dragleave)="dragLeave.emit($event)">
+<div [ngClass]="{ 'drag-over': dragOverColumn === status }" class="kanban-column rounded-lg shadow-sm border"
+    (dragover)="dragOver.emit($event)" (drop)="onDrop($event)" (dragenter)="dragEnter.emit($event)"
+    (dragleave)="dragLeave.emit($event)">
 
-    <div class="p-3 border-b bg-[#f9fbfc] " >
+    <!-- Header -->
+    <div class="p-3 border-b bg-[#f9fbfc]">
         <div class="flex items-center gap-2">
             <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
             <h2 class="text-sm font-medium">{{ title }}</h2>
-            <span class="bg-[#4e81ed] text-white px-1.5 py-0.5 rounded-full text-xs">
+            <span class="text-white px-3 py-0.5 rounded-lg text-xs" [ngClass]="getDotColor(status)">
                 {{ tasks.length }}
             </span>
+
         </div>
     </div>
 
-    <div class="p-2 min-h-[30rem] space-y-2">
-        <app-task-card (openCommend)="handelOpenCommend($event)" *ngFor="let task of tasks" [task]="task" (dragStart)="onCardDragStart($event, task)"
-            (dragEnd)="onCardDragEnd($event)">
-        </app-task-card>
+    <!-- Tasks / Empty State -->
+    <div class="p-2 min-h-[30rem] space-y-2 flex flex-col">
+        <ng-container *ngIf="tasks.length > 0; else emptyState">
+            <app-task-card (openCommend)="handelOpenCommend($event)" *ngFor="let task of tasks" [task]="task"
+                (dragStart)="onCardDragStart($event, task)" (dragEnd)="onCardDragEnd($event)">
+            </app-task-card>
+        </ng-container>
+
+        <!-- Empty State -->
+        <ng-template #emptyState>
+            <div
+                class="flex flex-col items-center justify-center text-gray-500 py-12 px-4 text-center  rounded-lg h-full">
+                <!-- SVG Icon -->
+                <svg class="w-12 h-12 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-6h6v6m2 4H7a2 2 0 01-2-2V7a2 2 0 012-2h4l2-2h4a2 2 0 012 2v12a2 2 0 01-2 2z" />
+                </svg>
+
+                <!-- Message -->
+                <p class="text-sm font-medium">No tasks here yet</p>
+                <p class="text-xs text-gray-400">Drag a task or create a new one</p>
+                <div class="flex items-center my-2 gap-2">
+                    <!-- <img class="size-12" src="sprint-planning.svg" alt=""> -->
+
+                    <button class="flex items-center gap-2  text-[#2b272e] px-8 py-1 rounded-md text-xs">
+                        <!-- SVG Icon -->
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                        Go Backlog
+                    </button>
+                </div>
+
+            </div>
+        </ng-template>
     </div>
 </div>

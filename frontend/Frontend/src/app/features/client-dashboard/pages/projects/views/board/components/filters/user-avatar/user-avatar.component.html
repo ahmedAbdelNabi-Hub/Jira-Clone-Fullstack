@@ -1,8 +1,12 @@
 <div class="h-6 rounded-full -space-x-2 flex items-center justify-center">
     <div *ngFor="let user of members(); let i = index" class="relative group -space-x-4">
-        <div class="w-9 h-9" (click)="selectUser(user.userId)">
+        <!-- <div class="w-9 h-9" (click)="selectUser(user.userId)">
             <img [src]="user.image || 'https://ui-avatars.com/api/?name=' + user.fullName + '&background=e5e7eb&color=6b7280&size=135'"
                 [alt]="user.fullName"
+                class="w-full h-full rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform duration-200 cursor-pointer" />
+        </div> -->
+        <div class="w-9 h-9" (click)="selectUser(user.userId)">
+            <img [src]="(user.image | memberImage ) " [alt]="user.fullName" 
                 class="w-full h-full rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform duration-200 cursor-pointer" />
         </div>
         <div

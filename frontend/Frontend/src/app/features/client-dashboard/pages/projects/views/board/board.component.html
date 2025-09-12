@@ -6,9 +6,9 @@
             <div class="flex items-center gap-4">
                 <!-- Task Count and Add Button -->
                 <div class="flex items-center gap-2">
-                    <div class="bg-white px-3 py-1.5 rounded shadow-sm border text-sm">
+                    <div class="bg-white px-3 py-1.5 rounded  border text-sm">
                         <span class="text-gray-600">Tasks: </span>
-                        <span class="font-medium">{{ todoTasks.length + inProgressTasks.length + doneTasks.length
+                        <span class="font-medium">{{ tasks().length
                             }}</span>
                     </div>
                     <button (click)="showDialog('right')"
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Kanban Board -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 overflow-hidden">
 
         <app-kanban-column (openCommend)="OpenCommendModal($event)" title="To Do" status="todo" [tasks]="todoTasks()"
             [dragOverColumn]="dragOverColumn()" (dropTask)="onDrop($event, 0)"

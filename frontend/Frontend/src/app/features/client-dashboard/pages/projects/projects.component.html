@@ -18,7 +18,7 @@
                     <div *ngFor="let user of member(); let i = index" class="relative group -space-x-4"
                         [style.z-index]="member()?.length ?? 0 - i">
                         <div class="w-9 h-9">
-                            <img [src]="user.image || 'https://ui-avatars.com/api/?name=' + user.fullName + '&background=e5e7eb&color=6b7280&size=135'"
+                            <img [src]="(user.image | memberImage ) "
                                 [alt]="user.fullName" (error)="onImageError($event)"
                                 class="w-full h-full rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform duration-200 cursor-pointer" />
                         </div>

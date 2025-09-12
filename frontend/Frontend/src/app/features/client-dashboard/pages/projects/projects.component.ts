@@ -10,6 +10,7 @@ import { ProjectService } from '../../../../core/services/Project.service';
 import { ModalProjectUpdateComponent } from "./components/modal-project-update/modal-project-update.component";
 import { IMember } from '../../../../core/interfaces/IMember';
 import { Subject, takeUntil, tap } from 'rxjs';
+import { MemberImagePipe } from '../../../../shared/pipes/MemberImage.pipe';
 
 interface TabConfig {
   id: string;
@@ -21,7 +22,7 @@ interface TabConfig {
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, FormsModule, ButtonModule, InputTextModule, DropdownModule, RouterModule, ModalProjectUpdateComponent],
+  imports: [CommonModule, MemberImagePipe, FormsModule, ButtonModule, InputTextModule, DropdownModule, RouterModule, ModalProjectUpdateComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
 })

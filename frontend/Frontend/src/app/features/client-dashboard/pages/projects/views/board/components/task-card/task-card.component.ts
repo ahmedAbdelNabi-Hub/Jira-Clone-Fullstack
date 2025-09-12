@@ -5,10 +5,11 @@ import { Task } from '../../board.component';
 import { IMember } from '../../../../../../../../core/interfaces/IMember';
 import { AuthService } from '../../../../../../../../core/services/AuthService.service';
 import { Subject, takeUntil } from 'rxjs';
+import { MemberImagePipe } from "../../../../../../../../shared/pipes/MemberImage.pipe";
 
 @Component({
   selector: 'app-task-card',
-  imports: [CommonModule, EnumLabelPipe],
+  imports: [CommonModule, EnumLabelPipe, MemberImagePipe],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.css'
 })

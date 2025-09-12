@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnInit, Output, output, signal } from '@angular/core';
 import { ProjectService } from '../../../../../../../../../core/services/Project.service';
 import { IMember } from '../../../../../../../../../core/interfaces/IMember';
+import { MemberImagePipe } from "../../../../../../../../../shared/pipes/MemberImage.pipe";
 
 @Component({
   selector: 'app-user-avatar',
-  imports: [CommonModule],
+  imports: [CommonModule, MemberImagePipe],
   templateUrl: './user-avatar.component.html',
   styleUrl: './user-avatar.component.css'
 })
